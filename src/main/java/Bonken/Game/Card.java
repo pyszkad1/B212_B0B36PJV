@@ -18,7 +18,7 @@ public class Card {
 
 
     private final String[] suitNames = new String[]
-            {"clubs", "diamonds", "hearts", "spades"};
+            {"Clubs", "Diamonds", "Hearts", "Spades"};
 
     private final String[] faceNames = new String[]
             {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
