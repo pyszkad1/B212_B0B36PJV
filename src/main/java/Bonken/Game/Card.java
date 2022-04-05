@@ -1,7 +1,5 @@
 package Bonken.Game;
 
-import java.util.Arrays;
-
 public class Card {
     int suit;
     int rank;
@@ -37,4 +35,5 @@ public class Card {
     public String toString() {
         return faceNames[rank - 2] + " of " + suitNames[suit];
     }
+
 }
