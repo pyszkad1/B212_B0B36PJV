@@ -25,11 +25,10 @@ public class Deck {
         ArrayList<ArrayList<Card>> cardHands = new ArrayList<ArrayList<Card>>(4);
         int cnt = 0;
         for (Card card : cardDeck) {
+            cardHand.add(card);
             if (cnt < 12) {
-                cardHand.add(card);
                 cnt++;
             } else {
-                cardHand.add(card);
                 cardHands.add(cardHand);
                 cardHand = new ArrayList<Card>(13);
                 cnt = 0;
