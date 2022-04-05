@@ -1,22 +1,55 @@
 package Bonken.Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Deck {
-    Card cardDeck[] = new Card[52];
+    List<Card> cardDeck = new ArrayList<Card>(52);
 
     public Deck() {
         for (int i = 0; i < 4; i++) {
             for (int j = 2; j < 15; j++) {
                 Card card = new Card(j, i);
-                cardDeck[i*13+j-2] = card;
+                cardDeck.add(card);
             }
         }
-
     }
 
-    public void shuffle(Deck deck) {
+    public void shuffle() {
+        Collections.shuffle(cardDeck);
     }
 
-    public void deal(Deck deck) {
+    public ArrayList<ArrayList<Card>> deal() {
+        ArrayList<Card> cardHand = new ArrayList<Card>(13);
+        ArrayList<ArrayList<Card>> cardHands = new ArrayList<ArrayList<Card>>(4);
+        int cnt = 0;
+        for (Card card : cardDeck) {
+            if (cnt < 12) {
+                cardHand.add(card);
+                cnt++;
+            } else {
+                cardHand.add(card);
+                cardHands.add(cardHand);
+                cardHand = new ArrayList<Card>(13);
+                cnt = 0;
+            }
+        }
+        cardHands.add(cardHand);
+        return cardHands;
     }
 
+    @Override
+    public String toString() {
+        String ret = "";
+        int cnt = 0;
+        for (Card card : cardDeck) {
+            ret += card.toString();
+            if (cnt >= 0 && cnt < 51) {
+                ret += ", ";
+            }
+            cnt++;
+        }
+        return ret;
+    }
 }

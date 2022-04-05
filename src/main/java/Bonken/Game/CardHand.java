@@ -33,4 +33,17 @@ public class CardHand {
         return playableCards.get(playableCards.size()-1);
     }
 
+    @Override
+    public String toString() {
+        String ret = "";
+        int cnt = 0;
+        for (Card card : hand) {
+            ret += card.toString();
+            if (cnt >= 0 && cnt < 51) {
+                ret += ", ";
+            }
+            cnt++;
+        }
+        return ret;
+    }
 }
