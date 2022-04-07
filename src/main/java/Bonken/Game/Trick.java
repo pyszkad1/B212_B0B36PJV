@@ -19,12 +19,13 @@ public class Trick {
 
     // always in order of players
     public Card[] getTrick(){
-        //TODO
         Card[] playedCards = new Card[4];
-        Card lastPlayedCard = new Card(2, -1);
+        Card firstPlayedCard = new Card(2, -1);
         for (int i = 0; i < 4; i++) {
-            playedCards[i] = cardHands[(firstPlayer+i)%4].play(lastPlayedCard);
-            lastPlayedCard = playedCards[i];
+            playedCards[i] = cardHands[(firstPlayer+i)%4].play(firstPlayedCard);
+            if (i == 0){
+                firstPlayedCard = playedCards[i];
+            }
         }
         firstSuit = playedCards[0].suit;
         System.out.println("setting first suit " + firstSuit);
@@ -33,10 +34,10 @@ public class Trick {
 
     public int getTrickWinner(Card[] cards) {
         Card winningCard = cards[0];
-        System.out.println(cards[0].toString());
-        System.out.println(cards[1].toString());
-        System.out.println(cards[2].toString());
-        System.out.println(cards[3].toString());
+        for (int i = 0; i < 4; i++) {
+            System.out.println(cards[i].toString());
+        }
+
 
         int player = -1;
 

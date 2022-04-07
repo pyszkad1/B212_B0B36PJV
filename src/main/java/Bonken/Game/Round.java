@@ -10,12 +10,6 @@ public class Round {
         deck.shuffle();
         ArrayList<ArrayList<Card>> hands = deck.deal();
         System.out.println(hands.toString());
-        /*
-        CardHand hand0 = new CardHand(hands.get(0));
-        CardHand hand1 = new CardHand(hands.get(1));
-        CardHand hand2 = new CardHand(hands.get(2));
-        CardHand hand3 = new CardHand(hands.get(3));
-         */
         cardHands = new CardHand[4];
         for (int i = 0; i < 4; i++) {
             cardHands[i] = new CardHand(hands.get(i));
@@ -29,10 +23,25 @@ public class Round {
 
     public void playRound() {
         int firstPlayer = 0; //TODO should be player -1 from chooser of minigame
+        int[] tricksTaken = {0,0,0,0};
         for (int i = 0; i < 13; i++) {
             firstPlayer = playTrick(firstPlayer);
             System.out.println("first player is " + firstPlayer);
+            tricksTaken[firstPlayer]++;
         }
+
+        //QUICK COUNTER! - deletable
+        int maxTricks = 0;
+        int playerNumber = -1;
+        System.out.println("Tricks of players:");
+        for (int i = 0; i < 4; i++) {
+            System.out.println("Player " + i + " got " + tricksTaken[i]);
+            if (tricksTaken[i] > maxTricks){
+                maxTricks = tricksTaken[i];
+                playerNumber = i;
+            }
+        }
+        System.out.println("Player " + playerNumber + " won with " + maxTricks + " tricks");
 
     }
 
