@@ -1,15 +1,19 @@
 package Bonken.Game;
 
 public class Round {
-    int firstSuit;
-    Card[] trick;
-
     public Round() {
 
     }
 
     public void chooseGame() {
-        
+        //TODO
     }
+
+    public void playTrick(int firstPlayer) {
+        Trick trick = new Trick()
+
+    }
+
+
 
 }
