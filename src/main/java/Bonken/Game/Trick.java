@@ -19,22 +19,20 @@ public class Trick {
 
     // always in order of players
     public Card[] getTrick(){
-        Card[] ret = new Card[4];
+        //TODO
+        Card[] playedCards = new Card[4];
         Card lastPlayedCard = new Card(2, -1);
         for (int i = 0; i < 4; i++) {
-            ret[i] = cardHands[i].play(lastPlayedCard);
-            lastPlayedCard = ret[i];
-            if (i == firstPlayer) {
-                firstSuit = ret[i].suit;
-                System.out.println("setting first suit " + firstSuit);
-            }
+            playedCards[i] = cardHands[(firstPlayer+i)%4].play(lastPlayedCard);
+            lastPlayedCard = playedCards[i];
         }
-        return ret;
+        firstSuit = playedCards[0].suit;
+        System.out.println("setting first suit " + firstSuit);
+        return playedCards;
     }
 
     public int getTrickWinner(Card[] cards) {
         Card winningCard = cards[0];
-        System.out.println("jsem tady!");
         System.out.println(cards[0].toString());
         System.out.println(cards[1].toString());
         System.out.println(cards[2].toString());
@@ -56,23 +54,26 @@ public class Trick {
                     player = i;
                 }
             }
-            return player;
+
         } else {
+            int winningSuit = firstSuit;
             for (int i = 0; i < 4; i++) {
-                if (cards[i].suit == trumps) {
+                if (winningSuit != trumps && cards[i].suit == trumps) {
                     winningCard = cards[i];
                     System.out.println(winningCard.toString());
-                    firstSuit = trumps;
+                    winningSuit = trumps;
                 }
-                if (cards[i].suit == firstSuit && cards[i].rank >= winningCard.rank) {
+                if (cards[i].suit == winningSuit && cards[i].rank >= winningCard.rank) {
                     winningCard = cards[i];
-                    System.out.println("winning card" + winningCard.toString());
-
-                    player = i;
+                    System.out.print("winning card is " + winningCard.toString());
+                    player = (i + firstPlayer)%4;
+                    System.out.println(" of player " + player);
                 }
             }
-            return player;
+
         }
+        return player;
     }
 
 }
+
