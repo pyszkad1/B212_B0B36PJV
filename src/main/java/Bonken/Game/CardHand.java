@@ -35,8 +35,13 @@ public class CardHand {
         //TODO
         getPlayableCards(card);
         System.out.println(playableCards);
+        System.out.println("choosing from " + (playableCards.size()) + " cards");
         Scanner scanner = new Scanner(System.in);
         int playedCard = scanner.nextInt();
+        while (playedCard > playableCards.size()-1 || playedCard < 0) {
+            System.out.println("not a card, please choose again");
+            playedCard = scanner.nextInt();
+        }
         Card tmp = playableCards.get(playedCard);
         hand.remove(tmp);
         return tmp;
