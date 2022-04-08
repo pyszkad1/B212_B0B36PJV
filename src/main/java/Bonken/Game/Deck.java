@@ -21,20 +21,21 @@ public class Deck {
     }
 
     public ArrayList<ArrayList<Card>> deal() {
-        ArrayList<Card> cardHand = new ArrayList<Card>(13);
+        ArrayList<Card> cardHand = null;
         ArrayList<ArrayList<Card>> cardHands = new ArrayList<ArrayList<Card>>(4);
         int cnt = 0;
         for (Card card : cardDeck) {
-            cardHand.add(card);
-            if (cnt < 12) {
-                cnt++;
-            } else {
-                cardHands.add(cardHand);
+            if(cardHand == null) {
                 cardHand = new ArrayList<Card>(13);
                 cnt = 0;
             }
+            cardHand.add(card);
+            cnt++;
+            if (cnt == 13) {
+                cardHands.add(cardHand);
+                cardHand = null;
+            }
         }
-        cardHands.add(cardHand);
         return cardHands;
     }
 
