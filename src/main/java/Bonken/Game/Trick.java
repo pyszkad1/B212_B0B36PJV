@@ -27,7 +27,7 @@ public class Trick {
                 firstPlayedCard = playedCards[i];
             }
         }
-        firstSuit = playedCards[0].suit;
+        firstSuit = playedCards[0].getSuit();
         System.out.println("setting first suit " + firstSuit);
         return playedCards;
     }
@@ -42,7 +42,7 @@ public class Trick {
         int player = -1;
 
         for (Card card : cards) {
-            if (card.suit == firstSuit) {
+            if (card.getSuit() == firstSuit) {
                 winningCard = card;
                 break;
             }
@@ -50,7 +50,7 @@ public class Trick {
 
         if (trumps == -1) {
             for (int i = 0; i < 4; i++) {
-                if (cards[i].suit == firstSuit && cards[i].rank > winningCard.rank) {
+                if (cards[i].getSuit() == firstSuit && cards[i].getSuit() > winningCard.getRank()) {
                     winningCard = cards[i];
                     player = i;
                 }
@@ -59,12 +59,12 @@ public class Trick {
         } else {
             int winningSuit = firstSuit;
             for (int i = 0; i < 4; i++) {
-                if (winningSuit != trumps && cards[i].suit == trumps) {
+                if (winningSuit != trumps && cards[i].getSuit() == trumps) {
                     winningCard = cards[i];
                     System.out.println(winningCard.toString());
                     winningSuit = trumps;
                 }
-                if (cards[i].suit == winningSuit && cards[i].rank >= winningCard.rank) {
+                if (cards[i].getSuit() == winningSuit && cards[i].getRank() >= winningCard.getRank()) {
                     winningCard = cards[i];
                     System.out.print("winning card is " + winningCard.toString());
                     player = (i + firstPlayer)%4;

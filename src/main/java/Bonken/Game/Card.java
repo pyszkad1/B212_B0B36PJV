@@ -1,8 +1,8 @@
 package Bonken.Game;
 
 public class Card {
-    int suit;
-    int rank;
+    private int suit;
+    private int rank;
 
     //suit definitions
     public static final int CLUBS = 0;
@@ -26,12 +26,19 @@ public class Card {
     public Card(int rank, int suit) {
         // TODO
         if (suit == -1) {
-
         } else if ((suit < 0) || (suit > 3) || (rank < 2) || (rank > 14)) {
             throw new IllegalArgumentException();
         }
         this.suit = suit;
         this.rank = rank;
+    }
+
+    public int getSuit() {
+        return suit;
+    }
+
+    public int getRank() {
+        return rank;
     }
 
     @Override

@@ -11,8 +11,13 @@ public class CardHand {
         this.hand = hand;
     }
 
+    public void sortPlayableCards() {
+        // TODO
+
+    }
+
     public void getPlayableCards(Card firstCard) {
-        if (firstCard.suit == -1) {
+        if (firstCard.getSuit() == -1) {
             playableCards = hand;
         }
         playableCards = hasThisSuit(firstCard);
@@ -24,7 +29,7 @@ public class CardHand {
     public ArrayList<Card> hasThisSuit(Card card){
         ArrayList<Card> ret = new ArrayList<Card>();
         for (int i = 0; i < hand.size(); i++) {
-            if (card.suit == hand.get(i).suit) {
+            if (card.getSuit() == hand.get(i).getSuit()) {
                 ret.add(hand.get(i));
             }
         }
