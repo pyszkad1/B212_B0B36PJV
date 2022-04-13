@@ -1,6 +1,7 @@
 package Bonken.Game;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class CardHand {
@@ -11,9 +12,10 @@ public class CardHand {
         this.hand = hand;
     }
 
-    public void sortPlayableCards() {
-        // TODO
-
+    public void sortHand() {
+        // TODO sortHand is better?
+        hand.sort(Comparator.comparing(Card::getRank));
+        hand.sort(Comparator.comparing(Card::getSuit));
     }
 
     public void getPlayableCards(Card firstCard) {
