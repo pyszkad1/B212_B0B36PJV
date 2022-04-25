@@ -18,7 +18,7 @@ public class Game {
 
     public void startGame() {
         Deck deck = new Deck();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 12; i++) {
             deck.shuffle();
             Round round = new Round(deck, minigames, players);
             round.playRound();

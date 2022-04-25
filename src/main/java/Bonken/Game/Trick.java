@@ -1,10 +1,13 @@
 package Bonken.Game;
 
+import java.util.ArrayList;
+
 public class Trick {
     int firstPlayer;
     int firstSuit;
     CardHand[] cardHands;
     int trumps = -1;
+    ArrayList<Card> penaltyCards;
 
     public Trick(int firstPlayer, CardHand[] cardHands, int trumps) {
         this.firstPlayer = firstPlayer;
@@ -12,9 +15,10 @@ public class Trick {
         this.trumps = trumps;
     }
 
-    public Trick(int firstPlayer, CardHand[] cardHands) {
+    public Trick(int firstPlayer, CardHand[] cardHands, ArrayList<Card> penaltyCards) {
         this.firstPlayer = firstPlayer;
         this.cardHands = cardHands;
+        this.penaltyCards = penaltyCards;
     }
 
     // always in order of players

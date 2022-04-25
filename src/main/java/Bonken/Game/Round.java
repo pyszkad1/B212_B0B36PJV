@@ -64,7 +64,7 @@ public class Round {
         int leadingPlayer = (startingPlayer + 3) % 4; //TODO should be player -1 from chooser of minigame
         System.out.println("VYNASI " + leadingPlayer);
         int[] tricksTaken = {0,0,0,0};
-        for (int i = 0; i < 2; i++) {           // TODO i < 13
+        for (int i = 0; i < 13; i++) {
             leadingPlayer = playTrick(leadingPlayer);
             System.out.println("VYNASI2 " + leadingPlayer);
             tricksTaken[leadingPlayer]++;
