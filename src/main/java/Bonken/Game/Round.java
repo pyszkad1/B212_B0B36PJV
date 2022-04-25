@@ -1,13 +1,24 @@
 package Bonken.Game;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Round {
     CardHand[] cardHands;
+    Player[] players;
+    Deck deck;
+    ArrayList<Integer> minigames;
+    int startingPlayer;
+    int chosenMiniGameNum;
 
-    public Round() {
-        Deck deck = new Deck(); //TODO later do in game!!!
-        deck.shuffle();
+    public Round(Deck deck, ArrayList<Integer> minigames, Player[] players) {
+        this.players = players;
+        this.deck = deck;
+        this.minigames = minigames;
+        createCardHands();
+    }
+
+    private void createCardHands() {
         ArrayList<ArrayList<Card>> hands = deck.deal();
         System.out.println(hands.toString());
         cardHands = new CardHand[4];
@@ -15,21 +26,48 @@ public class Round {
             cardHands[i] = new CardHand(hands.get(i));
             cardHands[i].sortHand();
         }
-
-
     }
 
-    public void chooseGame() {
-        //TODO
+    private void getStartingPlayer() {
+        startingPlayer = -1;
+        for (Player player : players) {
+            if (player.hisTurn) {
+                startingPlayer = player.id;
+            }
+        }
+
+        System.out.println("Starting PLAYER IS " + startingPlayer);
+    }
+
+    public void chooseGame() {      // TODO return int
+        getStartingPlayer();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
+        System.out.println("Choose from: " + minigames);
+        chosenMiniGameNum = scanner.nextInt();
+        while (!minigames.contains(chosenMiniGameNum)) {
+            System.out.println("choose eligible minigame from " + minigames + " pls");
+            chosenMiniGameNum = scanner.nextInt();
+        }
+        minigames.remove(chosenMiniGameNum);
+        if (chosenMiniGameNum > 6) {
+            MiniGamePositive chosenMiniGame = new MiniGamePositive(chosenMiniGameNum);
+            System.out.println("positive minigame");
+        } else {
+            MiniGameNegative chosenMiniGame = new MiniGameNegative(chosenMiniGameNum);
+            System.out.println("negative minigame");
+        }
     }
 
     public void playRound() {
-        int firstPlayer = 0; //TODO should be player -1 from chooser of minigame
+        chooseGame();
+        int leadingPlayer = (startingPlayer + 3) % 4; //TODO should be player -1 from chooser of minigame
+        System.out.println("VYNASI " + leadingPlayer);
         int[] tricksTaken = {0,0,0,0};
-        for (int i = 0; i < 13; i++) {
-            firstPlayer = playTrick(firstPlayer);
-            System.out.println("first player is " + firstPlayer);
-            tricksTaken[firstPlayer]++;
+        for (int i = 0; i < 2; i++) {           // TODO i < 13
+            leadingPlayer = playTrick(leadingPlayer);
+            System.out.println("VYNASI2 " + leadingPlayer);
+            tricksTaken[leadingPlayer]++;
         }
 
         //QUICK COUNTER! - deletable
@@ -44,12 +82,22 @@ public class Round {
             }
         }
         System.out.println("Player " + playerNumber + " won with " + maxTricks + " tricks");
+        getNextPlayer();
 
     }
 
-    public int playTrick(int firstPlayer) {
-        Trick trick = new Trick(firstPlayer, cardHands, 1); //TODO get trumps from minigame choice
+    private void getNextPlayer() {
+        for (int i = 0; i < 4; i++) {
+            if (players[i].hisTurn) {
+                players[i].hisTurn = false;
+                players[(i+1)%4].hisTurn = true;            // TODO should check the rules
+                break;
+            }
+        }
+    }
+
+    private int playTrick(int leadingPlayer) {
+        Trick trick = new Trick(leadingPlayer, cardHands, 1); //TODO get trumps from minigame choice
         return trick.getTrickWinner(trick.getTrick());
     }
 }
-

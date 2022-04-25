@@ -38,7 +38,6 @@ public class Trick {
             System.out.println(cards[i].toString());
         }
 
-
         int player = -1;
 
         for (Card card : cards) {
@@ -55,7 +54,6 @@ public class Trick {
                     player = i;
                 }
             }
-
         } else {
             int winningSuit = firstSuit;
             for (int i = 0; i < 4; i++) {
@@ -75,6 +73,5 @@ public class Trick {
         }
         return player;
     }
-
 }
 
