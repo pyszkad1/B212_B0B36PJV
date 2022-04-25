@@ -19,15 +19,16 @@ public class Trick {
         this.firstPlayer = firstPlayer;
         this.cardHands = cardHands;
         this.penaltyCards = penaltyCards;
+        trumps = -1;
     }
 
     // always in order of players
-    public Card[] getTrick(){
+    public Card[] getTrick() {
         Card[] playedCards = new Card[4];
         Card firstPlayedCard = new Card(2, -1);
         for (int i = 0; i < 4; i++) {
-            playedCards[i] = cardHands[(firstPlayer+i)%4].play(firstPlayedCard);
-            if (i == 0){
+            playedCards[i] = cardHands[(firstPlayer + i) % 4].play(firstPlayedCard);
+            if (i == 0) {
                 firstPlayedCard = playedCards[i];
             }
         }
@@ -51,7 +52,7 @@ public class Trick {
             }
         }
 
-        if (trumps == -1) {
+        if (trumps == -1 || trumps == 4) {
             for (int i = 0; i < 4; i++) {
                 if (cards[i].getSuit() == firstSuit && cards[i].getSuit() > winningCard.getRank()) {
                     winningCard = cards[i];
@@ -69,13 +70,25 @@ public class Trick {
                 if (cards[i].getSuit() == winningSuit && cards[i].getRank() >= winningCard.getRank()) {
                     winningCard = cards[i];
                     System.out.print("winning card is " + winningCard.toString());
-                    player = (i + firstPlayer)%4;
+                    player = (i + firstPlayer) % 4;
                     System.out.println(" of player " + player);
                 }
             }
 
         }
+        countTrickScore(cards, player);
         return player;
+    }
+
+    private void countTrickScore(Card[] trick, int trickWinner) {
+        int ret = 0;
+        if (trumps == -1) {
+
+
+        } else if (trumps >= 0 && trumps <= 4) {
+            ret += 10;
+        }
+
     }
 }
 

@@ -39,7 +39,7 @@ public class Round {
         System.out.println("Starting PLAYER IS " + startingPlayer);
     }
 
-    public void chooseGame() {      // TODO return int
+    public void chooseGame() {
         getStartingPlayer();
         Scanner scanner = new Scanner(System.in);
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
@@ -61,7 +61,7 @@ public class Round {
 
     public void playRound() {
         chooseGame();
-        int leadingPlayer = (startingPlayer + 3) % 4; //TODO should be player -1 from chooser of minigame
+        int leadingPlayer = (startingPlayer + 3) % 4;
         System.out.println("VYNASI " + leadingPlayer);
         int[] tricksTaken = {0,0,0,0};
         for (int i = 0; i < 13; i++) {

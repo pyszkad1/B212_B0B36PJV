@@ -15,7 +15,7 @@ public class MiniGameNegative {
     }
 
     public ArrayList<Card> getPenaltyCards() {
-
+        //TODO use this method
         switch (miniGameNum) {
             case 0:
                 for (Card card : tempDeck.cardDeck) {

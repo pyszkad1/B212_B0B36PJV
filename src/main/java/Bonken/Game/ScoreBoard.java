@@ -8,10 +8,8 @@ public class ScoreBoard {
         this.players = players;
     }
 
-    public void updateScoreBoard(int miniGameNum, int trickWinner) {
-        if (miniGameNum > 6) {
-            players[trickWinner].score += 10;
-        }
+    public void updateScoreBoard(int score, int trickWinner) {
+        players[trickWinner].score += score;
     }
 
 }
