@@ -30,6 +30,7 @@ public class Game {
     }
 
     public Player[] getPlayers() {
+        System.out.println("Enter names of four players:");
         Player[] players = new Player[4];
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();

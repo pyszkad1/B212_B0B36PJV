@@ -13,24 +13,12 @@ public class MiniGameTrumps {
 
     private void setTrumps(){
         switch (minigameNum) {
-            case 11:
-                trumps = 4;
-                break;
-            case 10:
-                trumps = 3;
-                break;
-            case 9:
-                trumps = 2;
-                break;
-            case 8:
-                trumps = 1;
-                break;
-            case 7:
-                trumps = 0;
-                break;
-            default:
-                trumps = -1;
-                break;
+            case 11 -> trumps = 4;
+            case 10 -> trumps = 3;
+            case 9 -> trumps = 2;
+            case 8 -> trumps = 1;
+            case 7 -> trumps = 0;
+            default -> trumps = -1;
         }
     }
 
