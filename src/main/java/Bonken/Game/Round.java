@@ -9,7 +9,7 @@ public class Round {
     Deck deck;
     ArrayList<Integer> minigames;
     int startingPlayer;
-    int chosenMiniGameNum;
+    Integer chosenMiniGameNum;
     Game game;
     MiniGameTrumps chosenMiniGameTrump;
     ArrayList<Card> penaltyCards;
@@ -44,6 +44,7 @@ public class Round {
         System.out.println("Starting PLAYER IS " + startingPlayer);
     }
 
+    // TODO chosenGameNum get int parse to string pop the number ?
     public void chooseGame() {
         getStartingPlayer();
         Scanner scanner = new Scanner(System.in);
@@ -60,7 +61,6 @@ public class Round {
         //TODO negative/positive minigame choosing
         if (chosenMiniGameNum > 6) {
             System.out.println("positive minigame");
-
             System.out.println("The game will be played with "
                     + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
                     + " as trumps");
@@ -76,7 +76,7 @@ public class Round {
         chooseGame();
         int leadingPlayer = (startingPlayer + 3) % 4;
         System.out.println("LEADING PLAYER IS " + leadingPlayer);
-        int[] tricksTaken = {0,0,0,0};
+        int[] tricksTaken = {0, 0, 0, 0};
         trickNum = 0;
         for (int i = 0; i < 13; i++) {
             if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
