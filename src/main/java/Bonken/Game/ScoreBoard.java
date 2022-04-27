@@ -16,7 +16,7 @@ public class ScoreBoard {
     public String toString() {
         String ret = "";
         for (int i = 0; i < 4; i++) {
-            ret += "Player " + i + "has " + (players[i].score) + "\n";
+            ret += "Player " + i + " has " + (players[i].score) + "\n";
         }
         return ret;
     }

@@ -8,9 +8,9 @@ public class MiniGameNegative {
     final int miniGameNum;
     final Deck tempDeck;
 
-    public MiniGameNegative(int miniGameNum) {
+    public MiniGameNegative(int miniGameNum, Deck deck) {
         this.miniGameNum = miniGameNum;
-        tempDeck = new Deck();
+        tempDeck = deck;
         penaltyCards = new ArrayList<>();
         getPenaltyCards();
     }

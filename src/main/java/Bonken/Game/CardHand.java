@@ -17,14 +17,35 @@ public class CardHand {
         hand.sort(Comparator.comparing(Card::getSuit));
     }
 
-    public void getPlayableCards(Card firstCard) {
-        if (firstCard.getSuit() == -1) {
-            playableCards = hand;
+    public void getPlayableCards(Card firstCard, int miniGameNum) {
+        if (miniGameNum != 2 && miniGameNum != 3) {
+            if (firstCard.getSuit() == -1) {
+                playableCards = hand;
+            } else {
+                playableCards = hasThisSuit(firstCard);
+            }
+            if (playableCards.size() == 0) {
+                playableCards = hand;
+            }
+        } else {
+            if (firstCard.getSuit() == -1) {
+                playableCards = new ArrayList<>();
+                for (Card card : hand) {
+                    if (card.getSuit() != 2) {
+                        playableCards.add(card);
+                    }
+                }
+                if (playableCards.size() == 0) {
+                    playableCards = hand;
+                }
+            } else {
+                playableCards = hasThisSuit(firstCard);
+            }
+            if (playableCards.size() == 0) {
+                playableCards = hand;
+            }
         }
-        playableCards = hasThisSuit(firstCard);
-        if (playableCards.size() == 0) {
-            playableCards = hand;
-        }
+
     }
 
     public ArrayList<Card> hasThisSuit(Card card){
@@ -37,9 +58,9 @@ public class CardHand {
         return ret;
     }
 
-    public Card play(Card card) {
+    public Card play(Card card, int miniGameNum) {
         //TODO
-        getPlayableCards(card);
+        getPlayableCards(card, miniGameNum);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
         Scanner scanner = new Scanner(System.in);

@@ -1,5 +1,6 @@
 package Bonken.Game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,20 +23,12 @@ public class Trick {
         this.trumps = trumps;
     }
 
-    public Trick(Game game, Round round, int firstPlayer, CardHand[] cardHands) {
-        this.game = game;
-        this.round = round;
-        this.firstPlayer = firstPlayer;
-        this.cardHands = cardHands;
-        trumps = -1;
-    }
-
     // always in order of players
     public Card[] getTrick() {
         Card[] playedCards = new Card[4];
         Card firstPlayedCard = new Card(2, -1);
         for (int i = 0; i < 4; i++) {
-            playedCards[i] = cardHands[(firstPlayer + i) % 4].play(firstPlayedCard);
+            playedCards[i] = cardHands[(firstPlayer + i) % 4].play(firstPlayedCard, round.chosenMiniGameNum);
             if (i == 0) {
                 firstPlayedCard = playedCards[i];
             }
@@ -98,9 +91,9 @@ public class Trick {
 
     private void countTrickScore(Card[] trick, int trickWinner) {
         if (trumps == -1) {
-            List<Card> playedTrick = Arrays.asList(trick);
+            List<Card> playedTrick = new ArrayList<Card>();
+            playedTrick = Arrays.asList(trick);
 
-            System.out.println("played trick: " + playedTrick);
             if (round.chosenMiniGameNum == 4) {
                 game.scoreBoard.updateScoreBoard(-10, trickWinner);
             } else if (round.chosenMiniGameNum == 0) {
@@ -144,8 +137,8 @@ public class Trick {
                     if (round.penaltyCards.contains(card)) {
                         game.scoreBoard.updateScoreBoard(-50, trickWinner);
                         round.penaltyCards.remove(card);
-                        System.out.println("jsem tady a popnul jsem věc " + round.penaltyCards);
                     }
+
                 }
             }
 

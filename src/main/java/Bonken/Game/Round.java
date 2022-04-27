@@ -65,7 +65,7 @@ public class Round {
                     + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
                     + " as trumps");
         } else {
-            MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum);
+            MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum, game.deck);
             penaltyCards = chosenNegative.penaltyCards;
             System.out.println("negative minigame");
             System.out.println("The game will be played with no trumps");
