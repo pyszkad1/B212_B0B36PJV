@@ -2,13 +2,15 @@ package Bonken.Game;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Round {
+    private static final Logger logger = Logger.getLogger(Round.class.getName());
     CardHand[] cardHands;
     Player[] players;
     Deck deck;
-    ArrayList<Integer> minigames;
-    int startingPlayer;
+    ArrayList<Integer> miniGames;
+    private int startingPlayer;
     Integer chosenMiniGameNum;
     Game game;
     MiniGameTrumps chosenMiniGameTrump;
@@ -19,7 +21,7 @@ public class Round {
         this.game = game;
         this.players = players;
         this.deck = deck;
-        this.minigames = minigames;
+        this.miniGames = minigames;
         createCardHands();
     }
 
@@ -44,21 +46,19 @@ public class Round {
         System.out.println("Starting PLAYER IS " + startingPlayer);
     }
 
-    // TODO chosenGameNum get int parse to string pop the number ?
     public void chooseGame() {
         getStartingPlayer();
         Scanner scanner = new Scanner(System.in);
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
-        System.out.println("Choose from: " + minigames);
+        System.out.println("Choose from: " + miniGames);
         chosenMiniGameNum = scanner.nextInt();
-        while (!minigames.contains(chosenMiniGameNum)) {
-            System.out.println("choose eligible minigame from " + minigames + " pls");
+        while (!miniGames.contains(chosenMiniGameNum)) {
+            System.out.println("choose eligible minigame from " + miniGames + " pls");
             chosenMiniGameNum = scanner.nextInt();
         }
-        minigames.remove(chosenMiniGameNum);
+        miniGames.remove(chosenMiniGameNum);
         chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
 
-        //TODO negative/positive minigame choosing
         if (chosenMiniGameNum > 6) {
             System.out.println("positive minigame");
             System.out.println("The game will be played with "
@@ -109,7 +109,7 @@ public class Round {
         for (int i = 0; i < 4; i++) {
             if (players[i].hisTurn) {
                 players[i].hisTurn = false;
-                players[(i+1)%4].hisTurn = true;            // TODO should check the rules
+                players[(i+1)%4].hisTurn = true;
                 break;
             }
         }

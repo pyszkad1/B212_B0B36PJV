@@ -1,8 +1,8 @@
 package Bonken.Game;
 
 public class Card {
-    private int suit;
-    private int rank;
+    private final int suit;
+    private final int rank;
 
     //suit definitions
     public static final int CLUBS = 0;

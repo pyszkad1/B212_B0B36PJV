@@ -5,7 +5,6 @@ public class Player {
     final int id;
     CardHand hand;
     int score;
-    boolean hasCards;
     boolean flagAllCheck;
     boolean hisTurn;
 

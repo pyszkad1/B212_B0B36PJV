@@ -26,7 +26,6 @@ public class Game {
             round.playRound();
             System.out.println(scoreBoard.toString());
         }
-        System.out.println("Konec");
     }
 
     public Player[] getPlayers() {
