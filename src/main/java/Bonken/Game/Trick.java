@@ -1,6 +1,8 @@
 package Bonken.Game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Trick {
     int firstPlayer;
@@ -8,14 +10,17 @@ public class Trick {
     CardHand[] cardHands;
     int trumps = -1;
     ArrayList<Card> penaltyCards;
+    Game game;
 
-    public Trick(int firstPlayer, CardHand[] cardHands, int trumps) {
+    public Trick(Game game, int firstPlayer, CardHand[] cardHands, int trumps) {
+        this.game = game;
         this.firstPlayer = firstPlayer;
         this.cardHands = cardHands;
         this.trumps = trumps;
     }
 
-    public Trick(int firstPlayer, CardHand[] cardHands, ArrayList<Card> penaltyCards) {
+    public Trick(Game game, int firstPlayer, CardHand[] cardHands, ArrayList<Card> penaltyCards) {
+        this.game = game;
         this.firstPlayer = firstPlayer;
         this.cardHands = cardHands;
         this.penaltyCards = penaltyCards;
@@ -81,12 +86,13 @@ public class Trick {
     }
 
     private void countTrickScore(Card[] trick, int trickWinner) {
-        int ret = 0;
         if (trumps == -1) {
+            //TODO NEGATIVE SCORE
+            List<Card> playedTrick = Arrays.asList(trick);
 
 
         } else if (trumps >= 0 && trumps <= 4) {
-            ret += 10;
+            game.scoreBoard.updateScoreBoard(10, trickWinner);
         }
 
     }

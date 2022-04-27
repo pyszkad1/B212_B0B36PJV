@@ -17,14 +17,14 @@ public class Card {
     public static final int ACE = 14;
 
 
-    private final String[] suitNames = new String[]
+    public final String[] suitNames = new String[]
             {"Clubs", "Diamonds", "Hearts", "Spades"};
 
-    private final String[] faceNames = new String[]
+    public final String[] faceNames = new String[]
             {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
     public Card(int rank, int suit) {
-        // TODO
+        // TODO check -1 suit
         if (suit == -1) {
         } else if ((suit < 0) || (suit > 3) || (rank < 2) || (rank > 14)) {
             throw new IllegalArgumentException();

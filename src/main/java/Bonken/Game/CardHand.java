@@ -13,7 +13,6 @@ public class CardHand {
     }
 
     public void sortHand() {
-        // TODO sortHand is better?
         hand.sort(Comparator.comparing(Card::getRank));
         hand.sort(Comparator.comparing(Card::getSuit));
     }

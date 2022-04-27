@@ -8,20 +8,23 @@ public class Game {
     Player[] players;
     Deck deck;
     ArrayList<Integer> minigames = new ArrayList<>(12);
+    ScoreBoard scoreBoard;
 
     public Game() {
         for (int i = 0; i < 12; i++) {
             minigames.add(i);
         }
         this.players = getPlayers();
+        scoreBoard = new ScoreBoard(players);
     }
 
     public void startGame() {
         Deck deck = new Deck();
         for (int i = 0; i < 12; i++) {
             deck.shuffle();
-            Round round = new Round(deck, minigames, players);
+            Round round = new Round(this, deck, minigames, players);
             round.playRound();
+            System.out.println(scoreBoard.toString());
         }
         System.out.println("Konec");
     }

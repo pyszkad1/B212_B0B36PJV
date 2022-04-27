@@ -10,8 +10,11 @@ public class Round {
     ArrayList<Integer> minigames;
     int startingPlayer;
     int chosenMiniGameNum;
+    Game game;
+    MiniGameTrumps chosenMiniGameTrump;
 
-    public Round(Deck deck, ArrayList<Integer> minigames, Player[] players) {
+    public Round(Game game, Deck deck, ArrayList<Integer> minigames, Player[] players) {
+        this.game = game;
         this.players = players;
         this.deck = deck;
         this.minigames = minigames;
@@ -50,23 +53,30 @@ public class Round {
             chosenMiniGameNum = scanner.nextInt();
         }
         minigames.remove(chosenMiniGameNum);
+        chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
+
+        //TODO negative/positive minigame choosing
         if (chosenMiniGameNum > 6) {
-            MiniGamePositive chosenMiniGame = new MiniGamePositive(chosenMiniGameNum);
             System.out.println("positive minigame");
+
+            System.out.println("The game will be played with "
+                    + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
+                    + " as trumps");
         } else {
-            MiniGameNegative chosenMiniGame = new MiniGameNegative(chosenMiniGameNum);
+            //MiniGameNegative chosenMiniGame = new MiniGameNegative(chosenMiniGameNum);
             System.out.println("negative minigame");
+            System.out.println("The game will be played with no trumps");
         }
     }
 
     public void playRound() {
         chooseGame();
         int leadingPlayer = (startingPlayer + 3) % 4;
-        System.out.println("VYNASI " + leadingPlayer);
+        System.out.println("LEADING PLAYER IS " + leadingPlayer);
         int[] tricksTaken = {0,0,0,0};
         for (int i = 0; i < 13; i++) {
             leadingPlayer = playTrick(leadingPlayer);
-            System.out.println("VYNASI2 " + leadingPlayer);
+            System.out.println("TO NEXT TRICK LEADS PLAYER " + leadingPlayer);
             tricksTaken[leadingPlayer]++;
         }
 
@@ -83,7 +93,6 @@ public class Round {
         }
         System.out.println("Player " + playerNumber + " won with " + maxTricks + " tricks");
         getNextPlayer();
-
     }
 
     private void getNextPlayer() {
@@ -97,7 +106,7 @@ public class Round {
     }
 
     private int playTrick(int leadingPlayer) {
-        Trick trick = new Trick(leadingPlayer, cardHands, 1); //TODO get trumps from minigame choice
+        Trick trick = new Trick(game, leadingPlayer, cardHands, chosenMiniGameTrump.trumps);
         return trick.getTrickWinner(trick.getTrick());
     }
 }

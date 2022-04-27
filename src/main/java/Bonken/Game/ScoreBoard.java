@@ -1,5 +1,7 @@
 package Bonken.Game;
 
+import java.util.Arrays;
+
 public class ScoreBoard {
 
     Player[] players;
@@ -12,4 +14,12 @@ public class ScoreBoard {
         players[trickWinner].score += score;
     }
 
+    @Override
+    public String toString() {
+        String ret = "";
+        for (int i = 0; i < 4; i++) {
+            ret += "Player " + i + "has " + (players[i].score) + "\n";
+        }
+        return ret;
+    }
 }
