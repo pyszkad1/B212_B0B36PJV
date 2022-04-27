@@ -12,6 +12,8 @@ public class Round {
     int chosenMiniGameNum;
     Game game;
     MiniGameTrumps chosenMiniGameTrump;
+    ArrayList<Card> penaltyCards;
+    int trickNum = 0;
 
     public Round(Game game, Deck deck, ArrayList<Integer> minigames, Player[] players) {
         this.game = game;
@@ -63,7 +65,8 @@ public class Round {
                     + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
                     + " as trumps");
         } else {
-            //MiniGameNegative chosenMiniGame = new MiniGameNegative(chosenMiniGameNum);
+            MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum);
+            penaltyCards = chosenNegative.penaltyCards;
             System.out.println("negative minigame");
             System.out.println("The game will be played with no trumps");
         }
@@ -74,10 +77,17 @@ public class Round {
         int leadingPlayer = (startingPlayer + 3) % 4;
         System.out.println("LEADING PLAYER IS " + leadingPlayer);
         int[] tricksTaken = {0,0,0,0};
+        trickNum = 0;
         for (int i = 0; i < 13; i++) {
+            if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
+                System.out.println("the only card was played");
+                break;
+            }
             leadingPlayer = playTrick(leadingPlayer);
             System.out.println("TO NEXT TRICK LEADS PLAYER " + leadingPlayer);
+
             tricksTaken[leadingPlayer]++;
+            trickNum++;
         }
 
         //QUICK COUNTER! - deletable
@@ -106,7 +116,7 @@ public class Round {
     }
 
     private int playTrick(int leadingPlayer) {
-        Trick trick = new Trick(game, leadingPlayer, cardHands, chosenMiniGameTrump.trumps);
+        Trick trick = new Trick(game, this, leadingPlayer, cardHands, chosenMiniGameTrump.trumps);
         return trick.getTrickWinner(trick.getTrick());
     }
 }

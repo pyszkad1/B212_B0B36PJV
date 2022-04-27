@@ -12,10 +12,10 @@ public class MiniGameNegative {
         this.miniGameNum = miniGameNum;
         tempDeck = new Deck();
         penaltyCards = new ArrayList<>();
+        getPenaltyCards();
     }
 
-    public ArrayList<Card> getPenaltyCards() {
-        //TODO use this method
+    private void getPenaltyCards() {
         switch (miniGameNum) {
             case 0:
                 for (Card card : tempDeck.cardDeck) {
@@ -48,11 +48,18 @@ public class MiniGameNegative {
                     }
                 }
                 break;
+            case 6:
+                for (Card card : tempDeck.cardDeck) {
+                    if (card.getSuit() == 1 && card.getRank() == 7) {
+                        penaltyCards.add(card);
+                    }
+                }
+                break;
 
             default:
                 break;
         }
 
-        return penaltyCards;
+
     }
 }

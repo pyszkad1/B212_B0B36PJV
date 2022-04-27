@@ -1,7 +1,5 @@
 package Bonken.Game;
 
-import java.util.Arrays;
-
 public class ScoreBoard {
 
     Player[] players;
