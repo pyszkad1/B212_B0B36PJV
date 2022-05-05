@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    Player[] players;
+    PlayerInterface[] players;
     Deck deck;
     ArrayList<Integer> minigames = new ArrayList<>(12);
     ScoreBoard scoreBoard;
@@ -13,10 +13,11 @@ public class Game {
 
     public Game(int numOfPlayers) {
         for (int i = 0; i < 12; i++) {
-            minigames.add(i);
+            minigames.add(Integer.valueOf(i));
         }
-        this.players = getPlayers();
         this.numOfPlayers = numOfPlayers;
+        getPlayers();
+
 
         scoreBoard = new ScoreBoard(players);
     }
@@ -32,18 +33,26 @@ public class Game {
         System.out.println("Konec");
     }
 
-    public PlayerInterface[] getPlayers() {
+    public void getPlayers() {
         System.out.println("Enter names of four players:");
-        PlayerInterface[] players = new PlayerInterface[4];
+        System.out.println("num of players is " + numOfPlayers );
+        players = new PlayerInterface[4];
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
         int startingPlayer = random.nextInt( 4);
         for (int i = 0; i < numOfPlayers; i++) {
             players[i] = new Player(scanner.next(), i);
             if (i == startingPlayer) {
-                players[i].hisTurn = true;
+                players[i].setHisTurn(true);
             }
         }
-        return players;
+        //TODO one for loop
+        for (int i = numOfPlayers; i < 4; i++) {
+            players[i] = new PlayerBot("Bot" + i, i);
+            if (i == startingPlayer) {
+                players[i].setHisTurn(true);
+            }
+        }
+
     }
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class CardHand {
     ArrayList<Card> hand;
-    ArrayList<Card> playableCards;
+
 
     public CardHand(ArrayList<Card> hand) {
         this.hand = hand;
@@ -18,6 +18,7 @@ public class CardHand {
     }
 
     public ArrayList<Card> getPlayableCards(Card firstCard) {
+        ArrayList<Card> playableCards;
         if (firstCard.getSuit() == -1) {
             playableCards = hand;
         }

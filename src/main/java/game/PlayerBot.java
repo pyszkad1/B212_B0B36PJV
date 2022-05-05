@@ -17,18 +17,45 @@ public class PlayerBot implements PlayerInterface {
         this.id = id;
     }
 
-    public void setCardHand(CardHand cardHand) {
-        this.cardHand = cardHand;
-    }
     @Override
     public Card play(Card card) {
         // TODO play card based on chosen minigame
-        cardHand.getPlayableCards(card);
+        playableCards = cardHand.getPlayableCards(card);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
         int playedCard = 0;
         Card tmp = playableCards.get(playedCard);
         this.cardHand.hand.remove(tmp);
         return tmp;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean isHisTurn() {
+        return hisTurn;
+    }
+
+    @Override
+    public void setHisTurn(boolean hisTurn) {
+        this.hisTurn = hisTurn;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public void setCardHand(CardHand cardHand) {
+        this.cardHand = cardHand;
     }
 }

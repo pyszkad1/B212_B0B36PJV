@@ -5,17 +5,17 @@ import java.util.Scanner;
 
 public class Round {
     CardHand[] cardHands;
-    Player[] players;
+    PlayerInterface[] players;
     Deck deck;
     ArrayList<Integer> minigames;
     int startingPlayer;
-    int chosenMiniGameNum;
+    Integer chosenMiniGameNum;
     Game game;
     MiniGameTrumps chosenMiniGameTrump;
     ArrayList<Card> penaltyCards;
     int trickNum = 0;
 
-    public Round(Game game, Deck deck, ArrayList<Integer> minigames, Player[] players) {
+    public Round(Game game, Deck deck, ArrayList<Integer> minigames, PlayerInterface[] players) {
         this.game = game;
         this.players = players;
         this.deck = deck;
@@ -36,9 +36,9 @@ public class Round {
 
     private void getStartingPlayer() {
         startingPlayer = -1;
-        for (Player player : players) {
-            if (player.hisTurn) {
-                startingPlayer = player.id;
+        for (PlayerInterface player : players) {
+            if (player.isHisTurn()) {
+                startingPlayer = player.getId();
             }
         }
 
@@ -50,7 +50,8 @@ public class Round {
         Scanner scanner = new Scanner(System.in);
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
         System.out.println("Choose from: " + minigames);
-        chosenMiniGameNum = scanner.nextInt();
+
+        chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
         while (!minigames.contains(chosenMiniGameNum)) {
             System.out.println("choose eligible minigame from " + minigames + " pls");
             chosenMiniGameNum = scanner.nextInt();
@@ -108,9 +109,9 @@ public class Round {
 
     private void getNextPlayer() {
         for (int i = 0; i < 4; i++) {
-            if (players[i].hisTurn) {
-                players[i].hisTurn = false;
-                players[(i+1)%4].hisTurn = true;            // TODO should check the rules
+            if (players[i].isHisTurn()) {
+                players[i].setHisTurn(false);
+                players[(i+1)%4].setHisTurn(true);           // TODO should check the rules
                 break;
             }
         }

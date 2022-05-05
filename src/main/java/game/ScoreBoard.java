@@ -2,21 +2,22 @@ package game;
 
 public class ScoreBoard {
 
-    Player[] players;
+    PlayerInterface[] players;
 
-    public ScoreBoard(Player[] players) {
+    public ScoreBoard(PlayerInterface[] players) {
         this.players = players;
     }
 
     public void updateScoreBoard(int score, int trickWinner) {
-        players[trickWinner].score += score;
+
+        players[trickWinner].setScore(players[trickWinner].getScore()+score);
     }
 
     @Override
     public String toString() {
         String ret = "";
         for (int i = 0; i < 4; i++) {
-            ret += "Player " + i + "has " + (players[i].score) + "\n";
+            ret += "Player " + i + "has " + (players[i].getScore()) + "\n";
         }
         return ret;
     }

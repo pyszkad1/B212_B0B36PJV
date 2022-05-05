@@ -16,14 +16,40 @@ public class Player implements PlayerInterface {
         this.id = id;
     }
 
+    @Override
+    public boolean isHisTurn() {
+        return hisTurn;
+    }
+
+    @Override
+    public void setHisTurn(boolean hisTurn) {
+        this.hisTurn = hisTurn;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
     public Card play(Card card) {
         //TODO
-        cardHand.getPlayableCards(card);
+        playableCards = cardHand.getPlayableCards(card);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
         Scanner scanner = new Scanner(System.in);
