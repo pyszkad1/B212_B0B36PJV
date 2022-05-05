@@ -17,7 +17,7 @@ public class CardHand {
         hand.sort(Comparator.comparing(Card::getSuit));
     }
 
-    public void getPlayableCards(Card firstCard) {
+    public ArrayList<Card> getPlayableCards(Card firstCard) {
         if (firstCard.getSuit() == -1) {
             playableCards = hand;
         }
@@ -25,6 +25,7 @@ public class CardHand {
         if (playableCards.size() == 0) {
             playableCards = hand;
         }
+        return playableCards;
     }
 
     public ArrayList<Card> hasThisSuit(Card card){
@@ -35,22 +36,6 @@ public class CardHand {
             }
         }
         return ret;
-    }
-
-    public Card play(Card card) {
-        //TODO
-        getPlayableCards(card);
-        System.out.println(playableCards);
-        System.out.println("choosing from " + (playableCards.size()) + " cards");
-        Scanner scanner = new Scanner(System.in);
-        int playedCard = scanner.nextInt();
-        while (playedCard > playableCards.size()-1 || playedCard < 0) {
-            System.out.println("not a card, please choose again");
-            playedCard = scanner.nextInt();
-        }
-        Card tmp = playableCards.get(playedCard);
-        hand.remove(tmp);
-        return tmp;
     }
 
     @Override
@@ -66,4 +51,6 @@ public class CardHand {
         }
         return ret;
     }
+
+
 }

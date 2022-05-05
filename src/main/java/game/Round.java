@@ -30,6 +30,7 @@ public class Round {
         for (int i = 0; i < 4; i++) {
             cardHands[i] = new CardHand(hands.get(i));
             cardHands[i].sortHand();
+            players[i].setCardHand(cardHands[i]);
         }
     }
 

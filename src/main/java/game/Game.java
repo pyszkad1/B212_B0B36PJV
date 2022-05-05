@@ -9,12 +9,15 @@ public class Game {
     Deck deck;
     ArrayList<Integer> minigames = new ArrayList<>(12);
     ScoreBoard scoreBoard;
+    int numOfPlayers;
 
-    public Game() {
+    public Game(int numOfPlayers) {
         for (int i = 0; i < 12; i++) {
             minigames.add(i);
         }
         this.players = getPlayers();
+        this.numOfPlayers = numOfPlayers;
+
         scoreBoard = new ScoreBoard(players);
     }
 
@@ -29,13 +32,13 @@ public class Game {
         System.out.println("Konec");
     }
 
-    public Player[] getPlayers() {
+    public PlayerInterface[] getPlayers() {
         System.out.println("Enter names of four players:");
-        Player[] players = new Player[4];
+        PlayerInterface[] players = new PlayerInterface[4];
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
         int startingPlayer = random.nextInt( 4);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numOfPlayers; i++) {
             players[i] = new Player(scanner.next(), i);
             if (i == startingPlayer) {
                 players[i].hisTurn = true;

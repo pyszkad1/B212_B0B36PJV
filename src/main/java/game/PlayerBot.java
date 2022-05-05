@@ -3,15 +3,16 @@ package game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Player implements PlayerInterface {
+public class PlayerBot implements PlayerInterface {
     final String username;
     final int id;
-    private CardHand cardHand;
+    CardHand cardHand;
     ArrayList<Card> playableCards;
     int score;
     boolean hisTurn;
 
-    public Player(String username, int id) {
+    public PlayerBot(String username, int id) {
+        super();
         this.username = username;
         this.id = id;
     }
@@ -19,22 +20,15 @@ public class Player implements PlayerInterface {
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }
-
     @Override
     public Card play(Card card) {
-        //TODO
+        // TODO play card based on chosen minigame
         cardHand.getPlayableCards(card);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
-        Scanner scanner = new Scanner(System.in);
-        int playedCard = scanner.nextInt();
-        while (playedCard > playableCards.size()-1 || playedCard < 0) {
-            System.out.println("not a card, please choose again");
-            playedCard = scanner.nextInt();
-        }
+        int playedCard = 0;
         Card tmp = playableCards.get(playedCard);
         this.cardHand.hand.remove(tmp);
         return tmp;
     }
-
 }
