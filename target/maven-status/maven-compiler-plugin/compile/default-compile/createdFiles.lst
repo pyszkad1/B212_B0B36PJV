@@ -1,0 +1,14 @@
+Bonken\Game\Card.class
+Bonken\Game\Game.class
+Bonken\Game\MiniGameNegative.class
+Bonken\Game\Round.class
+Bonken\Game\Main.class
+Bonken\Game\ScoreBoard.class
+Bonken\Game\MiniGameTrumps.class
+module-info.class
+gui\SystemInfo.class
+Bonken\Game\Trick.class
+gui\App.class
+Bonken\Game\Player.class
+Bonken\Game\Deck.class
+Bonken\Game\CardHand.class
