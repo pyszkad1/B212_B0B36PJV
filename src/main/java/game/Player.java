@@ -8,9 +8,9 @@ public class Player implements PlayerInterface {
     final int id;
     private CardHand cardHand;
     ArrayList<Card> playableCards;
-    int score;
-    boolean hisTurn;
-    boolean chosenPositive;
+    private int score;
+    private boolean hisTurn;
+    private boolean chosenPositive;
 
     public Player(String username, int id) {
         this.username = username;
@@ -62,14 +62,20 @@ public class Player implements PlayerInterface {
         }
 
         Scanner scanner = new Scanner(System.in);
-        if (chosenPositive) {
-            System.out.println("You have already played your positive minigame, so you can only choose negative");
-        }
-        System.out.println("Choose from: " + possibleMinigameChoices);
-        Integer chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
-        while (!possibleMinigameChoices.contains(chosenMiniGameNum)) {
-            System.out.println("choose eligible minigame from " + minigames + " pls");
-            chosenMiniGameNum = scanner.nextInt();
+
+        Integer chosenMiniGameNum;
+        if (possibleMinigameChoices.size() > 0) {
+            if (chosenPositive) {
+                System.out.println("You have already played your positive minigame, so you can only choose negative");
+            }
+            System.out.println("Choose from: " + possibleMinigameChoices);
+            chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
+            while (!possibleMinigameChoices.contains(chosenMiniGameNum)) {
+                System.out.println("choose eligible minigame from " + minigames + " pls");
+                chosenMiniGameNum = scanner.nextInt();
+            }
+        } else {
+            chosenMiniGameNum = -1;
         }
         if (chosenMiniGameNum > 6) chosenPositive = true;
         return chosenMiniGameNum;

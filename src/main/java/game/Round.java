@@ -49,21 +49,23 @@ public class Round {
         getStartingPlayer();
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
         chosenMiniGameNum = players[startingPlayer].chooseMinigame(minigames);
+        if (chosenMiniGameNum == -1) {
+            getNextPlayer();
+            chooseGame();
+            return;
+        }
         minigames.remove(chosenMiniGameNum);
         chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
 
         //TODO negative/positive minigame choosing
         if (chosenMiniGameNum > 6) {
-            System.out.println("positive minigame");
-
-            System.out.println("The game will be played with "
+            System.out.println("Chosen POSITIVE minigame, playing with "
                     + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
                     + " as trumps");
         } else {
-            MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum);
+            MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum, deck);
             penaltyCards = chosenNegative.penaltyCards;
-            System.out.println("negative minigame");
-            System.out.println("The game will be played with no trumps");
+            System.out.println("Chosen NEGATIVE minigame: " + chosenNegative.negativeNames[chosenMiniGameNum]);
         }
     }
 

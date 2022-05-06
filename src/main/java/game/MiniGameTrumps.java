@@ -4,7 +4,7 @@ public class MiniGameTrumps {
     int trumps;
     int minigameNum;
     public final String[] trumpNames = new String[]
-            {"Clubs", "Diamonds", "Hearts", "Spades", "No Trumps"};
+            {"Clubs ♣", "Diamonds ♦", "Hearts ♥", "Spades ♠", "No Trumps NT"};
 
     public MiniGameTrumps(int minigameNum) {
         this.minigameNum = minigameNum;

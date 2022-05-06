@@ -9,7 +9,6 @@ public class ScoreBoard {
     }
 
     public void updateScoreBoard(int score, int trickWinner) {
-
         players[trickWinner].setScore(players[trickWinner].getScore()+score);
     }
 
@@ -17,7 +16,7 @@ public class ScoreBoard {
     public String toString() {
         String ret = "";
         for (int i = 0; i < 4; i++) {
-            ret += "Player " + i + "has " + (players[i].getScore()) + "\n";
+            ret += "Player " + i + " has " + (players[i].getScore()) + "\n";
         }
         return ret;
     }

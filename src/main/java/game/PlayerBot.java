@@ -7,11 +7,11 @@ import java.util.Scanner;
 public class PlayerBot implements PlayerInterface {
     final String username;
     final int id;
-    CardHand cardHand;
+    private CardHand cardHand;
     ArrayList<Card> playableCards;
     private int score;
     private boolean hisTurn;
-    boolean chosenPositive;
+    private boolean chosenPositive;
 
     public PlayerBot(String username, int id) {
         this.username = username;
@@ -48,11 +48,17 @@ public class PlayerBot implements PlayerInterface {
                 possibleMinigameChoices.add(minigame);
             }
         }
-        System.out.println("Bot choosing from: " + possibleMinigameChoices);
-        int num = possibleMinigameChoices.get(possibleMinigameChoices.size() - 1);
+        int num = possibleMinigameChoices.size();
         Random random = new Random();
-        Integer chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
-        System.out.println("Bot chose minigame " + chosenMiniGameNum);
+        Integer chosenMiniGameNum;
+        if (possibleMinigameChoices.size() > 0) {
+            System.out.println("Bot choosing from: " + possibleMinigameChoices);
+            chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
+            System.out.println("Bot chose minigame " + chosenMiniGameNum);
+        } else {
+            chosenMiniGameNum = -1;
+            System.out.println("Bot can't choose, next player's turn");
+        }
         if (chosenMiniGameNum > 6) chosenPositive = true;
         return chosenMiniGameNum;
     }

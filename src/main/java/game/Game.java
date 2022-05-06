@@ -24,13 +24,14 @@ public class Game {
 
     public void startGame() {
         deck = new Deck();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 11; i++) {
             deck.shuffle();
             Round round = new Round(this, deck, minigames, players);
+            System.out.println("--------------------------------------------------------------------------------------------");
             round.playRound();
             System.out.println(scoreBoard.toString());
         }
-        System.out.println("Konec");
+        System.out.println("End of game.");
     }
 
     public void getPlayers() {

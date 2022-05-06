@@ -138,7 +138,7 @@ public class Trick {
                     if (round.penaltyCards.contains(card)) {
                         game.scoreBoard.updateScoreBoard(-50, trickWinner);
                         round.penaltyCards.remove(card);
-                        System.out.println("jsem tady a popnul jsem věc " + round.penaltyCards);
+                        System.out.println("You should buy other players beer! :)");
                     }
                 }
             }
