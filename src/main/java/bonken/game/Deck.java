@@ -1,4 +1,4 @@
-package game;
+package bonken.game;
 
 import java.util.ArrayList;
 import java.util.Collections;

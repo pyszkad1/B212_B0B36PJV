@@ -1,4 +1,4 @@
-package game;
+package bonken.game;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,7 +25,8 @@ public class PlayerBot implements PlayerInterface {
         playableCards = cardHand.getPlayableCards(card);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
-        int playedCard = 0;
+        Random random = new Random();
+        int playedCard = random.nextInt(playableCards.size());
         Card tmp = playableCards.get(playedCard);
         this.cardHand.hand.remove(tmp);
         return tmp;

@@ -1,4 +1,4 @@
-package game;
+package bonken.game;
 
 public class MiniGameTrumps {
     int trumps;

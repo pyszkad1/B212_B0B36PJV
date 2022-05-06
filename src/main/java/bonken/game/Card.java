@@ -1,4 +1,4 @@
-package game;
+package bonken.game;
 
 public class Card {
     private int suit;
