@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 public interface PlayerInterface {
     public Card play(Card card);
     public boolean isHisTurn();
@@ -8,5 +10,6 @@ public interface PlayerInterface {
     public void setScore(int score);
     public void setCardHand(CardHand cardHand);
     public int getId();
+    public Integer chooseMinigame(ArrayList<Integer> minigames);
 
 }

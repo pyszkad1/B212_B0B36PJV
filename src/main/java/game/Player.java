@@ -10,10 +10,12 @@ public class Player implements PlayerInterface {
     ArrayList<Card> playableCards;
     int score;
     boolean hisTurn;
+    boolean chosenPositive;
 
     public Player(String username, int id) {
         this.username = username;
         this.id = id;
+        chosenPositive = false;
     }
 
     @Override
@@ -44,6 +46,30 @@ public class Player implements PlayerInterface {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public Integer chooseMinigame(ArrayList<Integer> minigames) {
+        ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
+        if (chosenPositive){
+            for (Integer minigame: minigames) {
+                if (minigame < 7){
+                    possibleMinigameChoices.add(minigame);
+                }
+            }
+        }
+        Scanner scanner = new Scanner(System.in);
+        if (chosenPositive) {
+            System.out.println("You have already played your positive minigame, so you can only choose negative");
+        }
+        System.out.println("Choose from: " + possibleMinigameChoices);
+        Integer chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
+        while (!possibleMinigameChoices.contains(chosenMiniGameNum)) {
+            System.out.println("choose eligible minigame from " + minigames + " pls");
+            chosenMiniGameNum = scanner.nextInt();
+        }
+        if (chosenMiniGameNum > 6) chosenPositive = true;
+        return chosenMiniGameNum;
     }
 
     @Override

@@ -47,15 +47,8 @@ public class Round {
 
     public void chooseGame() {
         getStartingPlayer();
-        Scanner scanner = new Scanner(System.in);
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
-        System.out.println("Choose from: " + minigames);
-
-        chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
-        while (!minigames.contains(chosenMiniGameNum)) {
-            System.out.println("choose eligible minigame from " + minigames + " pls");
-            chosenMiniGameNum = scanner.nextInt();
-        }
+        chosenMiniGameNum = players[startingPlayer].chooseMinigame(minigames);
         minigames.remove(chosenMiniGameNum);
         chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
 

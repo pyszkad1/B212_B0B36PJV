@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class PlayerBot implements PlayerInterface {
@@ -8,13 +9,14 @@ public class PlayerBot implements PlayerInterface {
     final int id;
     CardHand cardHand;
     ArrayList<Card> playableCards;
-    int score;
-    boolean hisTurn;
+    private int score;
+    private boolean hisTurn;
+    boolean chosenPositive;
 
     public PlayerBot(String username, int id) {
-        super();
         this.username = username;
         this.id = id;
+        chosenPositive = false;
     }
 
     @Override
@@ -33,6 +35,25 @@ public class PlayerBot implements PlayerInterface {
     public int getId() {
         return id;
     }
+
+    @Override
+    public Integer chooseMinigame(ArrayList<Integer> minigames) {
+        ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
+        if (chosenPositive){
+            for (Integer minigame: minigames) {
+                if (minigame < 7){
+                    possibleMinigameChoices.add(minigame);
+                }
+            }
+        }
+        int num = possibleMinigameChoices.get(possibleMinigameChoices.size() - 1);
+        Random random = new Random();
+        Integer chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
+        System.out.println("Bot chose minigame " + chosenMiniGameNum);
+        if (chosenMiniGameNum > 6) chosenPositive = true;
+        return chosenMiniGameNum;
+    }
+
 
     @Override
     public boolean isHisTurn() {
