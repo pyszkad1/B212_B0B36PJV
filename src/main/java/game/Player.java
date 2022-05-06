@@ -51,13 +51,16 @@ public class Player implements PlayerInterface {
     @Override
     public Integer chooseMinigame(ArrayList<Integer> minigames) {
         ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
-        if (chosenPositive){
-            for (Integer minigame: minigames) {
-                if (minigame < 7){
+        for (Integer minigame : minigames) {
+            if (chosenPositive) {
+                if (minigame < 7) {
                     possibleMinigameChoices.add(minigame);
                 }
+            } else {
+                possibleMinigameChoices.add(minigame);
             }
         }
+
         Scanner scanner = new Scanner(System.in);
         if (chosenPositive) {
             System.out.println("You have already played your positive minigame, so you can only choose negative");
@@ -80,7 +83,7 @@ public class Player implements PlayerInterface {
         System.out.println("choosing from " + (playableCards.size()) + " cards");
         Scanner scanner = new Scanner(System.in);
         int playedCard = scanner.nextInt();
-        while (playedCard > playableCards.size()-1 || playedCard < 0) {
+        while (playedCard > playableCards.size() - 1 || playedCard < 0) {
             System.out.println("not a card, please choose again");
             playedCard = scanner.nextInt();
         }

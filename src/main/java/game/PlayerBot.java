@@ -39,13 +39,16 @@ public class PlayerBot implements PlayerInterface {
     @Override
     public Integer chooseMinigame(ArrayList<Integer> minigames) {
         ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
-        if (chosenPositive){
-            for (Integer minigame: minigames) {
-                if (minigame < 7){
+        for (Integer minigame : minigames) {
+            if (chosenPositive) {
+                if (minigame < 7) {
                     possibleMinigameChoices.add(minigame);
                 }
+            } else {
+                possibleMinigameChoices.add(minigame);
             }
         }
+        System.out.println("Bot choosing from: " + possibleMinigameChoices);
         int num = possibleMinigameChoices.get(possibleMinigameChoices.size() - 1);
         Random random = new Random();
         Integer chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
