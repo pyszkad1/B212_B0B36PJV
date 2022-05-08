@@ -1,0 +1,10 @@
+.label {
+    -fx-text-fill: #635255;
+}
+
+.button {
+    -fx-font-family: Fleftex_M;
+    -fx-background-color: #CE7B91;
+    -fx-text-fill: #635255;
+    -fx-padding: 30 30 30 30;
+}
