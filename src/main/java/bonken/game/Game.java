@@ -52,7 +52,7 @@ public class Game {
         deck.shuffle();
         round = new Round(this, deck, minigames, players);
         System.out.println("--------------------------------------------------------------------------------------------");
-        round.playRound();
+        //round.playRound();
         roundCnt++;
         if (roundCnt == 11) {
             gameEnded = true;

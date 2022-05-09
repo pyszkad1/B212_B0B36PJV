@@ -17,6 +17,10 @@ public class CardHand {
         hand.sort(Comparator.comparing(Card::getSuit));
     }
 
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
     public ArrayList<Card> getPlayableCards(Card firstCard) {
         ArrayList<Card> playableCards;
         if (firstCard.getSuit() == -1) {

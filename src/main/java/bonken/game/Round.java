@@ -23,6 +23,10 @@ public class Round {
         createCardHands();
     }
 
+    public void setMinigameNum(int num) {
+        chosenMiniGameNum = Integer.valueOf(num);
+    }
+
     private void createCardHands() {
         ArrayList<ArrayList<Card>> hands = deck.deal();
         System.out.println(hands.toString());
@@ -48,7 +52,7 @@ public class Round {
     public void chooseGame() {
         getStartingPlayer();
         System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
-        chosenMiniGameNum = players[startingPlayer].chooseMinigame(minigames);
+        //chosenMiniGameNum = players[startingPlayer].chooseMinigame(minigames);
         if (chosenMiniGameNum == -1) {
             getNextPlayer();
             chooseGame();

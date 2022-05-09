@@ -43,6 +43,10 @@ public class Player implements PlayerInterface {
         this.cardHand = cardHand;
     }
 
+    public CardHand getCardHand() {
+        return cardHand;
+    }
+
     @Override
     public int getId() {
         return id;

@@ -9,6 +9,7 @@ public interface PlayerInterface {
     public int getScore();
     public void setScore(int score);
     public void setCardHand(CardHand cardHand);
+    public CardHand getCardHand();
     public int getId();
     public Integer chooseMinigame(ArrayList<Integer> minigames);
 

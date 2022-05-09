@@ -1,6 +1,8 @@
 package bonken.gui;
 
 import bonken.game.Game;
+import bonken.game.Player;
+import bonken.game.PlayerInterface;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -17,8 +21,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class OfflineGameView {
-    Game game;
     String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
+
 
     public void initGameView(Game game, Stage stage) {
         BorderPane borderPane = new BorderPane();
@@ -36,7 +40,10 @@ public class OfflineGameView {
             @Override
             public void handle(ActionEvent e) {
                 if ((textField.getText() != null && !textField.getText().isEmpty())) {
+                    System.out.println("filling players");
                     game.fillPlayersArrayOffline(textField.getText());
+                    game.startGameOffline();
+                    miniGameChoiceView(stage, game, game.getMinigames());
 
                 } else {
                     label.setText("You have not left a comment.");
@@ -50,24 +57,24 @@ public class OfflineGameView {
         stage.show();
     }
 
-    public int miniGameChoiceView(Stage stage, ArrayList<Integer> minigames) {
-        int ret;
+    public void miniGameChoiceView(Stage stage, Game game, ArrayList<Integer> minigames) {
+
+        game.startRoundOffline();
 
         BorderPane borderPane = new BorderPane();
-        game.startRoundOffline();
 
         HBox minigameBox = new HBox();
         Rectangle space = new Rectangle(20, 20);
         space.setFill(Color.TRANSPARENT);
 
         for (int i = 0; i < 12; i++) {
+            //TODO
             String str = String.valueOf(i);
             Button button = new Button(str);
-            button.setOnAction(event -> );
+            int finalI = i;
+            button.setOnAction(event -> fire(finalI, game, stage));
             minigameBox.getChildren().add(button);
-            if (i != 11) {
-                minigameBox.getChildren().add(space);
-            }
+
         }
 
         minigameBox.setAlignment(Pos.CENTER);
@@ -80,7 +87,40 @@ public class OfflineGameView {
         stage.setScene(scene);
         stage.show();
 
-        return ret;
+    }
+
+    public void fire(int i, Game game, Stage stage) {
+        game.round.setMinigameNum(i);
+        game.round.chooseGame();
+        roundView(stage, game);
+    }
+
+    public void roundView(Stage stage, Game game){
+        System.out.println("Starting Game!! --------- :)");
+
+        BorderPane borderPane = new BorderPane();
+        HBox cardBox = new HBox();
+        PlayerInterface player = game.getPlayers()[0];
+
+        for (int i = 0; i < 13; i++) {
+            System.out.println("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage());
+            String image = this.getClass().getResource("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage()).toExternalForm();
+            ImageView imageView = new ImageView(new Image(image));
+            cardBox.getChildren().add(imageView);
+        }
+
+        cardBox.setAlignment(Pos.BOTTOM_CENTER);
+
+        borderPane.setCenter(cardBox);
+
+
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
+
+
+        game.round.playRound();
     }
 
     public void render() {

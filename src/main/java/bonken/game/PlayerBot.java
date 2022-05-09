@@ -89,4 +89,9 @@ public class PlayerBot implements PlayerInterface {
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }
+
+    @Override
+    public CardHand getCardHand() {
+        return cardHand;
+    }
 }
