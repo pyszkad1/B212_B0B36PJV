@@ -44,13 +44,12 @@ public class MenuView {
         //menu.setTranslateX(400);
         //menu.setTranslateY(400);
 
-        Scene scene = new Scene(menu, 1920, 1080);
+        Scene scene = new Scene(menu);
 
         startBtn.setOnAction(event -> initStartGameMenu(stage));
         exitBtn.setOnAction(event -> stage.close());
 
         scene.getStylesheets().add(css);
-        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -80,13 +79,12 @@ public class MenuView {
         borderPane.setTop(returnBox);
 
 
-        Scene scene = new Scene(borderPane, 1920, 1080);
+        Scene scene = new Scene(borderPane);
 
         Game game = new Game(0);                    // TODO config
         vsBots.setOnAction(event -> game.startGame());
 
         scene.getStylesheets().add(css);
-        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 

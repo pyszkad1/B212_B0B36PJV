@@ -10,6 +10,7 @@ public class Game {
     ArrayList<Integer> minigames = new ArrayList<>(12);
     ScoreBoard scoreBoard;
     int numOfPlayers;
+    boolean gameEnded;
 
     public Game(int numOfPlayers) {
         for (int i = 0; i < 12; i++) {
@@ -31,6 +32,8 @@ public class Game {
             round.playRound();
             System.out.println(scoreBoard.toString());
         }
+
+        gameEnded = true;
         System.out.println("End of game.");
     }
 

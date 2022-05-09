@@ -9,6 +9,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setMaximized(true);
+        stage.setResizable(false);
         MenuView menu = new MenuView();
         menu.initMenu(stage);
     }

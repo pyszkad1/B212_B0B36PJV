@@ -1,5 +1,6 @@
 .root {
     -fx-background-color: #006400;
+    -fx-font-family: "Courier New";
 }
 
 .label {
@@ -22,7 +23,7 @@
 }
 
 .button:pressed {
-    -fx-background-color: RED;
+    -fx-background-color: grey;
     -fx-border-color: BLACK;
     -fx-font-weight: BOLD;
     -fx-border-width: 5 5 5 5;
