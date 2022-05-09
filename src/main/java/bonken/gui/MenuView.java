@@ -1,5 +1,6 @@
 package bonken.gui;
 
+import bonken.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,6 +29,9 @@ public class MenuView {
         VBox menu = new VBox(name, menuButtons);
         menu.setPadding(new Insets(10));
         menu.setAlignment(Pos.CENTER);
+
+        //menu.setTranslateX(400);
+        //menu.setTranslateY(400);
 
         Scene scene = new Scene(menu);
 
@@ -62,10 +66,12 @@ public class MenuView {
 
         borderPane.setCenter(menu);
         borderPane.setTop(returnBox);
-        
+
+
         Scene scene = new Scene(borderPane);
 
-        vsBots.setOnAction(event -> offlineGameView.initGameView(stage));
+        // TODO config
+        vsBots.setOnAction(event -> new Controller(stage));
 
         scene.getStylesheets().add(css);
         stage.setScene(scene);

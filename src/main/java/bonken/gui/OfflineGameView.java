@@ -14,12 +14,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class OfflineGameView {
     Game game;
-    String css = this.getClass().getResource("/bonken/gui/game_style.css").toExternalForm();
+    String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
 
-    public void initGameView(Stage stage) {
-
+    public void initGameView(Game game, Stage stage) {
         BorderPane borderPane = new BorderPane();
         Label label1 = new Label("Name:");
         TextField textField = new TextField();
@@ -30,16 +31,12 @@ public class OfflineGameView {
         hb.setSpacing(10);
         borderPane.setCenter(hb);
 
-        submitButton.setOnAction(event -> miniGameChoiceView(stage));
-        /*
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
                 if ((textField.getText() != null && !textField.getText().isEmpty())) {
                     game.fillPlayersArrayOffline(textField.getText());
-                    game.startGameOffline();
-                    miniGameChoiceView(stage, 0);
 
                 } else {
                     label.setText("You have not left a comment.");
@@ -47,20 +44,17 @@ public class OfflineGameView {
             }
         });
 
-         */
-
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void miniGameChoiceView(Stage stage) {
-
-        stage.setMaximized(true);
-        stage.setResizable(false);
+    public int miniGameChoiceView(Stage stage, ArrayList<Integer> minigames) {
+        int ret;
 
         BorderPane borderPane = new BorderPane();
+        game.startRoundOffline();
 
         HBox minigameBox = new HBox();
         Rectangle space = new Rectangle(20, 20);
@@ -69,20 +63,27 @@ public class OfflineGameView {
         for (int i = 0; i < 12; i++) {
             String str = String.valueOf(i);
             Button button = new Button(str);
+            button.setOnAction(event -> );
             minigameBox.getChildren().add(button);
             if (i != 11) {
                 minigameBox.getChildren().add(space);
             }
         }
+
         minigameBox.setAlignment(Pos.CENTER);
 
         borderPane.setCenter(minigameBox);
+
 
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
 
+        return ret;
     }
 
+    public void render() {
+
+    }
 }
