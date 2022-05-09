@@ -1,9 +1,6 @@
 package bonken.gui;
 
-import bonken.game.Card;
-import bonken.game.Game;
-import bonken.game.Player;
-import bonken.game.PlayerInterface;
+import bonken.game.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -13,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -35,6 +33,21 @@ public class OfflineGameView {
         hb.getChildren().addAll(label1, textField, submitButton, label);
         hb.setSpacing(10);
         borderPane.setCenter(hb);
+
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                if ((textField.getText() != null && !textField.getText().isEmpty())) {
+                    System.out.println("filling players");
+                    game.fillPlayersArrayOffline(textField.getText());
+                    game.startGameOffline();
+                    miniGameChoiceView(stage, game, game.getMinigames());
+
+                } else {
+                    label.setText("You have not left a comment.");
+                }
+
+            }
+        });
 
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -124,7 +137,19 @@ public class OfflineGameView {
         game.round.playRound();
     }
 
-    public void TrickView() {
+    public void TrickView(Stage stage, Game game) {
+        BorderPane borderPane = new BorderPane();
+        HBox cardBox = new HBox();
+        PlayerInterface player = game.getPlayers()[0];
+
+        ArrayList<Card> playableCards;
+
+        for (int i = 0; i < player.getCardHand().getHand().size(); i++) {
+            String image = this.getClass().getResource("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage()).toExternalForm();
+            ImageView imageView = new ImageView(new Image(image));
+            cardBox.getChildren().add(imageView);
+        }
+
 
     }
 }
