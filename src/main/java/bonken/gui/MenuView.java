@@ -55,6 +55,8 @@ public class MenuView {
     }
 
     public void initStartGameMenu(Stage stage) {
+        stage.setResizable(false);
+        stage.setMaximized(true);
 
         BorderPane borderPane = new BorderPane();
 
