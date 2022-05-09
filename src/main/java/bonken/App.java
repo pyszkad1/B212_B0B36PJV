@@ -1,7 +1,7 @@
 package bonken;
 
 
-import bonken.gui.Menu;
+import bonken.gui.MenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,7 +9,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        Menu menu = new Menu();
+        MenuView menu = new MenuView();
         menu.initMenu(stage);
     }
 

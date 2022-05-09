@@ -1,10 +1,27 @@
+.root {
+    -fx-background-color: #006400;
+}
+
 .label {
-    -fx-text-fill: #635255;
+    -fx-text-fill: WHITE;
+    -fx-stroke: BLACK;
+    -fx-stroke-width: 2;
+    -fx-font-size: 50px;
+}
+
+.text {
+    -fx-text-fill: WHITE;
+    -fx-font-size: 50px;
 }
 
 .button {
-    -fx-font-family: Fleftex_M;
-    -fx-background-color: #CE7B91;
-    -fx-text-fill: #635255;
+    -fx-background-color: WHITE;
+    -fx-border-color: BLACK;
+    -fx-font-weight: BOLD;
+    -fx-border-width: 5 5 5 5;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 32px;
     -fx-padding: 30 30 30 30;
+    -fx-pref-height: 28px;
+    -fx-pref-width: 400px;
 }
