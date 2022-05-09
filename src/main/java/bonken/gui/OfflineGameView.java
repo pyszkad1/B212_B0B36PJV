@@ -22,14 +22,14 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class OfflineGameView {
-    String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
+    String css = this.getClass().getResource("/bonken/gui/game_style.css").toExternalForm();
 
 
     public void initGameView(Game game, Stage stage) {
         BorderPane borderPane = new BorderPane();
         Label label1 = new Label("Name:");
         TextField textField = new TextField();
-        Button submitButton = new Button("Submit");
+        Button submitButton = new Button("ok");
         Label label = new Label();
         HBox hb = new HBox();
         hb.getChildren().addAll(label1, textField, submitButton, label);
@@ -109,6 +109,7 @@ public class OfflineGameView {
             cardBox.getChildren().add(imageView);
         }
 
+        cardBox.setSpacing(5);
         cardBox.setAlignment(Pos.BOTTOM_CENTER);
 
         borderPane.setCenter(cardBox);
