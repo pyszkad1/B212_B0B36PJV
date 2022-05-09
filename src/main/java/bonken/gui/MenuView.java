@@ -22,16 +22,9 @@ public class MenuView {
 
     public void initMenu(Stage stage) {
 
-        Font nameFont = Font.loadFont(getClass().getResourceAsStream("/bonken/gui/fonts/8-bit_Arcade_Out.ttf"), 300);
-        Font btnFont = Font.loadFont(getClass().getResourceAsStream("/bonken/gui/fonts/Fleftex_M.ttf"), 30);
-
         Label name = new Label("BONKEN");
         Button startBtn = new Button("START");
         Button exitBtn = new Button("EXIT");
-
-        //name.setFont(nameFont);
-        //startBtn.setFont(btnFont);
-        //exitBtn.setFont(btnFont);
 
         VBox menuButtons = new VBox(20, startBtn, exitBtn);
         menuButtons.setPadding(new Insets(5));
@@ -55,9 +48,6 @@ public class MenuView {
     }
 
     public void initStartGameMenu(Stage stage) {
-        stage.setResizable(false);
-        stage.setMaximized(true);
-
         BorderPane borderPane = new BorderPane();
 
         Button returnBtn = new Button("RETURN");
