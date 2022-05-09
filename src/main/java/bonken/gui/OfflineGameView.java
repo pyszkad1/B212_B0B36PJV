@@ -32,7 +32,7 @@ public class OfflineGameView {
             @Override
             public void handle(ActionEvent e) {
                 if ((textField.getText() != null && !textField.getText().isEmpty())) {
-                    game.getPlayersOffline(textField.getText());
+                    game.fillPlayersArrayOffline(textField.getText());
                     miniGameChoiceView(stage, 0);
 
                 } else {

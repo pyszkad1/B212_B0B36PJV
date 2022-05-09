@@ -18,7 +18,7 @@ public class Game {
             minigames.add(Integer.valueOf(i));
         }
         this.numOfPlayers = numOfPlayers;
-        //getPlayers(); //need to use from gui?
+        //fillPlayersArray(); //need to use from gui?
 
 
         scoreBoard = new ScoreBoard(players);
@@ -55,7 +55,7 @@ public class Game {
     }
 
 
-    public void getPlayers() {
+    public void fillPlayersArray () {
         System.out.println("Enter names of four players:");
         System.out.println("num of players is " + numOfPlayers );
         players = new PlayerInterface[4];
@@ -81,7 +81,11 @@ public class Game {
         return minigames;
     }
 
-    public void getPlayersOffline(String user) {
+    public PlayerInterface[] getPlayers() {
+        return players;
+    }
+
+    public void fillPlayersArrayOffline(String user) {
         System.out.println("name of player is " + user);
         players = new PlayerInterface[4];
         int startingPlayer = 0;
