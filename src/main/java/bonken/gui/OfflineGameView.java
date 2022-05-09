@@ -60,8 +60,15 @@ public class OfflineGameView {
 
         HBox mgHbox = new HBox();
         for (int i = 0; i < game.getMinigames().size(); i++) {
-
+            Button button = new Button(game.getMinigames().get(i).toString());
+            mgHbox.getChildren().add(button);
         }
+        borderPane.setCenter(mgHbox);
+
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
 
         roundNum++;
         miniGameChoiceView(stage, roundNum);

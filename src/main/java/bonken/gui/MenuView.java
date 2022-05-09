@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class MenuView {
 
     String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
-    OfflineGameView gameView;
+    OfflineGameView offlineGameView;
 
     public void initMenu(Stage stage) {
 
@@ -43,7 +43,7 @@ public class MenuView {
     }
 
     public void initStartGameMenu(Stage stage) {
-        gameView = new OfflineGameView();
+        offlineGameView = new OfflineGameView();
         BorderPane borderPane = new BorderPane();
 
         Button returnBtn = new Button("RETURN");
@@ -70,7 +70,7 @@ public class MenuView {
         Scene scene = new Scene(borderPane);
 
         // TODO config
-        vsBots.setOnAction(event -> gameView.initGameView(stage));
+        vsBots.setOnAction(event -> offlineGameView.initGameView(stage));
 
         scene.getStylesheets().add(css);
         stage.setScene(scene);

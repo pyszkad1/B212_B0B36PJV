@@ -42,10 +42,10 @@ public class Game {
         deck = new Deck();
         deck.shuffle();
 
-        System.out.println(scoreBoard.toString());
+        //System.out.println(scoreBoard.toString());
 
-        gameEnded = true;
-        System.out.println("End of Game");
+        //gameEnded = true;
+        //System.out.println("End of Game");
     }
 
     public void startRoundOffline() {
