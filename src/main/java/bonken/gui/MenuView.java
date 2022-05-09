@@ -29,9 +29,6 @@ public class MenuView {
         menu.setPadding(new Insets(10));
         menu.setAlignment(Pos.CENTER);
 
-        //menu.setTranslateX(400);
-        //menu.setTranslateY(400);
-
         Scene scene = new Scene(menu);
 
         startBtn.setOnAction(event -> initStartGameMenu(stage));
@@ -65,11 +62,9 @@ public class MenuView {
 
         borderPane.setCenter(menu);
         borderPane.setTop(returnBox);
-
-
+        
         Scene scene = new Scene(borderPane);
 
-        // TODO config
         vsBots.setOnAction(event -> offlineGameView.initGameView(stage));
 
         scene.getStylesheets().add(css);

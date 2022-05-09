@@ -10,8 +10,9 @@ public class Game {
     ArrayList<Integer> minigames = new ArrayList<>(12);
     ScoreBoard scoreBoard;
     int numOfPlayers;
-    boolean gameEnded;
-    Round round;
+    public boolean gameEnded;
+    int roundCnt = 0;
+    public Round round;
 
     public Game(int numOfPlayers) {
         for (int i = 0; i < 12; i++) {
@@ -40,8 +41,7 @@ public class Game {
 
     public void startGameOffline() {
         deck = new Deck();
-        deck.shuffle();
-
+        System.out.println("Deck created.");
         //System.out.println(scoreBoard.toString());
 
         //gameEnded = true;
@@ -49,11 +49,15 @@ public class Game {
     }
 
     public void startRoundOffline() {
+        deck.shuffle();
         round = new Round(this, deck, minigames, players);
         System.out.println("--------------------------------------------------------------------------------------------");
         round.playRound();
+        roundCnt++;
+        if (roundCnt == 11) {
+            gameEnded = true;
+        }
     }
-
 
     public void fillPlayersArray () {
         System.out.println("Enter names of four players:");

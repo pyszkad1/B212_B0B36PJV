@@ -17,9 +17,9 @@
     -fx-border-width: 5 5 5 5;
     -fx-text-fill: BLACK;
     -fx-font-size: 20px;
-    -fx-padding: 30 30 30 30;
-    -fx-pref-height: 28px;
-    -fx-pref-width: 400px;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 60px;
 }
 
 .button:pressed {
@@ -28,8 +28,11 @@
     -fx-font-weight: BOLD;
     -fx-border-width: 5 5 5 5;
     -fx-text-fill: BLACK;
+}
+
+.text-field {
+    -fx-background-color: WHITE;
+    -fx-border-color: BLACK;
+    -fx-border-width: 5;
     -fx-font-size: 20px;
-    -fx-padding: 30 30 30 30;
-    -fx-pref-height: 28px;
-    -fx-pref-width: 400px;
 }
