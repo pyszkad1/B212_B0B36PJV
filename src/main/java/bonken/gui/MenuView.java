@@ -1,25 +1,19 @@
 package bonken.gui;
 
-import bonken.game.Game;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MenuView {
 
     String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
-    GameView gameView;
+    OfflineGameView gameView;
 
     public void initMenu(Stage stage) {
 
@@ -49,7 +43,7 @@ public class MenuView {
     }
 
     public void initStartGameMenu(Stage stage) {
-        gameView = new GameView();
+        gameView = new OfflineGameView();
         BorderPane borderPane = new BorderPane();
 
         Button returnBtn = new Button("RETURN");

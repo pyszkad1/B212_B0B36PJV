@@ -11,6 +11,7 @@ public class Game {
     ScoreBoard scoreBoard;
     int numOfPlayers;
     boolean gameEnded;
+    Round round;
 
     public Game(int numOfPlayers) {
         for (int i = 0; i < 12; i++) {
@@ -48,10 +49,11 @@ public class Game {
     }
 
     public void startRoundOffline() {
-        Round round = new Round(this, deck, minigames, players);
+        round = new Round(this, deck, minigames, players);
         System.out.println("--------------------------------------------------------------------------------------------");
         round.playRound();
     }
+
 
     public void getPlayers() {
         System.out.println("Enter names of four players:");
@@ -73,6 +75,10 @@ public class Game {
                 players[i].setHisTurn(true);
             }
         }
+    }
+
+    public ArrayList<Integer> getMinigames() {
+        return minigames;
     }
 
     public void getPlayersOffline(String user) {

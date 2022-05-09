@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class GameView {
+public class OfflineGameView {
     Game game;
     String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
 
@@ -58,8 +58,13 @@ public class GameView {
         BorderPane borderPane = new BorderPane();
         game.startRoundOffline();
 
+        HBox mgHbox = new HBox();
+        for (int i = 0; i < game.getMinigames().size(); i++) {
 
+        }
 
+        roundNum++;
+        miniGameChoiceView(stage, roundNum);
 
     }
 
