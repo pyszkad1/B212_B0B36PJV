@@ -1,13 +1,15 @@
 package bonken.gui;
 
 import bonken.game.Game;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -24,8 +26,8 @@ public class MenuView {
         Font btnFont = Font.loadFont(getClass().getResourceAsStream("/bonken/gui/fonts/Fleftex_M.ttf"), 30);
 
         Label name = new Label("BONKEN");
-        Button startBtn = new Button("start");
-        Button exitBtn = new Button("exit");
+        Button startBtn = new Button("START");
+        Button exitBtn = new Button("EXIT");
 
         //name.setFont(nameFont);
         //startBtn.setFont(btnFont);
@@ -44,7 +46,7 @@ public class MenuView {
 
         Scene scene = new Scene(menu, 1920, 1080);
 
-        startBtn.setOnAction(event -> initStartGame(stage));
+        startBtn.setOnAction(event -> initStartGameMenu(stage));
         exitBtn.setOnAction(event -> stage.close());
 
         scene.getStylesheets().add(css);
@@ -53,24 +55,35 @@ public class MenuView {
         stage.show();
     }
 
-    public void initStartGame(Stage stage) {
+    public void initStartGameMenu(Stage stage) {
+
+        BorderPane borderPane = new BorderPane();
+
+        Button returnBtn = new Button("RETURN");
+        returnBtn.setOnAction(event -> initMenu(stage));
+        VBox returnBox = new VBox(returnBtn);
+        returnBox.setAlignment(Pos.TOP_LEFT);
 
         Label text = new Label("Play VS");
-
+        Rectangle hSpace = new Rectangle(28, 28);
         Button vsBots = new Button("BOTS");
-        Rectangle rectangle = new Rectangle(28, 28);
-        rectangle.setFill(Color.TRANSPARENT);
+        Rectangle vSpace = new Rectangle(28, 28);
+        hSpace.setFill(Color.TRANSPARENT);
+        vSpace.setFill(Color.TRANSPARENT);
         Button vsPlayers = new Button("PLAYERS");
-        HBox hbox = new HBox(vsBots, rectangle, vsPlayers);
-        VBox menu = new VBox(text, hbox);
+        HBox hbox = new HBox(vsBots, vSpace, vsPlayers);
+        VBox menu = new VBox(text, hSpace, hbox);
         hbox.setAlignment(Pos.CENTER);
         menu.setAlignment(Pos.CENTER);
 
+        borderPane.setCenter(menu);
+        borderPane.setTop(returnBox);
 
-        Scene scene = new Scene(menu, 1920, 1080);
 
-        //vsBots.setOnAction(event -> game.startGame());
+        Scene scene = new Scene(borderPane, 1920, 1080);
 
+        Game game = new Game(0);                    // TODO config
+        vsBots.setOnAction(event -> game.startGame());
 
         scene.getStylesheets().add(css);
         stage.setResizable(false);
