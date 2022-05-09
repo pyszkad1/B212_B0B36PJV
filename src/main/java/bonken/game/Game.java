@@ -17,7 +17,7 @@ public class Game {
             minigames.add(Integer.valueOf(i));
         }
         this.numOfPlayers = numOfPlayers;
-        getPlayers();
+        //getPlayers(); //need to use from gui?
 
 
         scoreBoard = new ScoreBoard(players);
@@ -34,7 +34,23 @@ public class Game {
         }
 
         gameEnded = true;
-        System.out.println("End of game.");
+        System.out.println("End of Game");
+    }
+
+    public void startGameOffline() {
+        deck = new Deck();
+        deck.shuffle();
+
+        System.out.println(scoreBoard.toString());
+
+        gameEnded = true;
+        System.out.println("End of Game");
+    }
+
+    public void startRoundOffline() {
+        Round round = new Round(this, deck, minigames, players);
+        System.out.println("--------------------------------------------------------------------------------------------");
+        round.playRound();
     }
 
     public void getPlayers() {
@@ -57,6 +73,24 @@ public class Game {
                 players[i].setHisTurn(true);
             }
         }
+    }
 
+    public void getPlayersOffline(String user) {
+        System.out.println("name of player is " + user);
+        players = new PlayerInterface[4];
+        int startingPlayer = 0;
+        for (int i = 0; i < numOfPlayers; i++) {
+            players[i] = new Player(user, i);
+            if (i == startingPlayer) {
+                players[i].setHisTurn(true);
+            }
+        }
+        //TODO one for loop
+        for (int i = numOfPlayers; i < 4; i++) {
+            players[i] = new PlayerBot("Bot" + i, i);
+            if (i == startingPlayer) {
+                players[i].setHisTurn(true);
+            }
+        }
     }
 }
