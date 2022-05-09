@@ -1,5 +1,6 @@
 package bonken.gui;
 
+import bonken.game.Card;
 import bonken.game.Game;
 import bonken.game.Player;
 import bonken.game.PlayerInterface;
@@ -103,7 +104,6 @@ public class OfflineGameView {
         PlayerInterface player = game.getPlayers()[0];
 
         for (int i = 0; i < 13; i++) {
-            System.out.println("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage());
             String image = this.getClass().getResource("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage()).toExternalForm();
             ImageView imageView = new ImageView(new Image(image));
             cardBox.getChildren().add(imageView);
@@ -123,7 +123,7 @@ public class OfflineGameView {
         game.round.playRound();
     }
 
-    public void render() {
+    public void TrickView() {
 
     }
 }
