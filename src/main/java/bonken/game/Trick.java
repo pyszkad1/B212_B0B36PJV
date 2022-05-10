@@ -27,7 +27,7 @@ public class Trick {
         Card[] playedCards = new Card[4];
         Card firstPlayedCard = new Card(2, -1);
         for (int i = 0; i < 4; i++) {
-            playedCards[i] = game.players[(firstPlayer + i) % 4].play(firstPlayedCard);         // TODO check if ok
+            playedCards[i] = game.players[(firstPlayer + i) % 4].play(firstPlayedCard);         // TODO ask each player for played card
             if (i == 0) {
                 firstPlayedCard = playedCards[i];
             }

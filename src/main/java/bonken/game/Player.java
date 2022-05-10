@@ -11,6 +11,7 @@ public class Player implements PlayerInterface {
     private int score;
     private boolean hisTurn;
     private boolean chosenPositive;
+    Card playedCard;
 
     public Player(String username, int id) {
         this.username = username;
@@ -87,7 +88,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public Card play(Card card) {
-        //TODO
+        //TODO just insert played card from gui, dont ask for it
         playableCards = cardHand.getPlayableCards(card);
         System.out.println(playableCards);
         System.out.println("choosing from " + (playableCards.size()) + " cards");
@@ -102,4 +103,7 @@ public class Player implements PlayerInterface {
         return tmp;
     }
 
+    public void setPlayedCard(Card playedCard) {
+        this.playedCard = playedCard;
+    }
 }

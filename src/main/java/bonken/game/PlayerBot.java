@@ -12,6 +12,7 @@ public class PlayerBot implements PlayerInterface {
     private int score;
     private boolean hisTurn;
     private boolean chosenPositive;
+    Card playedCard;
 
     public PlayerBot(String username, int id) {
         this.username = username;
@@ -93,5 +94,10 @@ public class PlayerBot implements PlayerInterface {
     @Override
     public CardHand getCardHand() {
         return cardHand;
+    }
+
+    @Override
+    public void setPlayedCard(Card card) {
+        playedCard = card;
     }
 }

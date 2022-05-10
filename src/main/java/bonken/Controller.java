@@ -1,5 +1,6 @@
 package bonken;
 
+import bonken.game.Card;
 import bonken.game.Game;
 import bonken.gui.OfflineGameView;
 import javafx.stage.Stage;
@@ -17,7 +18,7 @@ public class Controller {
     public void startGame() {
         game = new Game(1);
         offlineGameView = new OfflineGameView();
-        offlineGameView.initGameView(game ,stage);
+        offlineGameView.initGameView(game ,stage, this);
         //game.startGameOffline();
         //game.startRoundOffline();
         //game.round.chooseGame();
@@ -27,6 +28,11 @@ public class Controller {
     }
 
     public void playRound() {
+        Card card = new Card(2, 0);
+        //for (int i = 0; i < 13; i++) {
+            offlineGameView.TrickView(stage, game, card);
+        System.out.println("I am here");
+        //}
 
 
     }

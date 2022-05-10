@@ -1,11 +1,13 @@
 package bonken.gui;
 
+import bonken.Controller;
 import bonken.game.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -21,9 +23,11 @@ import java.util.ArrayList;
 
 public class OfflineGameView {
     String css = this.getClass().getResource("/bonken/gui/game_style.css").toExternalForm();
+    Controller controller;
 
 
-    public void initGameView(Game game, Stage stage) {
+    public void initGameView(Game game, Stage stage, Controller controller) {
+        this.controller = controller;
         BorderPane borderPane = new BorderPane();
         Label label1 = new Label("Name:");
         TextField textField = new TextField();
@@ -114,12 +118,14 @@ public class OfflineGameView {
 
         BorderPane borderPane = new BorderPane();
         HBox cardBox = new HBox();
+
         PlayerInterface player = game.getPlayers()[0];
 
         for (int i = 0; i < 13; i++) {
             String image = this.getClass().getResource("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage()).toExternalForm();
             ImageView imageView = new ImageView(new Image(image));
             cardBox.getChildren().add(imageView);
+
         }
 
         cardBox.setSpacing(5);
@@ -127,6 +133,7 @@ public class OfflineGameView {
 
         borderPane.setCenter(cardBox);
 
+        //dát border pane do VBOXu?
 
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add(css);
@@ -134,22 +141,37 @@ public class OfflineGameView {
         stage.show();
 
 
-        game.round.playRound();
+        controller.playRound();
     }
 
-    public void TrickView(Stage stage, Game game) {
+    public void TrickView(Stage stage, Game game, Card card) {
         BorderPane borderPane = new BorderPane();
         HBox cardBox = new HBox();
         PlayerInterface player = game.getPlayers()[0];
-
-        ArrayList<Card> playableCards;
-
+        ArrayList<Card> playableCards = player.getCardHand().getPlayableCards(card);
         for (int i = 0; i < player.getCardHand().getHand().size(); i++) {
             String image = this.getClass().getResource("/bonken/gui/cards/" + player.getCardHand().getHand().get(i).getImage()).toExternalForm();
             ImageView imageView = new ImageView(new Image(image));
+            int finalI = i;
+            if (playableCards.contains(player.getCardHand().getHand().get(i))){
+                imageView.setOnMouseClicked(event -> pressedCard(player, finalI));
+            }
             cardBox.getChildren().add(imageView);
         }
 
+        cardBox.setSpacing(5);
+        cardBox.setAlignment(Pos.BOTTOM_CENTER);
+
+        borderPane.setCenter(cardBox);
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void pressedCard(PlayerInterface player, int i) {
+        player.setPlayedCard(player.getCardHand().getHand().get(i));
+        System.out.println("played card is " + player.getCardHand().getHand().get(i));
 
     }
 }
