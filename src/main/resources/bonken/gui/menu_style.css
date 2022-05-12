@@ -1,0 +1,51 @@
+.root {
+    -fx-background-color: #006400;
+    -fx-font-family: "Consolas";
+}
+
+.label {
+    -fx-text-fill: WHITE;
+    -fx-stroke: BLACK;
+    -fx-stroke-width: 2;
+    -fx-font-size: 50px;
+}
+
+.button {
+
+    -fx-border-color: BLACK;
+    -fx-font-weight: BOLD;
+    -fx-border-width: 5 5 5 5;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 20px;
+}
+
+.menu-button {
+    -fx-background-color: WHITE;
+    -fx-padding: 30 30 30 30;
+    -fx-pref-height: 28px;
+    -fx-pref-width: 400px;
+}
+
+.minigame-choice-button {
+
+    -fx-padding: 5 5 10 10;
+    -fx-margin: 5 5 10 10;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 200px;
+}
+
+.minigamechoice-button-active {
+    -fx-background-color: WHITE;
+}
+
+.minigamechoice-button-inactive {
+    -fx-background-color: GREY;
+}
+
+.button:pressed {
+    -fx-background-color: GREY;
+}
+
+.card {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}

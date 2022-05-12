@@ -1,0 +1,59 @@
+package bonken.game;
+
+import bonken.utils.Action;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class PlayerBot extends Player {
+
+    private Random random;
+
+    public PlayerBot(int id, Position pos) {
+        super(id, pos);
+        this.username = "Bot " + id;
+        chosenPositive = false;
+        random = new Random();
+    }
+
+    @Override
+    public void getCardToPlay() {
+        // TODO play card based on chosen minigame
+
+        System.out.println(playableCards);
+
+        System.out.println("choose from " + (playableCards.size()) + " cards");
+        Random random = new Random();
+        int playedCard = random.nextInt(playableCards.size());
+        Card tmp = playableCards.get(playedCard);
+        System.out.println(tmp.toString());
+        this.putCard(tmp);
+    }
+
+
+    @Override
+    public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback) {
+        ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
+        for (Integer minigame : minigames) {
+            if (chosenPositive) {
+                if (minigame < 7) {
+                    possibleMinigameChoices.add(minigame);
+                }
+            } else {
+                possibleMinigameChoices.add(minigame);
+            }
+        }
+        int num = possibleMinigameChoices.size();
+        Integer chosenMiniGameNum;
+        if (possibleMinigameChoices.size() > 0) {
+            System.out.println("Bot choosing from: " + possibleMinigameChoices);
+            chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
+            System.out.println("Bot chose minigame " + chosenMiniGameNum);
+        } else {
+            chosenMiniGameNum = -1;
+            System.out.println("Bot can't choose, next player's turn");
+        }
+        if (chosenMiniGameNum > 6) chosenPositive = true;
+        callback.call(chosenMiniGameNum);
+    }
+}
