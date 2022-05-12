@@ -11,6 +11,8 @@ public class Game {
     ScoreBoard scoreBoard;
     public boolean gameEnded;
     public ArrayList<Round> rounds;
+    private int gameCounter;
+
 
 
     public ArrayList<Integer> getMinigames() {
@@ -23,6 +25,10 @@ public class Game {
 
     public Round getCurrentRound() {
         return this.rounds.get(rounds.size() - 1);
+    }
+
+    public int getGameCounter(){
+        return  gameCounter;
     }
 
     public Game( PlayerInterface[] players) {
@@ -43,7 +49,6 @@ public class Game {
         gameCounter = 0;
     }
 
-    private int gameCounter;
 
     public void startRound() {
         deck.shuffle();

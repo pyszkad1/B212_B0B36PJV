@@ -11,7 +11,7 @@ public class PlayerBot extends Player {
 
     public PlayerBot(int id, Position pos) {
         super(id, pos);
-        this.username = "Bot " + id;
+        this.username = "Bot" + id;
         chosenPositive = false;
         random = new Random();
     }

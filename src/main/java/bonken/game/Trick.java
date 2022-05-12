@@ -38,7 +38,7 @@ public class Trick {
 
         playerToPlay = firstPlayer;
 
-        game.players[firstPlayer].requestCardToPlay(this);
+        game.players[firstPlayer].requestCardToPlay(this, round.chosenMiniGameNum);
 
     }
 
@@ -67,7 +67,7 @@ public class Trick {
 
         // request new player
 
-        game.players[playerToPlay].requestCardToPlay(this);
+        game.players[playerToPlay].requestCardToPlay(this, round.getChosenMiniGameNum());
 
     }
 

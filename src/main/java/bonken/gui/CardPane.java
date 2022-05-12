@@ -72,8 +72,8 @@ public class CardPane extends HBox {
             this.getChildren().add(pane);
 
             pane.setOnMouseClicked(event -> pressedCard(card));
-            pane.hoverProperty().addListener((obs, oldval, newval) -> {
-                if(newval && player.canPlay(card)) {
+            pane.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                if(newVal && player.canPlay(card)) {
                     imageView.setTranslateY(-cardHoverDistance);
 
                 } else {

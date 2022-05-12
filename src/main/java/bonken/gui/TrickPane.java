@@ -27,6 +27,8 @@ public class TrickPane extends Pane {
 
     private Timer timer ;
 
+    private StatusPane statusPane;
+
     private static Border testBorder = new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
     private Pane[] cardPanes;
@@ -34,12 +36,15 @@ public class TrickPane extends Pane {
 
     public void setGame(Game game) {
         this.game = game;
+        statusPane.setGame(game);
     }
 
     public TrickPane(Position bottomPlayer) {
         super();
 
         timer = new Timer();
+        statusPane = new StatusPane();
+
         setupCardPanes(bottomPlayer);
         this.setBorder(new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -60,6 +65,10 @@ public class TrickPane extends Pane {
             this.getChildren().add(p);
         }
 
+        this.getChildren().add(statusPane);
+        statusPane.setTranslateX(0);
+        statusPane.setTranslateX(0);
+
 
     }
 
@@ -73,7 +82,6 @@ public class TrickPane extends Pane {
             Pane p = cardPanes[i];
         switch (currPos) {
             case North:
-
                 p.setTranslateY(this.getHeight() - cardHeight);
                 p.setTranslateX( w );
                 break;
@@ -156,6 +164,8 @@ public class TrickPane extends Pane {
             currPosition = currPosition.next();
         }
 
+
         adjustPanePositions();
+        statusPane.update();
     }
 }

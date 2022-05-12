@@ -21,17 +21,45 @@ public class CardHand {
         return hand;
     }
 
-    public ArrayList<Card> getPlayableCards(Card firstCard) {
-        ArrayList<Card> playableCards;
-        if (firstCard.getSuit() == -1) {
-            playableCards = new ArrayList<>(hand) ;
+    public ArrayList<Card> getPlayableCards(Card firstCard, Integer chosenMinigameNum) {
+        System.out.println("CARD HARD CHOSEN MIN NUM " + chosenMinigameNum);
+        boolean cannotPlayHearts;
+        if (chosenMinigameNum.intValue() == 2 || chosenMinigameNum.intValue() == 3) {
+            cannotPlayHearts = true;
         }
-        playableCards = hasThisSuit(firstCard);
+        else {
+            cannotPlayHearts = false;
+        }
+
+        ArrayList<Card> playableCards;
+
+        if (firstCard.getSuit() == -1) {
+            if (cannotPlayHearts) {
+                playableCards = addAllButHearts();
+            }
+            else {
+                playableCards = new ArrayList<>(hand);
+            }
+        }
+        else {
+            playableCards = hasThisSuit(firstCard);
+        }
         if (playableCards.size() == 0) {
             playableCards = new ArrayList<>(hand);
         }
         return playableCards;
     }
+
+    public ArrayList<Card> addAllButHearts(){
+        ArrayList<Card> ret = new ArrayList<Card>();
+        for (int i = 0; i < hand.size(); i++) {
+            if (!(hand.get(i).getSuit() == 2)) {
+                ret.add(hand.get(i));
+            }
+        }
+        return ret;
+    }
+
 
     public ArrayList<Card> hasThisSuit(Card card){
         ArrayList<Card> ret = new ArrayList<Card>();

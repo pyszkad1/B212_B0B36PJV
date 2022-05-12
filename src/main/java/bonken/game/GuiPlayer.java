@@ -26,6 +26,9 @@ public class GuiPlayer extends Player{
 
         if(miniGameRequired == false) return;
         miniGameRequired = false;
+        if (minigame >= 7) {
+            chosenPositive = true;
+        }
         onMinigameSelected.call(minigame);
     }
 
@@ -37,9 +40,20 @@ public class GuiPlayer extends Player{
 
     @Override
     public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback) {
+        ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
+        for (Integer minigame : minigames) {
+            if (chosenPositive) {
+                if (minigame < 7) {
+                    possibleMinigameChoices.add(minigame);
+                }
+            } else {
+                possibleMinigameChoices.add(minigame);
+            }
+        }
+
         miniGameRequired = true;
         this.onMinigameSelected = callback;
-        onMinigameRequired.call(minigames);
+        onMinigameRequired.call(possibleMinigameChoices);
     }
 
     @Override

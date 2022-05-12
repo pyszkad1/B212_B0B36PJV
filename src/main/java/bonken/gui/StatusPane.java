@@ -1,8 +1,11 @@
 package bonken.gui;
 
 import bonken.game.Game;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import bonken.game.Minigames;
 
 public class StatusPane extends VBox {
 
@@ -18,28 +21,50 @@ public class StatusPane extends VBox {
      *
      * */
 
-    private Label minigameLabel, minigameHeader , roundLabel, roundHeader, scoreLabel, scoreHeader;
+    private Label minigameLabel, minigameHeader , roundLabel, roundHeader, scoreLabel;
+    private HBox minigameBox, roundBox;
+    private VBox scoreboardBox;
+    private ScoreboardView scoreboard;
 
-    public StatusPane(Game game) {
+    public void setGame(Game game) {
+        this.game = game;
+        scoreboard.setGame(game);
+    }
+
+    public StatusPane() {
         super();
 
-        this.game = game;
 
-        minigameHeader = new Label("Minigame") ;
+        roundHeader= new Label("Round ");
+        roundLabel= new Label();
+        roundBox = new HBox(roundHeader, roundLabel);
 
         minigameLabel= new Label() ;
+        minigameBox = new HBox(minigameLabel);
 
-        roundHeader= new Label("Round") ;
+        scoreLabel = new Label("Score");
+        scoreboard = new ScoreboardView();
+        scoreLabel.hoverProperty().addListener((obs, oldVal, newVal) -> {
+            if(newVal) {
+                scoreboard.show();
 
-        roundLabel= new Label() ;
+            } else {
+                scoreboard.hide();
+            }
+        });
+        scoreboardBox = new VBox(scoreLabel, scoreboard);
 
-        scoreHeader = new Label("Score");
-
-        scoreLabel= new Label() ;
+        this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
 
     }
 
     public void update() {
+        int gameCounter = game.getGameCounter()+1;
+        if (gameCounter > 11){
+            gameCounter = 11;
+        }
 
+        roundLabel.setText(gameCounter + " / 11");
+        minigameLabel.setText(String.valueOf(Minigames.values()[game.getCurrentRound().getChosenMiniGameNum()].name));
     }
 }

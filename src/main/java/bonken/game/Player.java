@@ -63,17 +63,22 @@ public abstract class Player implements PlayerInterface {
         return id;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
 
     @Override
-    public void requestCardToPlay(Trick trick) {
+    public void requestCardToPlay(Trick trick, Integer chosenMinigameNum) {
 
         trickToPlayTo = trick;
 
-        Card card = trick.cards[0] ;
+        Card card = trick.cards[0];
 
         if(card == null) card = new Card(2, -1);
 
-        playableCards = cardHand.getPlayableCards(card);
+        playableCards = cardHand.getPlayableCards(card, chosenMinigameNum);
 
         getCardToPlay();
     }

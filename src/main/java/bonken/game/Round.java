@@ -26,9 +26,6 @@ public class Round {
         createCardHands();
     }
 
-    public void setMinigameNum(int num) {
-        chosenMiniGameNum = Integer.valueOf(num);
-    }
 
     public Trick getCurrentTrick()
     {
@@ -170,4 +167,7 @@ public class Round {
         trick.start( () -> finishTrick() );
     }
 
+    public Integer getChosenMiniGameNum() {
+        return chosenMiniGameNum;
+    }
 }
