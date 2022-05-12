@@ -1,9 +1,12 @@
 package bonken.gui;
 
+import bonken.game.Game;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class StatusPane extends VBox {
+
+    Game game;
 
     /**
      * SHOULD SHOW
@@ -17,8 +20,10 @@ public class StatusPane extends VBox {
 
     private Label minigameLabel, minigameHeader , roundLabel, roundHeader, scoreLabel, scoreHeader;
 
-    public StatusPane() {
+    public StatusPane(Game game) {
         super();
+
+        this.game = game;
 
         minigameHeader = new Label("Minigame") ;
 
@@ -31,6 +36,10 @@ public class StatusPane extends VBox {
         scoreHeader = new Label("Score");
 
         scoreLabel= new Label() ;
+
+    }
+
+    public void update() {
 
     }
 }

@@ -66,6 +66,7 @@ public class TrickPane extends Pane {
     private void adjustPanePositions() {
         double h = (this.getHeight() - cardHeight) / 2;
         double w = (this.getWidth() - cardWidth) / 2;
+        double alignment = (this.getWidth() / 4);
 
         Position currPos = Position.North;
         for (int i = 0; i < 4; i++) {
@@ -78,7 +79,7 @@ public class TrickPane extends Pane {
                 break;
             case East:
                 p.setTranslateY(h);
-                p.setTranslateX(0);
+                p.setTranslateX(alignment);
                 break;
             case South:
                 p.setTranslateY(0);
@@ -86,7 +87,7 @@ public class TrickPane extends Pane {
                 break;
             case West:
                 p.setTranslateY( h);
-                p.setTranslateX(this.getWidth()  - cardWidth);
+                p.setTranslateX(this.getWidth()  - cardWidth - alignment);
                 break;
         }
         currPos = currPos.next();}

@@ -1,6 +1,8 @@
 package bonken.gui;
 
-public class ScoreboardView {
+import javafx.scene.layout.HBox;
+
+public class ScoreboardView extends HBox {
 
     public void initScoreboard() {
 
