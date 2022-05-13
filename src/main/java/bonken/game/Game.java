@@ -4,6 +4,7 @@ import bonken.utils.Callable;
 import javafx.application.Platform;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Game {
     PlayerInterface[] players;
@@ -17,7 +18,7 @@ public class Game {
     private Callable onGameEnd;
 
     Timer timer;
-
+    private static final Logger logger = Logger.getLogger(Server.class.getName());
 
 
     public ArrayList<Integer> getMinigames() {
@@ -70,7 +71,7 @@ public class Game {
 
         if(++gameCounter == 11) {
             gameEnded = true;
-            System.out.println("End of Game");
+            logger.info("END OF GAME");
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {

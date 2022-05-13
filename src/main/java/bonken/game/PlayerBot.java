@@ -18,18 +18,12 @@ public class PlayerBot extends Player {
 
     @Override
     public void getCardToPlay() {
-        // TODO play card based on chosen minigame
-
-        System.out.println(playableCards);
-
-        System.out.println("choose from " + (playableCards.size()) + " cards");
         Random random = new Random();
         int playedCard = random.nextInt(playableCards.size());
         Card tmp = playableCards.get(playedCard);
         System.out.println(tmp.toString());
         this.putCard(tmp);
     }
-
 
     @Override
     public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback) {

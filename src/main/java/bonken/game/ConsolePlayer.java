@@ -5,6 +5,7 @@ import bonken.utils.Action;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class ConsolePlayer extends Player {
 
     private Scanner scanner;
@@ -17,7 +18,7 @@ public class ConsolePlayer extends Player {
     }
 
     private void chooseUsername() {
-        System.out.println("Write your username");
+        System.out.println("Enter your username: ");
         username = scanner.next();
     }
 
@@ -44,7 +45,7 @@ public class ConsolePlayer extends Player {
             System.out.println("Choose from: " + possibleMinigameChoices);
             chosenMiniGameNum = Integer.valueOf(scanner.nextInt());
             while (!possibleMinigameChoices.contains(chosenMiniGameNum)) {
-                System.out.println("choose eligible minigame from " + minigames + " pls");
+                System.out.println("Choose eligible minigame from " + minigames + " please.");
                 chosenMiniGameNum = scanner.nextInt();
             }
         } else {
@@ -60,11 +61,11 @@ public class ConsolePlayer extends Player {
         //first card
 
         System.out.println(playableCards);
-        System.out.println("choosing from " + (playableCards.size()) + " cards");
+        System.out.println("Choosing from " + (playableCards.size()) + " cards.");
         Scanner scanner = new Scanner(System.in);
         int playedCard = scanner.nextInt();
         while (playedCard > playableCards.size() - 1 || playedCard < 0) {
-            System.out.println("not a card, please choose again");
+            System.out.println("Not a card, please choose again.");
             playedCard = scanner.nextInt();
         }
 

@@ -69,7 +69,7 @@
 .return-button {
     -fx-font-size: 20px;
     -fx-background-color: DARKGREEN;
-    -fx-text-fill: #00b300;
+    -fx-text-fill: LINEN;
     -fx-padding: 0 0 0 0;
     -fx-pref-height: 28px;
     -fx-pref-width: 130px;
@@ -77,7 +77,7 @@
 
 .return-button:pressed {
     -fx-background-color: DARKGREEN;
-    -fx-text-fill: #009900;
+    -fx-text-fill: #f7e7d4;
 }
 
 .minigame-choice-button {

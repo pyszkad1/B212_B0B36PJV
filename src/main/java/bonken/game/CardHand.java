@@ -22,7 +22,6 @@ public class CardHand {
     }
 
     public ArrayList<Card> getPlayableCards(Card firstCard, Integer chosenMinigameNum) {
-        System.out.println("CARD HARD CHOSEN MIN NUM " + chosenMinigameNum);
         boolean cannotPlayHearts;
         if (chosenMinigameNum.intValue() == 2 || chosenMinigameNum.intValue() == 3) {
             cannotPlayHearts = true;

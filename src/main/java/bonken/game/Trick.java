@@ -42,7 +42,6 @@ public class Trick {
 
     }
 
-    // always in order of players
     public Card[] getCards() {
         return cards;
     }
@@ -50,14 +49,12 @@ public class Trick {
     public void addCard(PlayerInterface player, Card card) {
 
         // check if correct player is playing
-
         if(player.getId() != playerToPlay) return;
 
         cards[numPlayedCards] = card;
         numPlayedCards++;
 
         // check if trick ended
-
         if(numPlayedCards == 4) {
             wrapUp();
             return;
@@ -66,14 +63,13 @@ public class Trick {
         playerToPlay = (playerToPlay + 1) % 4;
 
         // request new player
-
         game.players[playerToPlay].requestCardToPlay(this, round.getChosenMiniGameNum());
 
     }
 
     private void wrapUp() {
         firstSuit = cards[0].getSuit();
-        System.out.println("setting first suit " + firstSuit);
+        System.out.println("Setting first suit " + firstSuit);
 
         onTrickFinished.call();
     }
@@ -110,7 +106,7 @@ public class Trick {
                 }
                 if (cards[i].getSuit() == winningSuit && cards[i].getRank() >= winningCard.getRank()) {
                     winningCard = cards[i];
-                    System.out.print("winning card is " + winningCard.toString());
+                    System.out.print("Winning card is " + winningCard.toString());
                     player = (i + firstPlayer) % 4;
                     System.out.println(" of player " + player);
                 }
@@ -120,7 +116,6 @@ public class Trick {
         if (round.chosenMiniGameNum != 5) {
             countTrickScore(cards, player);
         } else {
-            //Last trick minigame
             if (round.trickNum == 12) {
                 game.scoreBoard.updateScoreBoard(-50, player);
             }
@@ -135,7 +130,7 @@ public class Trick {
             for (int i = 0; i < 4; i++) {
                 playedTrick.add(trick[i]);
             }
-            System.out.println("played trick: " + playedTrick);
+            System.out.println("Played trick: " + playedTrick);
             if (round.chosenMiniGameNum == 4) {
                 game.scoreBoard.updateScoreBoard(-10, trickWinner);
             } else if (round.chosenMiniGameNum == 0) {
