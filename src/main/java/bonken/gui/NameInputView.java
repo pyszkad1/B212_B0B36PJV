@@ -27,7 +27,7 @@ public class NameInputView extends  View {
 
         this.onNameInput = onNameInput;
 
-        label1 = new Label("Choose your username:");
+        label1 = new Label("Enter your username:");
 
         textField = new TextField();
 
@@ -57,12 +57,10 @@ public class NameInputView extends  View {
     {
         if ((textField.getText() != null && (textField.getText().length() > 0 && textField.getText().length() <= 8))) {
             onNameInput.call(textField.getText());
-            System.out.println("NAME " + textField.getText());
-            System.out.println("NAME LENGTH " + textField.getText().length());
         } else if ((textField.getText().length() > 8)) {
             label.setText("Username is too long.");
         } else {
-            label.setText("Please choose a valid username.");
+            label.setText("Please enter a valid username.");
         }
 
     }

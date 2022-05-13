@@ -38,11 +38,6 @@ public class ScoreboardView extends VBox {
         player2.setSpacing(10);
         player3.setSpacing(10);
 
-        player0.getStyleClass().add("score-hbox");
-        player1.getStyleClass().add("score-hbox");
-        player2.getStyleClass().add("score-hbox");
-        player3.getStyleClass().add("score-hbox");
-
         player1.setPadding(new Insets(0, 20, 0,0));
         player2.setPadding(new Insets(0, 20, 0,0));
         player3.setPadding(new Insets(0, 20, 0,0));
@@ -50,6 +45,8 @@ public class ScoreboardView extends VBox {
 
 
         this.getChildren().addAll(player0, player1, player2, player3);
+        this.getStyleClass().add("score");
+        this.setPadding(new Insets(20, 20, 20, 20));
         this.setSpacing(20);
     }
 

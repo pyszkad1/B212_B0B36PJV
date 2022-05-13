@@ -6,22 +6,34 @@
 .label {
     -fx-text-fill: LINEN;
     -fx-font-size: 50px;
+    -fx-effect: dropshadow(gaussian, BLACK, 2, 2, 0, 0);
 }
 
 .header-label {
     -fx-font-size: 100px;
+    -fx-effect: dropshadow(gaussian, BLACK, 3, 3, 0, 0);
 }
 
 .name-label {
     -fx-font-size: 200px;
+    -fx-effect: dropshadow(gaussian, BLACK, 5, 5, 0, 0);
 }
 
 .small-label {
     -fx-font-size: 30px;
+    -fx-effect: dropshadow(gaussian, BLACK, 2, 2, 0, 0);
 }
 
-.score-hbox .label {
-    -fx-font-size: 40px;
+.score {
+    -fx-background-color: LINEN;
+    -fx-border-color: BLACK;
+    -fx-border-width: 2px;
+}
+
+.score .label {
+    -fx-font-size: 30px;
+    -fx-text-fill: BLACK;
+    -fx-effect: dropshadow(gaussian, BLACK, 0, 0, 0, 0);
 }
 
 .button {
@@ -39,6 +51,10 @@
     -fx-background-color: LINEN;
 }
 
+.ok-button {
+    -fx-background-color: #f7e7d4;
+}
+
 .menu-button {
     -fx-border-color: BLACK;
     -fx-border-width: 5 5 5 5;
@@ -47,13 +63,13 @@
     -fx-background-color: LINEN;
     -fx-padding: 30 30 30 30;
     -fx-pref-height: 28px;
-    -fx-pref-width: 400px;
+    -fx-pref-width: 250px;
 }
 
 .return-button {
     -fx-font-size: 20px;
     -fx-background-color: DARKGREEN;
-    -fx-text-fill: LINEN;
+    -fx-text-fill: #00b300;
     -fx-padding: 0 0 0 0;
     -fx-pref-height: 28px;
     -fx-pref-width: 130px;
@@ -61,7 +77,7 @@
 
 .return-button:pressed {
     -fx-background-color: DARKGREEN;
-    -fx-text-fill: #f7e7d4;
+    -fx-text-fill: #009900;
 }
 
 .minigame-choice-button {
