@@ -26,7 +26,7 @@ public class TrickPane extends Pane {
     private double cardHeight = 180;
 
 
-    private Timer timer ;
+    private Timer timer;
 
     private StatusPane statusPane;
 
@@ -181,5 +181,11 @@ public class TrickPane extends Pane {
 
         adjustPanePositions();
         statusPane.update();
+    }
+
+    public void killTimer(){
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }

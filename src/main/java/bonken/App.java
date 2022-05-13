@@ -11,6 +11,7 @@ public class App extends Application {
 
         stage.setResizable(false);
         Controller controller = new Controller(stage);
+        stage.setOnCloseRequest(event -> {stage.close(); controller.close();});
         controller.start();
     }
 

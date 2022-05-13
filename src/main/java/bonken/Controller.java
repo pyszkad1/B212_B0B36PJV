@@ -43,7 +43,7 @@ public class Controller {
 
     public Controller(Stage stage) {
         this.stage = stage;
-        this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, stage::close);
+        this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, () -> {stage.close();this.close();});
         this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
@@ -51,7 +51,7 @@ public class Controller {
         });
         this.cardPane = new CardPane(card -> { mePlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
-        this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, stage::close);
+        this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close();this.close();});
 
 
 
@@ -216,6 +216,13 @@ public class Controller {
         } catch (IOException ex) {
             return true;
         }
+    }
+
+    public void close() {
+        if (server != null){
+            server.stop();
+        }
+        trickPane.killTimer();
     }
 
 
