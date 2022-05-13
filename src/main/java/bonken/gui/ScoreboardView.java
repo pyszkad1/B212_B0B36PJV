@@ -41,9 +41,7 @@ public class ScoreboardView extends VBox {
         player1.setPadding(new Insets(0, 20, 0,0));
         player2.setPadding(new Insets(0, 20, 0,0));
         player3.setPadding(new Insets(0, 20, 0,0));
-
-
-
+        
         this.getChildren().addAll(player0, player1, player2, player3);
         this.getStyleClass().add("score");
         this.setPadding(new Insets(20, 20, 20, 20));
