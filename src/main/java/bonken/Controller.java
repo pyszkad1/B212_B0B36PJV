@@ -37,9 +37,8 @@ public class Controller {
         });
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North);
-
-
         this.endGameView = new EndGameView();
+
 
 
         this.nameInputView =  new NameInputView(name -> {
@@ -88,11 +87,14 @@ public class Controller {
 
         gameView.setGame(game);
         trickPane.setGame(game);
+        endGameView.setGame(game);
+
 
     }
 
     public void showEndGameScreen() {
         endGameView.show();
+        stage.setScene(endGameView.getScene());
     }
 
     private void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {

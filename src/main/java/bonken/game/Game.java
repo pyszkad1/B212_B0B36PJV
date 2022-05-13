@@ -1,10 +1,9 @@
 package bonken.game;
 
 import bonken.utils.Callable;
+import javafx.application.Platform;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     PlayerInterface[] players;
@@ -16,6 +15,8 @@ public class Game {
     private int gameCounter;
 
     private Callable onGameEnd;
+
+    Timer timer;
 
 
 
@@ -65,11 +66,18 @@ public class Game {
     private void finishRound()
     {
         System.out.println(scoreBoard.toString());
+        timer = new Timer();
 
-        if(++gameCounter == 11) {
+        if(++gameCounter == 1) {
             gameEnded = true;
             System.out.println("End of Game");
-            onGameEnd.call();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> onGameEnd.call());
+                }
+            } , 3100);
+
             return;
         }
 
