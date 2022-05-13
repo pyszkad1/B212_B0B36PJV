@@ -3,6 +3,7 @@ package bonken;
 import bonken.game.*;
 import bonken.gui.*;
 import bonken.net.Client;
+import bonken.net.Protocol;
 import bonken.net.Server;
 import bonken.utils.Action;
 import bonken.utils.Callable;
@@ -35,19 +36,20 @@ public class Controller {
     private static final int PORT_NUMBER = 11111;               // TODO
     private static final String HOST = "localhost";
 
-
+    private GuiPlayer mePlayer;
+    public Position myPos;
     private GuiPlayer guiPlayer;
     private NameInputView nameInputView;
 
     public Controller(Stage stage) {
         this.stage = stage;
         this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, stage::close);
-        this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.startupBackend());
+        this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
-            guiPlayer.minigameSelected(minigame.num);
+            mePlayer.minigameSelected(minigame.num);
         });
-        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
+        this.cardPane = new CardPane(card -> { mePlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, stage::close);
 
@@ -58,10 +60,9 @@ public class Controller {
             startGame();
         });
 
-        this.onlineNameInputView = new NameInputView(name -> {              // TODO online
+        this.onlineNameInputView = new NameInputView(name -> {
             username = name;
             startupBackend();
-            showStartOnlineView();
         });
 
         this.gameView = new GameView(  minigameChoicePane, cardPane, trickPane);
@@ -96,6 +97,7 @@ public class Controller {
                     cardPane.update();
                 }                );
         players[0] = guiPlayer;
+        mePlayer = guiPlayer;
 
         for (int i = 1; i < 4; i++) {
             players[i] = new PlayerBot(i, Position.values()[i]);
@@ -115,16 +117,23 @@ public class Controller {
     }
 
     private void startupBackend() {
-        getNameOnline();
+
         client = new Client(this, HOST, PORT_NUMBER, username);
+        System.out.println("username is " + username);
         if (!isServerRunning()) {
-            server = new Server(client, PORT_NUMBER);
+            server = new Server(client, PORT_NUMBER, this);
             startServerThenClient();
             clientOnly = false;
+            System.out.println("You own the server");
+
+            showStartOnlineView();
         } else {
             startClient();
             clientOnly = true;
+            System.out.println("waiting");
         }
+
+
 
     }
 
@@ -139,12 +148,17 @@ public class Controller {
     private StartOnlineView startOnlineView;
 
     public void showStartOnlineView() {
-        startOnlineView = new StartOnlineView(() -> startGameOnline());
+        if (clientOnly){
+            System.out.println("I am just a client");
+        }else{
+        startOnlineView = new StartOnlineView(() -> {startGameOnline(); server.setGameStarted();});
         stage.setScene(startOnlineView.getScene());
+        }
     }
 
     private void startGameOnline() {
         //TODO make server, player num choice view,...
+        //doesnt do what it is supposed to
         System.out.println("------------------------------------------------");
         if (username == null) {
             getNameOnline();
@@ -153,17 +167,22 @@ public class Controller {
 
         PlayerInterface[] players = new  PlayerInterface[4];
 
-        guiPlayer = new GuiPlayer(0, Position.North, username,
-                minigames -> showMiniGameChoiceView(minigames),
-                () -> {
-                    trickPane.update();
-                    cardPane.update();
-                }                );
-        players[0] = guiPlayer;
+        for (int i = 0; i < server.getConnections().size(); i++) {
+            NetPlayer player = new NetPlayer(i, Position.values()[i], server.getConnections().get(i).getName(),
+                    minigames -> showMiniGameChoiceView(minigames),
+                    () -> {
+                        trickPane.update();
+                        cardPane.update();
+                    });
+            players[i] = player;
+            if (i == myPos.index){ mePlayer = player;}
+        }
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = server.getConnections().size(); i < 4; i++) {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
+
+        System.out.println(players[0].getUsername());
 
         game = new Game(players, () -> showEndGameScreen());
 

@@ -12,6 +12,7 @@ public enum Protocol {
 
     // client origin
     USERNAME,
+    MYPOS,
     MINIGAME,
     CARD,
     QUIT

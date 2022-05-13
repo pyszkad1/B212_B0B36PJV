@@ -48,7 +48,7 @@ public class GameView extends View{
 
 
 
-        System.out.println("Starting Game!! --------- :)");
+        System.out.println("StartedGameView!! --------- :)");
 
         this.cardPane = cardPane;
         cardPane.setMaxWidth(1080);

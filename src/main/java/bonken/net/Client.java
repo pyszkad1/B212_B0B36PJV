@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bonken.Controller;
+import bonken.game.Position;
 import bonken.net.Protocol;
 import javafx.application.Platform;
 
@@ -42,6 +43,7 @@ public class Client implements Runnable {
             socket = new Socket(host, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
+
             boolean running = true;
             while (running) {
                 String msg = in.readLine();
@@ -69,7 +71,7 @@ public class Client implements Runnable {
         String actionPayload = tokens.length > 1 ? tokens[1] : "";
         switch (actionCode) {
             case SUBMIT:
-                //sendToServer(Protocol.NAME, name);
+                sendToServer(Protocol.USERNAME, name);
                 break;
             case ACCEPTED:
                 Platform.runLater(() -> { // dtto as above
@@ -79,6 +81,10 @@ public class Client implements Runnable {
             case REJECTED:
             //    controller.showAlert("Name " + name + " already taken. Please choose another one.");
                 break;
+            case MYPOS:
+                controller.myPos = Position.values()[Integer.valueOf(tokens[1])];
+                System.out.println("myPos je " + controller.myPos);
+                break;
         }
     }
 
@@ -86,7 +92,9 @@ public class Client implements Runnable {
     //    sendToServer(Protocol.BROADCAST, name + " says: " + message);
     }
 
-    private void sendToServer(Protocol code, String payload) {
+
+
+    public void sendToServer(Protocol code, String payload) {
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Client {1} is sending >>>{0}<<< to server", new Object[]{msg, name});
         out.println(msg);

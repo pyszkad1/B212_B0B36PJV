@@ -5,7 +5,7 @@ import bonken.utils.Callable;
 
 import java.util.ArrayList;
 
-public class NetPlayer extends Player{
+public class NetPlayer extends GuiPlayer{
 
     private Action<ArrayList<Integer>> onMinigameRequired;
     private Action<Integer> onMinigameSelected;
@@ -15,7 +15,7 @@ public class NetPlayer extends Player{
     private boolean cardRequired = false;
 
     public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired ) {
-        super(id, pos);
+        super(id, pos, username, onMinigameRequired, onCardRequired);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;

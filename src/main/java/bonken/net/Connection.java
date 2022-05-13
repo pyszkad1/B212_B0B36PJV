@@ -65,6 +65,7 @@ public class Connection implements Runnable {
                     name = actionPayload;
                     sendToClient(Protocol.ACCEPTED, "");
                     server.broadcast(name + " joined the conversation.");
+                    System.out.println("ADDED CONNECTION");
                 } else {
                     // connection with this name already there, reject
                     sendToClient(Protocol.REJECTED, "");

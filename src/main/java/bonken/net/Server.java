@@ -1,5 +1,8 @@
 package bonken.net;
 
+import bonken.Controller;
+import bonken.game.Position;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,15 +22,23 @@ public class Server implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     private final Client client;
+    Controller controller;
     private final List<Connection> connections;
 
     private ServerSocket serverSocket;
     private Socket socket;
+    boolean gameStarted;
 
-    public Server(Client client, int PORT_NUMBER) {
+    public Server(Client client, int PORT_NUMBER, Controller controller) {
         this.PORT_NUMBER = PORT_NUMBER;
         this.client = client;
         connections = new ArrayList<>();
+        this.controller = controller;
+        gameStarted = false;
+    }
+
+    public void setGameStarted(){
+        gameStarted = true;
     }
 
     @Override
@@ -38,12 +49,13 @@ public class Server implements Runnable {
             LOGGER.info("The server is running.");
             // ...then client
             new Thread(client).start();
-            while (true) {
+            while (connections.size() <= 4 && !gameStarted) {
                 // listening for clients...
                 socket = serverSocket.accept();
                 LOGGER.info("The server is accepted connection.");
                 // ...open new connection with client
                 Connection connection = new Connection(this, socket);
+
                 new Thread(connection).start();
             }
         } catch (IOException ex) {
@@ -63,8 +75,16 @@ public class Server implements Runnable {
             }
             LOGGER.info("Adding connection for " + newName);
             connections.add(newConnection);
+
+            //sends myPos to client
+            newConnection.sendToClient(Protocol.MYPOS, String.valueOf(connections.size()-1));
+
             return true;
         }
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
     }
 
     public void removeConnection(String nameToRemove) {
