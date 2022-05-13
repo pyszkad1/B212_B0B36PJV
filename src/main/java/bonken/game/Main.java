@@ -1,8 +1,11 @@
 package bonken.game;
 
+import bonken.utils.Callable;
+
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         int numPlayers = Integer.parseInt(args[0]);
 
@@ -21,7 +24,12 @@ public class Main {
             }
         }
 
-        Game game = new Game(players);
+        Game game = new Game(players, new Callable() {
+            @Override
+            public void call() {
+
+            }
+        });
 
         game.startRound();
 

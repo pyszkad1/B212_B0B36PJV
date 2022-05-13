@@ -3,6 +3,7 @@ package bonken;
 import bonken.game.*;
 import bonken.gui.*;
 import bonken.utils.Action;
+import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ public class Controller {
     private CardPane cardPane;
     private TrickPane trickPane;
     private GameView gameView;
+    private EndGameView endGameView;
 
 
     private GuiPlayer guiPlayer;
@@ -35,6 +37,9 @@ public class Controller {
         });
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North);
+
+
+        this.endGameView = new EndGameView();
 
 
         this.nameInputView =  new NameInputView(name -> {
@@ -75,7 +80,7 @@ public class Controller {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
 
-        game = new Game(players);
+        game = new Game(players, () -> showEndGameScreen());
 
         stage.setScene(gameView.getScene());
 
@@ -84,6 +89,10 @@ public class Controller {
         gameView.setGame(game);
         trickPane.setGame(game);
 
+    }
+
+    public void showEndGameScreen() {
+        endGameView.show();
     }
 
     private void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {

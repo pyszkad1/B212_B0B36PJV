@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 
 public abstract class View {
 
-    private String css = this.getClass().getResource("/bonken/gui/menu_style.css").toExternalForm();
+    private String css = this.getClass().getResource("/bonken/gui/style.css").toExternalForm();
 
     private Scene scene;
 

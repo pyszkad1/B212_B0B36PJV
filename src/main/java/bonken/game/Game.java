@@ -1,5 +1,7 @@
 package bonken.game;
 
+import bonken.utils.Callable;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,6 +14,8 @@ public class Game {
     public boolean gameEnded;
     public ArrayList<Round> rounds;
     private int gameCounter;
+
+    private Callable onGameEnd;
 
 
 
@@ -31,11 +35,11 @@ public class Game {
         return  gameCounter;
     }
 
-    public Game( PlayerInterface[] players) {
+    public Game(PlayerInterface[] players, Callable onGameEnd) {
         for (int i = 0; i < 12; i++) {
             minigames.add(Integer.valueOf(i));
         }
-
+        this.onGameEnd = onGameEnd;
         this.players = players;
 
         Random random = new Random();
@@ -65,6 +69,7 @@ public class Game {
         if(++gameCounter == 11) {
             gameEnded = true;
             System.out.println("End of Game");
+            onGameEnd.call();
             return;
         }
 
