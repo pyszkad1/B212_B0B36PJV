@@ -15,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 public class GameMenuView  extends  View {
 
 
-    public GameMenuView(Callable startVsBots, Callable showStartMenu) {
+    public GameMenuView(Callable startVsBots, Callable showStartMenu, Callable startVsPlayers) {
         BorderPane borderPane = new BorderPane();
 
         Button returnBtn = new Button("RETURN");
@@ -46,6 +46,7 @@ public class GameMenuView  extends  View {
 
         // TODO config
         vsBots.setOnAction(event -> startVsBots.call());
+        vsPlayers.setOnAction(event -> startVsPlayers.call());
 
 
 

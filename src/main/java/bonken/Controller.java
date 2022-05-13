@@ -42,7 +42,7 @@ public class Controller {
     public Controller(Stage stage) {
         this.stage = stage;
         this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, stage::close);
-        this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());});
+        this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.startupBackend());
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
             guiPlayer.minigameSelected(minigame.num);
@@ -61,6 +61,7 @@ public class Controller {
         this.onlineNameInputView = new NameInputView(name -> {              // TODO online
             username = name;
             startupBackend();
+            showStartOnlineView();
         });
 
         this.gameView = new GameView(  minigameChoicePane, cardPane, trickPane);
@@ -73,6 +74,10 @@ public class Controller {
 
     public void getName() {
         stage.setScene(nameInputView.getScene());
+    }
+
+    public void getNameOnline() {
+        stage.setScene(onlineNameInputView.getScene());
     }
 
     private void startGame() {
@@ -110,6 +115,7 @@ public class Controller {
     }
 
     private void startupBackend() {
+        getNameOnline();
         client = new Client(this, HOST, PORT_NUMBER, username);
         if (!isServerRunning()) {
             server = new Server(client, PORT_NUMBER);
@@ -130,12 +136,18 @@ public class Controller {
         new Thread(client).start();
     }
 
+    private StartOnlineView startOnlineView;
+
+    public void showStartOnlineView() {
+        startOnlineView = new StartOnlineView(() -> startGameOnline());
+        stage.setScene(startOnlineView.getScene());
+    }
 
     private void startGameOnline() {
         //TODO make server, player num choice view,...
-
-        if(username == null) {
-            getName();
+        System.out.println("------------------------------------------------");
+        if (username == null) {
+            getNameOnline();
             return;
         }
 
@@ -176,7 +188,6 @@ public class Controller {
         minigameChoicePane.setAvailableMinigames(availableMinigames);
         gameView.showMinigameChoice();
     }
-
 
     private boolean isServerRunning() {
         try {
