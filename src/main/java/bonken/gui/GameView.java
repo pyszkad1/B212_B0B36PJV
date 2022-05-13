@@ -13,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -23,11 +25,14 @@ public class GameView extends View{
     private Game game;
 
     private CardPane cardPane;
-    private BorderPane borderPane;
     private MinigameChoicePane minigameChoicePane;
     private TrickPane trickPane;
-
     private StackPane centerPane;
+
+    private BorderPane borderPane;
+    private Rectangle blockingRec;
+
+    private StackPane wholeScreen;
 
     public void showMinigameChoice() {
         minigameChoicePane.setVisible(true);
@@ -65,11 +70,31 @@ public class GameView extends View{
         borderPane.setBottom(cardPane);
         borderPane.setMaxWidth(1080);
 
+        blockingRec = new Rectangle(1080, 200);
+
+        blockingRec.setFill(Color.TRANSPARENT);
+
+        wholeScreen = new StackPane();
+        wholeScreen.setAlignment(blockingRec, Pos.BOTTOM_CENTER) ;
+        wholeScreen.getChildren().addAll(blockingRec, borderPane);
+
+
+
         showMinigameChoice();
 
 
-        Scene scene = new Scene(borderPane, 1080, 720);
+
+
+        Scene scene = new Scene(wholeScreen, 1080, 720);
         setScene(scene);
+    }
+
+    public void showBlockingRec() {
+        blockingRec.toFront();
+    }
+
+    public void hideBlockingRec(){
+        borderPane.toFront();
     }
 
     public void setGame(Game game) {

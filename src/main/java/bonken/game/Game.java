@@ -68,7 +68,7 @@ public class Game {
         System.out.println(scoreBoard.toString());
         timer = new Timer();
 
-        if(++gameCounter == 1) {
+        if(++gameCounter == 11) {
             gameEnded = true;
             System.out.println("End of Game");
             timer.schedule(new TimerTask() {

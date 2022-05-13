@@ -2,6 +2,7 @@ package bonken.gui;
 
 import bonken.game.*;
 import bonken.utils.Action;
+import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,13 +35,18 @@ public class TrickPane extends Pane {
     private Pane[] cardPanes;
     private Game game;
 
+    Callable showBlock; Callable hideBlock;
+
     public void setGame(Game game) {
         this.game = game;
         statusPane.setGame(game);
     }
 
-    public TrickPane(Position bottomPlayer) {
+    public TrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
         super();
+
+        this.showBlock = showBlock;
+        this.hideBlock = hideBlock;
 
         timer = new Timer();
         statusPane = new StatusPane();
@@ -102,24 +108,32 @@ public class TrickPane extends Pane {
     }
 
     private boolean showingTrickEnd = false;
+    private boolean blocking = false;
 
     public void update() {
+        if (blocking){
+            hideBlock.call();
+        }
         Round round = game.getCurrentRound();
 
         if(round.trickNum != 0 && !trickEndAlreadyDrawn) {
             trickEndAlreadyDrawn = true;
             showingTrickEnd = true;
-            drawTrick(round.tricks.get(round.trickNum - 1) );
+            drawTrick(round.tricks.get(round.trickNum - 1));
+            showBlock.call();
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+
                     Platform.runLater(() -> update());
+                    blocking = true;
                     showingTrickEnd = false;
                 }
-            } , 3000);
+            } , 2500);
 
-        } else if (! showingTrickEnd) {
+        } else if (!showingTrickEnd) {
+
             Trick trick = round.getCurrentTrick();
             if(trick == null) return;
             drawTrick(trick);

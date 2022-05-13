@@ -36,7 +36,7 @@ public class Controller {
             guiPlayer.minigameSelected(minigame.num);
         });
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
-        this.trickPane = new TrickPane(Position.North);
+        this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, stage::close);
 
 
@@ -59,6 +59,41 @@ public class Controller {
     }
 
     private void startGame() {
+
+        if(username == null) {
+            getName();
+            return;
+        }
+
+        PlayerInterface[] players = new  PlayerInterface[4];
+
+        guiPlayer = new GuiPlayer(0, Position.North, username,
+                minigames -> showMiniGameChoiceView(minigames),
+                () -> {
+                    trickPane.update();
+                    cardPane.update();
+                }                );
+        players[0] = guiPlayer;
+
+        for (int i = 1; i < 4; i++) {
+            players[i] = new PlayerBot(i, Position.values()[i]);
+        }
+
+        game = new Game(players, () -> showEndGameScreen());
+
+        stage.setScene(gameView.getScene());
+
+        game.startRound();
+
+        gameView.setGame(game);
+        trickPane.setGame(game);
+        endGameView.setGame(game);
+
+
+    }
+
+    private void startGameOnline() {
+        //TODO make server, player num choice view,...
 
         if(username == null) {
             getName();
