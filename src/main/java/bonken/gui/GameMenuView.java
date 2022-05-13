@@ -24,21 +24,20 @@ public class GameMenuView  extends  View {
         VBox returnBox = new VBox(returnBtn);
         returnBox.setAlignment(Pos.TOP_LEFT);
 
-        Label text = new Label("Play VS");
-        Rectangle hSpace = new Rectangle(28, 28);
+        Label text = new Label("Play against");
+
         Button vsBots = new Button("BOTS");
         vsBots.getStyleClass().add("menu-button");
 
-        Rectangle vSpace = new Rectangle(28, 28);
-        hSpace.setFill(Color.TRANSPARENT);
-        vSpace.setFill(Color.TRANSPARENT);
         Button vsPlayers = new Button("PLAYERS");
         vsPlayers.getStyleClass().add("menu-button");
 
-        HBox hbox = new HBox(vsBots, vSpace, vsPlayers);
-        VBox menu = new VBox(text, hSpace, hbox);
+        HBox hbox = new HBox(vsBots, vsPlayers);
+        VBox menu = new VBox(text, hbox);
         hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(28);
         menu.setAlignment(Pos.CENTER);
+        menu.setSpacing(28);
 
         borderPane.setCenter(menu);
         borderPane.setTop(returnBox);

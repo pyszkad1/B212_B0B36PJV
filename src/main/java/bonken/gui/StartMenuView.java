@@ -17,6 +17,7 @@ public class StartMenuView extends View {
     public StartMenuView(Callable onStart, Callable onClose) {
 
         mainLabel = new Label("BONKEN");
+        mainLabel.getStyleClass().add("name-label");
 
         startBtn = new Button("START");
         startBtn.getStyleClass().add("menu-button");

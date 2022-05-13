@@ -31,15 +31,16 @@ public class NameInputView extends  View {
 
         textField = new TextField();
 
-        submitButton = new Button("ok");
-        submitButton.getStyleClass().add("menu-button");
+        submitButton = new Button("OK");
+        submitButton.getStyleClass().add("ok-button");
         submitButton.setOnAction(e -> trySubmit());
 
         label = new Label();
+        label.getStyleClass().add("small-label");
 
         vb = new VBox();
         vb.getChildren().addAll(label1, textField, submitButton, label);
-        vb.setSpacing(10);
+        vb.setSpacing(30);
         vb.setAlignment(Pos.CENTER);
 
         borderPane = new BorderPane();
@@ -54,11 +55,15 @@ public class NameInputView extends  View {
 
     private void trySubmit()
     {
-        if ((textField.getText() != null && !textField.getText().isEmpty())) {
+        if ((textField.getText() != null && (textField.getText().length() > 0 && textField.getText().length() <= 8))) {
             onNameInput.call(textField.getText());
-
+            System.out.println("NAME " + textField.getText());
+            System.out.println("NAME LENGTH " + textField.getText().length());
+        } else if ((textField.getText().length() > 8)) {
+            label.setText("Username is too long.");
         } else {
-            label.setText("You have not left a comment.");
+            label.setText("Please choose a valid username.");
         }
+
     }
 }

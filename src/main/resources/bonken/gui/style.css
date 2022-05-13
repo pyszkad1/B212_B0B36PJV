@@ -5,13 +5,38 @@
 
 .label {
     -fx-text-fill: LINEN;
-    -fx-stroke: BLACK;
-    -fx-stroke-width: 2;
     -fx-font-size: 50px;
+}
+
+.header-label {
+    -fx-font-size: 100px;
+}
+
+.name-label {
+    -fx-font-size: 200px;
+}
+
+.small-label {
+    -fx-font-size: 30px;
+}
+
+.score-hbox .label {
+    -fx-font-size: 40px;
 }
 
 .button {
     -fx-font-size: 20px;
+}
+
+.ok-button {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+    -fx-padding: 30 30 30 30;
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-background-color: LINEN;
 }
 
 .menu-button {
@@ -36,7 +61,7 @@
 
 .return-button:pressed {
     -fx-background-color: DARKGREEN;
-    -fx-text-fill: WHEAT;
+    -fx-text-fill: #f7e7d4;
 }
 
 .minigame-choice-button {
@@ -59,11 +84,11 @@
 }
 
 .menu-button:pressed {
-    -fx-background-color: GRAY;
+    -fx-background-color: #f7e7d4;
 }
 
 .minigame-choice-button:pressed {
-    -fx-background-color: GRAY;
+    -fx-background-color: #f7e7d4;
 }
 
 .endgame-button {
@@ -76,7 +101,7 @@
 }
 
 .endgame-button:pressed {
-    -fx-background-color: GRAY;
+    -fx-background-color: #f7e7d4;
 }
 
 .text-field {

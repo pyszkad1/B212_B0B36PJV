@@ -27,15 +27,21 @@ public class ScoreboardView extends VBox {
         label1 = new Label();
         label2 = new Label();
         label3 = new Label();
+
         player0 = new HBox(new Label(game.getPlayers()[0].getUsername() + ":"), label0);
         player1= new HBox(new Label(game.getPlayers()[1].getUsername() + ":"), label1);
         player2= new HBox(new Label(game.getPlayers()[2].getUsername() + ":"), label2);
         player3= new HBox(new Label(game.getPlayers()[3].getUsername() + ":"), label3);
+
         player0.setSpacing(10);
         player1.setSpacing(10);
         player2.setSpacing(10);
         player3.setSpacing(10);
-        //TODO alignment
+
+        player0.getStyleClass().add("score-hbox");
+        player1.getStyleClass().add("score-hbox");
+        player2.getStyleClass().add("score-hbox");
+        player3.getStyleClass().add("score-hbox");
 
         player1.setPadding(new Insets(0, 20, 0,0));
         player2.setPadding(new Insets(0, 20, 0,0));
@@ -44,18 +50,16 @@ public class ScoreboardView extends VBox {
 
 
         this.getChildren().addAll(player0, player1, player2, player3);
+        this.setSpacing(20);
     }
 
     public ScoreboardView() {
 
         this.setVisible(false);
 
-
-
     }
 
     public void show() {
-
 
         label0.setText(String.valueOf( game.getPlayers()[0].getScore()));
         label1.setText(String.valueOf( game.getPlayers()[1].getScore()));
