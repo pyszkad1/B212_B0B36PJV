@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class NameInputView extends  View {
 
@@ -20,13 +21,13 @@ public class NameInputView extends  View {
     private Label label, label1;
     private BorderPane borderPane;
     private Button submitButton;
-    private HBox hb;
+    private VBox vb;
 
     public NameInputView(Action<String> onNameInput) {
 
         this.onNameInput = onNameInput;
 
-        label1 = new Label("Name:");
+        label1 = new Label("Choose your username:");
 
         textField = new TextField();
 
@@ -36,13 +37,13 @@ public class NameInputView extends  View {
 
         label = new Label();
 
-        hb = new HBox();
-        hb.getChildren().addAll(label1, textField, submitButton, label);
-        hb.setSpacing(10);
-        hb.setAlignment(Pos.CENTER);
+        vb = new VBox();
+        vb.getChildren().addAll(label1, textField, submitButton, label);
+        vb.setSpacing(10);
+        vb.setAlignment(Pos.CENTER);
 
         borderPane = new BorderPane();
-        borderPane.setCenter(hb);
+        borderPane.setCenter(vb);
 
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) trySubmit();

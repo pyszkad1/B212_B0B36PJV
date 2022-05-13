@@ -1,33 +1,49 @@
 .root {
-    -fx-background-color: #006400;
+    -fx-background-color: DARKGREEN;
     -fx-font-family: "Consolas";
 }
 
 .label {
-    -fx-text-fill: WHITE;
+    -fx-text-fill: LINEN;
     -fx-stroke: BLACK;
     -fx-stroke-width: 2;
     -fx-font-size: 50px;
 }
 
 .button {
-
-    -fx-border-color: BLACK;
-    -fx-font-weight: BOLD;
-    -fx-border-width: 5 5 5 5;
-    -fx-text-fill: BLACK;
     -fx-font-size: 20px;
 }
 
 .menu-button {
-    -fx-background-color: WHITE;
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-background-color: LINEN;
     -fx-padding: 30 30 30 30;
     -fx-pref-height: 28px;
     -fx-pref-width: 400px;
 }
 
-.minigame-choice-button {
+.return-button {
+    -fx-font-size: 20px;
+    -fx-background-color: DARKGREEN;
+    -fx-text-fill: LINEN;
+    -fx-padding: 0 0 0 0;
+    -fx-pref-height: 28px;
+    -fx-pref-width: 130px;
+}
 
+.return-button:pressed {
+    -fx-background-color: DARKGREEN;
+    -fx-text-fill: WHEAT;
+}
+
+.minigame-choice-button {
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
     -fx-padding: 5 5 10 10;
     -fx-margin: 5 5 10 10;
     -fx-pref-height: 30px;
@@ -35,15 +51,42 @@
 }
 
 .minigamechoice-button-active {
-    -fx-background-color: WHITE;
+    -fx-background-color: LINEN;
 }
 
 .minigamechoice-button-inactive {
-    -fx-background-color: GREY;
+    -fx-background-color: DIMGRAY;
 }
 
-.button:pressed {
-    -fx-background-color: GREY;
+.menu-button:pressed {
+    -fx-background-color: GRAY;
+}
+
+.minigame-choice-button:pressed {
+    -fx-background-color: GRAY;
+}
+
+.endgame-button {
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+}
+
+.endgame-button:pressed {
+    -fx-background-color: GRAY;
+}
+
+.text-field {
+	-fx-accent: DIMGRAY;
+	-fx-text-fill: LINEN;
+	-fx-font-size: 30px;
+	-fx-background-color: BLACK, DARKGREEN;
+	-fx-background-insets: 0, 0 0 2 0;
+	-fx-background-radius: 0;
+	-fx-min-width: 500px;
 }
 
 .card {

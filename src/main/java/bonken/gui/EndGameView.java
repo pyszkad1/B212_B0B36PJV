@@ -20,24 +20,34 @@ public class EndGameView extends View {
     VBox scoreBox;
     HBox players;
     HBox playersScore;
+    HBox hb;
 
-    Button returnToMenu;
-    Button exit;
+    Button returnButton;
+    Button exitButton;
 
     Game game;
 
-    public EndGameView () {
+    public EndGameView (Callable showStartMenu, Callable onClose) {
 
-       pane  = new BorderPane();
+        pane  = new BorderPane();
         whole = new VBox();
-        gameFinished = new Label("GAME FINISHED");
+        gameFinished = new Label("G A M E   F I N I S H E D");
         scoreBox = new VBox();
 
 
-        returnToMenu = new Button("RETURN TO MENU");
-        exit = new Button("EXIT");
+        returnButton = new Button("MENU");
+        exitButton = new Button("EXIT");
 
-        whole.getChildren().addAll(gameFinished, scoreBox, returnToMenu, exit);
+        returnButton.setOnAction(event -> showStartMenu.call());
+        exitButton.setOnAction(event -> onClose.call());
+
+
+        returnButton.getStyleClass().add("endgame-button");
+        exitButton.getStyleClass().add("endgame-button");
+        hb = new HBox(returnButton, exitButton);
+        hb.setSpacing(50);
+
+        whole.getChildren().addAll(gameFinished, scoreBox, hb);
 
     }
 
@@ -47,20 +57,24 @@ public class EndGameView extends View {
         for (int i = 0; i < 4; i++) {
             players.getChildren().add(new Label(game.getPlayers()[i].getUsername()));
         }
+        players.setSpacing(100);
         scoreBox.getChildren().add(players);
+
+    }
+
+    public void show() {
 
         playersScore = new HBox();
         for (int i = 0; i < 4; i++) {
             playersScore.getChildren().add(new Label(String.valueOf(game.getPlayers()[i].getScore())));
         }
+        playersScore.setSpacing(100);
         scoreBox.getChildren().add(playersScore);
-    }
 
-    public void show() {
         System.out.println("I WAS CALLED");
-        whole.setAlignment(Pos.TOP_CENTER);
-        whole.setTranslateY(50);
-        whole.setTranslateX(400);
+        whole.setAlignment(Pos.CENTER);
+        //whole.setTranslateY(50);
+        //whole.setTranslateX(400);
         pane.getChildren().add(whole);
 
         Scene scene = new Scene(pane, 1080, 720);

@@ -37,7 +37,7 @@ public class Controller {
         });
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North);
-        this.endGameView = new EndGameView();
+        this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, stage::close);
 
 
 

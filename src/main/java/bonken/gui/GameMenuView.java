@@ -19,7 +19,7 @@ public class GameMenuView  extends  View {
         BorderPane borderPane = new BorderPane();
 
         Button returnBtn = new Button("RETURN");
-        returnBtn.getStyleClass().add("menu-button");
+        returnBtn.getStyleClass().add("return-button");
         returnBtn.setOnAction(event -> showStartMenu.call());
         VBox returnBox = new VBox(returnBtn);
         returnBox.setAlignment(Pos.TOP_LEFT);
