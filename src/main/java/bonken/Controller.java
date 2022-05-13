@@ -2,11 +2,15 @@ package bonken;
 
 import bonken.game.*;
 import bonken.gui.*;
+import bonken.net.Client;
+import bonken.net.Server;
 import bonken.utils.Action;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 
 public class Controller {
@@ -22,6 +26,14 @@ public class Controller {
     private TrickPane trickPane;
     private GameView gameView;
     private EndGameView endGameView;
+
+    // online game
+    private NameInputView onlineNameInputView;
+    private Client client;
+    private boolean clientOnly;
+    private Server server;
+    private static final int PORT_NUMBER = 11111;               // TODO
+    private static final String HOST = "localhost";
 
 
     private GuiPlayer guiPlayer;
@@ -44,6 +56,11 @@ public class Controller {
         this.nameInputView =  new NameInputView(name -> {
             username = name;
             startGame();
+        });
+
+        this.onlineNameInputView = new NameInputView(name -> {              // TODO online
+            username = name;
+            startupBackend();
         });
 
         this.gameView = new GameView(  minigameChoicePane, cardPane, trickPane);
@@ -92,6 +109,28 @@ public class Controller {
 
     }
 
+    private void startupBackend() {
+        client = new Client(this, HOST, PORT_NUMBER, username);
+        if (!isServerRunning()) {
+            server = new Server(client, PORT_NUMBER);
+            startServerThenClient();
+            clientOnly = false;
+        } else {
+            startClient();
+            clientOnly = true;
+        }
+
+    }
+
+    private void startServerThenClient() {
+        new Thread(server).start();
+    }
+
+    private void startClient() {
+        new Thread(client).start();
+    }
+
+
     private void startGameOnline() {
         //TODO make server, player num choice view,...
 
@@ -137,5 +176,17 @@ public class Controller {
         minigameChoicePane.setAvailableMinigames(availableMinigames);
         gameView.showMinigameChoice();
     }
+
+
+    private boolean isServerRunning() {
+        try {
+            ServerSocket serverSocket = new ServerSocket(PORT_NUMBER);
+            serverSocket.close();
+            return false;
+        } catch (IOException ex) {
+            return true;
+        }
+    }
+
 
 }

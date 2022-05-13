@@ -1,5 +1,6 @@
 package bonken.game;
 
+import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 
