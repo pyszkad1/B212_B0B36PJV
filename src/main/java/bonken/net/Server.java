@@ -155,6 +155,10 @@ public class Server implements Runnable {
         this.game = game;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public void startGame(){
         broadcast(Protocol.GAME_STARTED, "");
         game.startRound();
@@ -190,7 +194,7 @@ public class Server implements Runnable {
         game.getPlayers()[concectionNum].minigameSelected(minigame);
     }
 
-    public void setCard(Card card, int connectionNum) {
+    public void setCard(String card, int connectionNum) {
         game.getPlayers()[connectionNum].cardSelected(card);
     }
 

@@ -40,10 +40,14 @@ public class NetPlayer extends Player{
         onMinigameSelected.call(minigame);
     }
 
-    public void cardSelected(Card card) {
+    public void cardSelected(String card) {
         if(cardRequired == false) return;
-        System.out.println(card.toString());
-        putCard(card);
+        System.out.println(card);
+
+        Deck deck = server.getGame().getDeck();
+
+
+        putCard(deck.getSpecificCardByString(card));
     }
 
     @Override
@@ -72,5 +76,14 @@ public class NetPlayer extends Player{
         cardRequired = true;
 
         onCardRequired.call(playableCards);
+    }
+
+    public String[] getStringHand() {
+        String[] stringHand = new String[getCardHand().getHand().size()];
+        for (int i = 0; i < getCardHand().getHand().size(); i++) {
+            stringHand[i] = getCardHand().getHand().get(i).getImage();
+        }
+
+        return stringHand;
     }
 }

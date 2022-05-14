@@ -9,6 +9,8 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class OnlineController {
 
@@ -38,10 +40,33 @@ public class OnlineController {
             gameView.hideMinigameChoice();
             client.sendToServer(Protocol.MINIGAME,  String.valueOf(minigame.num));
         });
-        this.cardPane = new CardPane(card -> { sendToServer(card.getImage()); cardPane.update(); trickPane.packUpTrick(); });
+        this.cardPane = new CardPane(card -> {updateHand(card); client.sendToServer(Protocol.CARD, card); cardPane.updateAfter(currentStringCardHand); trickPane.packUpTrick();  });
         this.trickPane = new TrickPane(position, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
+    }
+
+    private String[] currentStringCardHand;
+
+    public void setCurrentStringCardHand(String[] currentStringCardHand) {
+        this.currentStringCardHand = currentStringCardHand;
+    }
+
+    public void updateHand(String card) {
+        ArrayList<String> handList = new ArrayList<>();
+        for (String string : currentStringCardHand){
+            handList.add(string);
+        }
+
+        for (String string: handList) {
+            if (string.equals(card)){
+                handList.remove(card);
+            }
+        }
+        for (int i = 0; i < handList.size(); i++) {
+            currentStringCardHand[i] = handList.get(i);
+        }
+
     }
 
     public void start() {

@@ -1,6 +1,5 @@
 package bonken.net;
 
-import bonken.game.Card;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -83,11 +82,7 @@ public class Connection implements Runnable {
                 Integer chosenMg = Integer.valueOf(actionPayload);
                 server.setMinigame(chosenMg, connectionNum);
             case CARD:
-                for (Card card : server.game.getDeck().getCardDeck()) {
-                    if (card.getImage().equals(actionPayload)){
-                        server.setCard(card, connectionNum);
-                    }
-                }
+                server.setCard(actionPayload, connectionNum);
         }
         return true;
     }

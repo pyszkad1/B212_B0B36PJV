@@ -85,7 +85,7 @@ public class Controller {
             gameView.hideMinigameChoice();
             guiPlayer.minigameSelected(minigame.num);
         });
-        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
+        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.updateAfter(guiPlayer.getStringHand()); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.gameView = new GameView( minigameChoicePane, cardPane, trickPane);
 
@@ -101,7 +101,7 @@ public class Controller {
                 minigames -> showMiniGameChoiceView(minigames),
                 () -> {
                     trickPane.update();
-                    cardPane.update();
+                    cardPane.updateBefore(guiPlayer.getStringHand(), );
                 });
         players[0] = guiPlayer;
 

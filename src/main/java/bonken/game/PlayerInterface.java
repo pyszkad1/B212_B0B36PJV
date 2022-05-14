@@ -17,5 +17,5 @@ public interface PlayerInterface {
     public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback);
     public boolean canPlay(Card card);
     public void minigameSelected(Integer minigame);
-    public void cardSelected(Card card);
+    public void cardSelected(String card);
 }

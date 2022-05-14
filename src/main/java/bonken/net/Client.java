@@ -110,6 +110,7 @@ public class Client implements Runnable {
                 String[] trickAndHand = tokens[1].split("@");
                 String[] trick = trickAndHand[0].split("#");
                 String[] hand = trickAndHand[1].split("#");
+                onlineController.setCurrentStringCardHand(hand);
         }
     }
 

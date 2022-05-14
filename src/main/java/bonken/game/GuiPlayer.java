@@ -10,15 +10,17 @@ public class GuiPlayer extends Player{
     private Action<ArrayList<Integer>> onMinigameRequired;
     private Action<Integer> onMinigameSelected;
     private Callable onCardRequired;
+    Game game;
 
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
-    public GuiPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired ) {
+    public GuiPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired, Game game ) {
         super(id, pos);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;
+        this.game = game;
 
     }
 
@@ -32,10 +34,14 @@ public class GuiPlayer extends Player{
         onMinigameSelected.call(minigame);
     }
 
-    public void cardSelected(Card card) {
+    public void cardSelected(String card) {
         if(cardRequired == false) return;
-        System.out.println(card.toString());
-        putCard(card);
+        System.out.println(card);
+
+        Deck deck = game.getDeck();
+
+
+        putCard(deck.getSpecificCardByString(card));
     }
 
     @Override
@@ -60,5 +66,15 @@ public class GuiPlayer extends Player{
     protected void getCardToPlay() {
         cardRequired = true;
         onCardRequired.call();
+    }
+
+
+    public String[] getStringHand() {
+        String[] stringHand = new String[getCardHand().getHand().size()];
+        for (int i = 0; i < getCardHand().getHand().size(); i++) {
+            stringHand[i] = getCardHand().getHand().get(i).getImage();
+        }
+
+        return stringHand;
     }
 }

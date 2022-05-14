@@ -24,9 +24,9 @@ public class CardPane extends HBox {
     private double cardHeight = 180;
     private double cardHoverDistance = 20;
 
-    private Action<Card> onCardClicked;
+    private Action<String> onCardClicked;
 
-    public CardPane(Action<Card> onCardClicked) {
+    public CardPane(Action<String> onCardClicked) {
         super();
 
         this.onCardClicked = onCardClicked;
@@ -42,12 +42,12 @@ public class CardPane extends HBox {
         update();
     }
 
-    public void update() {
+    public void updateBefore(String[] cards, String[] playableCards) {
 
         this.getChildren().clear();
 
-        ArrayList<Card> cards = player.getCardHand().getHand();
-        int cardCount = cards.size();
+
+        int cardCount = cards.length;
 
 
         double size = this.getWidth();
@@ -59,10 +59,16 @@ public class CardPane extends HBox {
         this.setSpacing(space > 0 ? 0 : space);
 
         for (int i = 0; i < cardCount; i++) {
+            boolean playable = false;
+            String card = cards[i];
 
-            Card card = cards.get(i);
+            for (String string: playableCards) {
+                if (card.equals(string)){
+                    playable = true;
+                }
+            }
 
-            String image = this.getClass().getResource("/bonken/gui/cards/" + card.getImage()).toExternalForm();
+            String image = this.getClass().getResource("/bonken/gui/cards/" + card).toExternalForm();
             ImageView imageView = new ImageView(new Image(image));
             imageView.getStyleClass().add("card");
             VBox pane = new VBox(imageView);
@@ -71,25 +77,51 @@ public class CardPane extends HBox {
 
             this.getChildren().add(pane);
 
-            pane.setOnMouseClicked(event -> pressedCard(card));
-            pane.hoverProperty().addListener((obs, oldVal, newVal) -> {
-                if(newVal && player.canPlay(card)) {
-                    imageView.setTranslateY(-cardHoverDistance);
+            if (playable) {
+                pane.setOnMouseClicked(event -> pressedCard(card));
+                pane.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                    if (newVal) {
+                        imageView.setTranslateY(-cardHoverDistance);
 
-                } else {
-                    imageView.setTranslateY(0);
-                }
-            });
+                    } else {
+                        imageView.setTranslateY(0);
+                    }
+                });
+            }
+        }
+    }
+    public void updateAfter(String[] cards) {
+
+        this.getChildren().clear();
+
+
+        int cardCount = cards.length;
+
+
+        double size = this.getWidth();
+        double sizeForOverlap = size - cardWidth;
+        double spacePerCard = sizeForOverlap / (cardCount - 1);
+        double space = spacePerCard - cardWidth;
+
+
+        this.setSpacing(space > 0 ? 0 : space);
+
+        for (int i = 0; i < cardCount; i++) {
+            String card = cards[i];
+
+            String image = this.getClass().getResource("/bonken/gui/cards/" + card).toExternalForm();
+            ImageView imageView = new ImageView(new Image(image));
+            imageView.getStyleClass().add("card");
+            VBox pane = new VBox(imageView);
+            pane.setAlignment(Pos.BOTTOM_CENTER);
+            pane.setMinHeight(cardHeight + cardHoverDistance);
+
+            this.getChildren().add(pane);
         }
     }
 
 
-    public void pressedCard(Card card) {
-
-        if(player.canPlay(card) == false) {
-            System.out.println("Cannot play this card right now");
-            return;
-        }
+    public void pressedCard(String card) {
 
         onCardClicked.call(card);
     }
