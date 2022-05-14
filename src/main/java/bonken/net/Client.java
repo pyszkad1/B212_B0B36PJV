@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,6 +87,18 @@ public class Client implements Runnable {
                 controller.myPos = Position.values()[Integer.valueOf(tokens[1])];
                 System.out.println("myPos je " + controller.myPos);
                 break;
+            case GAME_STARTED:
+                //TODO CONTROLLER START ONLINE CONTROLLER
+                //DELETE SHOW START MENU
+                controller.showStartMenu();
+                break;
+            case POSSIBLE_MINIGAMES:
+                String[] minigamesString = tokens[1].split("#");
+                ArrayList<Integer> minigames = new ArrayList<>();
+                for (String minigame: minigamesString) {
+                    minigames.add(Integer.valueOf(minigame));
+                }
+                controller.showMiniGameChoiceView(minigames);
         }
     }
 

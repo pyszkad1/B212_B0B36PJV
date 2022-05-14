@@ -1,6 +1,7 @@
 package bonken.net;
 
 import bonken.Controller;
+import bonken.game.Game;
 import bonken.game.Position;
 
 import java.io.IOException;
@@ -28,6 +29,8 @@ public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Socket socket;
     boolean gameStarted;
+
+    Game game;
 
     public Server(Client client, int PORT_NUMBER, Controller controller) {
         this.PORT_NUMBER = PORT_NUMBER;
@@ -101,10 +104,10 @@ public class Server implements Runnable {
         }
     }
 
-    public void broadcast(String msg) {
+    public void broadcast(Protocol protocol,String msg) {
         synchronized(connections) {
             for (Connection connection : connections) {
-                //connection.sendToClient(Protocol.CHAT, msg);
+                connection.sendToClient(protocol, msg);
             }
         }
     }
@@ -121,5 +124,18 @@ public class Server implements Runnable {
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "The server is failed to stop properly. {0}", ex.getMessage());
         }
+    }
+
+
+    public void setGame(Game game){
+        this.game = game;
+    }
+
+    public void startGame(){
+        broadcast(Protocol.GAME_STARTED, "");
+//POSLAT KARTY
+        game.startRound();
+
+
     }
 }

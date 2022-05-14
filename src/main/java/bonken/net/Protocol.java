@@ -5,6 +5,7 @@ public enum Protocol {
     SUBMIT,
     ACCEPTED,
     REJECTED,
+    GAME_STARTED,
     POSSIBLE_MINIGAMES,
     TRICK,
     CARD_HAND,

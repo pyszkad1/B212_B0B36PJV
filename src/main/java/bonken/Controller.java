@@ -79,6 +79,8 @@ public class Controller {
     }
 
     public void showStartMenu() {
+        //TODO IF COMING FROM ONLINE REFUSAL SHOW MSG!!
+
         Platform.runLater(() -> {
             stage.setScene(startMenuView.getScene());
 
@@ -167,7 +169,7 @@ public class Controller {
 
     private void startGameOnline() {
         //TODO make server, player num choice view,...
-        //doesnt do what it is supposed to
+
         System.out.println("------------------------------------------------");
         if (username == null) {
             getNameOnline();
@@ -182,7 +184,7 @@ public class Controller {
                     () -> {
                         trickPane.update();
                         cardPane.update();
-                    });
+                    }, server);
             players[i] = player;
             if (i == myPos.index){ mePlayer = player;}
         }
@@ -190,18 +192,12 @@ public class Controller {
         for (int i = server.getConnections().size(); i < 4; i++) {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
-
         System.out.println(players[0].getUsername());
 
         game = new Game(players, () -> showEndGameScreen());
+        server.setGame(game);
 
-        stage.setScene(gameView.getScene());
-
-        game.startRound();
-
-        gameView.setGame(game);
-        trickPane.setGame(game);
-        endGameView.setGame(game);
+        server.startGame();
 
 
     }
@@ -211,7 +207,7 @@ public class Controller {
         stage.setScene(endGameView.getScene());
     }
 
-    private void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {
+    public void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {
 
         minigameChoicePane.setAvailableMinigames(availableMinigames);
         gameView.showMinigameChoice();

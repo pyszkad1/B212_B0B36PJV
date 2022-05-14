@@ -64,7 +64,6 @@ public class Connection implements Runnable {
                     // name sent, add connection to the list maintained by server
                     name = actionPayload;
                     sendToClient(Protocol.ACCEPTED, "");
-                    server.broadcast(name + " joined the conversation.");
                     System.out.println("ADDED CONNECTION");
                 } else {
                     // connection with this name already there, reject
@@ -72,7 +71,7 @@ public class Connection implements Runnable {
                 }
                 break;
             case QUIT:
-                server.broadcast(name + " left the conversation.");
+                //TODO SEND other players that game is no longer playable or somthing?
                 server.removeConnection(name);
                 return false;
         }

@@ -1,5 +1,8 @@
 package bonken.game;
 
+import bonken.net.Client;
+import bonken.net.Protocol;
+import bonken.net.Server;
 import bonken.utils.Action;
 import bonken.utils.Callable;
 
@@ -11,17 +14,21 @@ public class NetPlayer extends GuiPlayer{
     private Action<Integer> onMinigameSelected;
     private Callable onCardRequired;
 
+    Server server;
+
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
-    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired ) {
+    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired, Server server) {
         super(id, pos, username, onMinigameRequired, onCardRequired);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;
+        this.server = server;
 
     }
 
+    //BUDE NA EVENT ZE SERVERU -> jakmile přijde odpovědět od klienta s minihrou!
     public void minigameSelected(Integer minigame) {
 
         if(miniGameRequired == false) return;
@@ -29,6 +36,9 @@ public class NetPlayer extends GuiPlayer{
         if (minigame >= 7) {
             chosenPositive = true;
         }
+
+
+
         onMinigameSelected.call(minigame);
     }
 
@@ -40,6 +50,7 @@ public class NetPlayer extends GuiPlayer{
 
     @Override
     public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback) {
+
         ArrayList<Integer> possibleMinigameChoices = new ArrayList<>();
         for (Integer minigame : minigames) {
             if (chosenPositive) {
@@ -50,9 +61,16 @@ public class NetPlayer extends GuiPlayer{
                 possibleMinigameChoices.add(minigame);
             }
         }
-
         miniGameRequired = true;
         this.onMinigameSelected = callback;
+
+        String possibleMinString = "";
+        for (Integer min: possibleMinigameChoices) {
+            possibleMinString += min + "#";
+        }
+
+        server.getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMinString);
+
         onMinigameRequired.call(possibleMinigameChoices);
     }
 
