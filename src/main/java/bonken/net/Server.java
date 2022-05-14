@@ -49,14 +49,16 @@ public class Server implements Runnable {
             LOGGER.info("The server is running.");
             // ...then client
             new Thread(client).start();
-            while (connections.size() <= 4 && !gameStarted) {
+            while (true) {
                 // listening for clients...
-                socket = serverSocket.accept();
-                LOGGER.info("The server is accepted connection.");
-                // ...open new connection with client
-                Connection connection = new Connection(this, socket);
+                    socket = serverSocket.accept();
+                    LOGGER.info("The server is accepted connection.");
+                    // ...open new connection with client
+                    Connection connection = new Connection(this, socket);
 
-                new Thread(connection).start();
+                    new Thread(connection).start();
+
+
             }
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "The server is not running. {0}", ex.getMessage());
@@ -69,7 +71,7 @@ public class Server implements Runnable {
         // add only connection with name not yet existing
         synchronized(connections) {
             for (Connection connection : connections) {
-                if (connection.getName().equals(newName)) {
+                if (connection.getName().equals(newName) || connections.size() >= 4 || gameStarted) {
                     return false;
                 }
             }

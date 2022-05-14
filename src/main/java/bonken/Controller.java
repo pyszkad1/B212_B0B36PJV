@@ -3,10 +3,7 @@ package bonken;
 import bonken.game.*;
 import bonken.gui.*;
 import bonken.net.Client;
-import bonken.net.Protocol;
 import bonken.net.Server;
-import bonken.utils.Action;
-import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -16,9 +13,9 @@ import java.util.ArrayList;
 
 public class Controller {
     Game game;
-    Stage stage;
+    public Stage stage;
 
-    StartMenuView startMenuView;
+    public StartMenuView startMenuView;
     GameMenuView gameMenuView;
 
     private String username;
@@ -81,6 +78,13 @@ public class Controller {
         stage.setScene(onlineNameInputView.getScene());
     }
 
+    public void showStartMenu() {
+        Platform.runLater(() -> {
+            stage.setScene(startMenuView.getScene());
+
+        });
+    }
+
     private void startGame() {
 
         if(username == null) {
@@ -126,11 +130,13 @@ public class Controller {
             clientOnly = false;
             System.out.println("You own the server");
 
-            showStartOnlineView();
+            showSettingUpOnlineGame();
         } else {
             startClient();
             clientOnly = true;
             System.out.println("waiting");
+            showSettingUpOnlineGame();
+
         }
 
 
@@ -146,10 +152,13 @@ public class Controller {
     }
 
     private StartOnlineView startOnlineView;
+    private WaitingView waitingView;
 
-    public void showStartOnlineView() {
+    public void showSettingUpOnlineGame() {
         if (clientOnly){
             System.out.println("I am just a client");
+            waitingView = new WaitingView();
+            stage.setScene(waitingView.getScene());
         }else{
         startOnlineView = new StartOnlineView(() -> {startGameOnline(); server.setGameStarted();});
         stage.setScene(startOnlineView.getScene());

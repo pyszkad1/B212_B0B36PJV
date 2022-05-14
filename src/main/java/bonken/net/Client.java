@@ -79,6 +79,7 @@ public class Client implements Runnable {
                 });
                 break;
             case REJECTED:
+                controller.showStartMenu();
             //    controller.showAlert("Name " + name + " already taken. Please choose another one.");
                 break;
             case MYPOS:
