@@ -1,5 +1,7 @@
 package bonken.net;
 
+import bonken.game.Card;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,9 +23,12 @@ public class Connection implements Runnable {
     private PrintWriter out;
     private String name;
 
-    public Connection(Server server, Socket socket) {
+    private int connectionNum;
+
+    public Connection(Server server, Socket socket, int connectionNum) {
         this.server = server;
         this.socket = socket;
+        this.connectionNum = connectionNum;
     }
 
     @Override
@@ -74,6 +79,15 @@ public class Connection implements Runnable {
                 //TODO SEND other players that game is no longer playable or somthing?
                 server.removeConnection(name);
                 return false;
+            case MINIGAME:
+                Integer chosenMg = Integer.valueOf(actionPayload);
+                server.setMinigame(chosenMg, connectionNum);
+            case CARD:
+                for (Card card : server.game.getDeck().getCardDeck()) {
+                    if (card.getImage().equals(actionPayload)){
+                        server.setCard(card, connectionNum);
+                    }
+                }
         }
         return true;
     }

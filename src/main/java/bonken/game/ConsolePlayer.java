@@ -55,6 +55,11 @@ public class ConsolePlayer extends Player {
         callback.call(chosenMiniGameNum);
     }
 
+    @Override
+    public void minigameSelected(Integer minigame){}
+
+
+
     public void getCardToPlay() {
         //TODO just insert played card from gui, dont ask for it
 

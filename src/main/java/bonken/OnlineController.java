@@ -1,8 +1,9 @@
 package bonken;
 
-import bonken.game.Position;
+import bonken.game.*;
 import bonken.gui.*;
 import bonken.net.Client;
+import bonken.net.Protocol;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -23,6 +24,7 @@ public class OnlineController {
     private GameView gameView;
     private EndGameView endGameView;
     private GameStartedView gameStartedView;
+
     private Client client;
     private Callable onMinigameRequired;
 
@@ -31,17 +33,24 @@ public class OnlineController {
         this.stage = stage;
         this.position = position;
         this.startMenuView = startMenuView;
+
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
-            // TODO send to server minigame num
+            client.sendToServer(Protocol.MINIGAME,  String.valueOf(minigame.num));
         });
-        this.cardPane = new CardPane(card -> { sendToServer(card.toString()); cardPane.update(); trickPane.packUpTrick(); });
+        this.cardPane = new CardPane(card -> { sendToServer(card.getImage()); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(position, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
+        gameView = new GameView(minigameChoicePane, cardPane, trickPane);
     }
 
     public void start() {
         stage.setScene(startMenuView.getScene());
+        stage.show();
+    }
+
+    public void showGameView() {
+        stage.setScene(gameView.getScene());
         stage.show();
     }
 

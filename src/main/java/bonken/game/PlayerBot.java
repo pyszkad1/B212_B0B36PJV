@@ -48,6 +48,13 @@ public class PlayerBot extends Player {
             System.out.println("Bot can't choose, next player's turn");
         }
         if (chosenMiniGameNum > 6) chosenPositive = true;
+
         callback.call(chosenMiniGameNum);
+    }
+
+    private Integer selectedMinigame;
+    @Override
+    public void minigameSelected(Integer minigame) {
+        selectedMinigame = minigame;
     }
 }

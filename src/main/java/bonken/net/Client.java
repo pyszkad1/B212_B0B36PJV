@@ -97,24 +97,27 @@ public class Client implements Runnable {
                 onlineController.showGameStarted();
                 break;
             case POSSIBLE_MINIGAMES:
+                System.out.println(name + " received minigames");
                 String[] minigamesString = tokens[1].split("#");
                 ArrayList<Integer> minigames = new ArrayList<>();
                 for (String minigame: minigamesString) {
                     minigames.add(Integer.valueOf(minigame));
                 }
-                onlineController.setPossibleMinigames(minigames);
-                onlineController.showMiniGameChoiceView();
+                Platform.runLater(() -> {onlineController.showGameView(); onlineController.setPossibleMinigames(minigames);onlineController.showMiniGameChoiceView();});
+                break;
+            case TRICK_AND_HAND:
+                System.out.println(name + "received trick and hand");
+                String[] trickAndHand = tokens[1].split("@");
+                String[] trick = trickAndHand[0].split("#");
+                String[] hand = trickAndHand[1].split("#");
         }
     }
 
 
-    public void sendMessage(String message) {
-    //    sendToServer(Protocol.BROADCAST, name + " says: " + message);
-    }
-
 
 
     public void sendToServer(Protocol code, String payload) {
+        System.out.println("trying to send to server");
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Client {1} is sending >>>{0}<<< to server", new Object[]{msg, name});
         out.println(msg);

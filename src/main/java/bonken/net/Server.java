@@ -1,8 +1,7 @@
 package bonken.net;
 
 import bonken.Controller;
-import bonken.game.Game;
-import bonken.game.Position;
+import bonken.game.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -57,7 +56,7 @@ public class Server implements Runnable {
                     socket = serverSocket.accept();
                     LOGGER.info("The server has accepted connection.");
                     // ...open new connection with client
-                    Connection connection = new Connection(this, socket);
+                    Connection connection = new Connection(this, socket, connections.size());
 
                     new Thread(connection).start();
 
@@ -126,6 +125,31 @@ public class Server implements Runnable {
         }
     }
 
+    public void setPLayers(Game game) {
+        this.game = game;
+        PlayerInterface[] players = new  PlayerInterface[4];
+
+        for (int i = 0; i < this.getConnections().size(); i++) {
+            int finalI = i;
+            NetPlayer player = new NetPlayer(i, Position.values()[i], this.getConnections().get(i).getName(),
+                    minigames -> this.sendMinigamesToClient(finalI, minigames),
+                    cardhand -> {
+                        this.sendTrickToClient(finalI, cardhand); trickPane.update(); cardPane.update(finalI, ); //SEND TO CLIENT
+                          //SEND TO CLIENT
+                    }, this);
+            players[i] = player;
+        }
+
+        for (int i = this.getConnections().size(); i < 4; i++) {
+            players[i] = new PlayerBot(i, Position.values()[i]);
+        }
+
+        game = new Game(players, () -> controller.showEndGameScreen());
+        setGame(game);
+
+       startGame();
+    }
+
 
     public void setGame(Game game){
         this.game = game;
@@ -133,7 +157,6 @@ public class Server implements Runnable {
 
     public void startGame(){
         broadcast(Protocol.GAME_STARTED, "");
-//POSLAT KARTY
         game.startRound();
     }
 
@@ -142,8 +165,33 @@ public class Server implements Runnable {
         for (Integer mg: minigames) {
             possibleMG += mg + "#";
         }
+        //TODO Poslat i karty!!
         getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMG);
+    }
 
+    public void sendTrickToClient(int id, ArrayList<Card> cardHand) {
+        Card[] currentTrick = game.getCurrentRound().getCurrentTrick().getCards();
+
+        String sendingTrick = "";
+        for (Card card: currentTrick) {
+            sendingTrick += card.getImage() + "#";
+        }
+        sendingTrick += "@";
+
+        for (Card card : cardHand){
+            sendingTrick += card.getImage() + "#";
+        }
+
+        getConnections().get(id).sendToClient(Protocol.TRICK_AND_HAND, sendingTrick);
+
+    }
+
+    public void setMinigame(Integer minigame, int concectionNum) {
+        game.getPlayers()[concectionNum].minigameSelected(minigame);
+    }
+
+    public void setCard(Card card, int connectionNum) {
+        game.getPlayers()[connectionNum].cardSelected(card);
     }
 
 }

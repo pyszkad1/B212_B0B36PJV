@@ -42,12 +42,7 @@ public class Controller {
         this.stage = stage;
         this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, () -> {stage.close();this.close();});
         this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
-        this.minigameChoicePane = new MinigameChoicePane( minigame -> {
-            gameView.hideMinigameChoice();
-            guiPlayer.minigameSelected(minigame.num);
-        });
-        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
-        this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
+
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close();this.close();});
 
 
@@ -62,7 +57,6 @@ public class Controller {
             startupBackend();
         });
 
-        this.gameView = new GameView(  minigameChoicePane, cardPane, trickPane);
     }
 
     public void start() {
@@ -87,6 +81,14 @@ public class Controller {
     }
 
     private void startGame() {
+        this.minigameChoicePane = new MinigameChoicePane( minigame -> {
+            gameView.hideMinigameChoice();
+            guiPlayer.minigameSelected(minigame.num);
+        });
+        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
+        this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
+        this.gameView = new GameView( minigameChoicePane, cardPane, trickPane);
+
 
         if(username == null) {
             getName();
@@ -176,26 +178,10 @@ public class Controller {
             return;
         }
 
-        PlayerInterface[] players = new  PlayerInterface[4];
 
-        for (int i = 0; i < server.getConnections().size(); i++) {
-            NetPlayer player = new NetPlayer(i, Position.values()[i], server.getConnections().get(i).getName(),
-                    minigames -> showMiniGameChoiceView(minigames),
-                    () -> {
-                        trickPane.update();
-                        cardPane.update();
-                    }, server);
-            players[i] = player;
-        }
+        server.setPLayers(game);
 
-        for (int i = server.getConnections().size(); i < 4; i++) {
-            players[i] = new PlayerBot(i, Position.values()[i]);
-        }
 
-        game = new Game(players, () -> showEndGameScreen());
-        server.setGame(game);
-
-        server.startGame();
 
 
     }

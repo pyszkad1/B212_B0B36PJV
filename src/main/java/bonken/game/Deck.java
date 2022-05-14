@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    List<Card> cardDeck = new ArrayList<Card>(52);
+    ArrayList<Card> cardDeck = new ArrayList<Card>(52);
 
     public Deck() {
         for (int i = 0; i < 4; i++) {
@@ -51,5 +51,9 @@ public class Deck {
             cnt++;
         }
         return ret;
+    }
+
+    public ArrayList<Card> getCardDeck(){
+        return cardDeck;
     }
 }

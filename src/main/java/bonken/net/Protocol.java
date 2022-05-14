@@ -7,9 +7,8 @@ public enum Protocol {
     REJECTED,
     GAME_STARTED,
     POSSIBLE_MINIGAMES,
-    TRICK,
+    TRICK_AND_HAND,
     CARD_HAND,
-    PLAYABLE_CARDS,
 
     // client origin
     USERNAME,

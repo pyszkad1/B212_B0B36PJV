@@ -8,19 +8,19 @@ import bonken.utils.Callable;
 
 import java.util.ArrayList;
 
-public class NetPlayer extends GuiPlayer{
+public class NetPlayer extends Player{
 
     private Action<ArrayList<Integer>> onMinigameRequired;
     private Action<Integer> onMinigameSelected;
-    private Callable onCardRequired;
+    private Action<ArrayList<Card>> onCardRequired;
 
     Server server;
 
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
-    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Callable onCardRequired, Server server) {
-        super(id, pos, username, onMinigameRequired, onCardRequired);
+    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Action<ArrayList<Card>> onCardRequired, Server server) {
+        super(id, pos);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;
@@ -62,12 +62,15 @@ public class NetPlayer extends GuiPlayer{
         miniGameRequired = true;
         this.onMinigameSelected = callback;
 
+
+
         onMinigameRequired.call(possibleMinigameChoices);
     }
 
     @Override
     protected void getCardToPlay() {
         cardRequired = true;
-        onCardRequired.call();
+
+        onCardRequired.call(playableCards);
     }
 }

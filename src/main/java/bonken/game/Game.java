@@ -86,4 +86,8 @@ public class Game {
         startRound();
     }
 
+    public Deck getDeck(){
+        return deck;
+    }
+
 }
