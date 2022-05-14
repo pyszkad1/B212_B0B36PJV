@@ -37,8 +37,6 @@ public class NetPlayer extends GuiPlayer{
             chosenPositive = true;
         }
 
-
-
         onMinigameSelected.call(minigame);
     }
 
@@ -63,13 +61,6 @@ public class NetPlayer extends GuiPlayer{
         }
         miniGameRequired = true;
         this.onMinigameSelected = callback;
-
-        String possibleMinString = "";
-        for (Integer min: possibleMinigameChoices) {
-            possibleMinString += min + "#";
-        }
-
-        server.getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMinString);
 
         onMinigameRequired.call(possibleMinigameChoices);
     }

@@ -15,9 +15,8 @@ public class Controller {
     Game game;
     public Stage stage;
 
-    public StartMenuView startMenuView;
-    GameMenuView gameMenuView;
-
+    private StartMenuView startMenuView;
+    private GameMenuView gameMenuView;
     private String username;
     private MinigameChoicePane minigameChoicePane;
     private CardPane cardPane;
@@ -33,10 +32,11 @@ public class Controller {
     private static final int PORT_NUMBER = 11111;               // TODO
     private static final String HOST = "localhost";
 
-    private GuiPlayer mePlayer;
     public Position myPos;
     private GuiPlayer guiPlayer;
     private NameInputView nameInputView;
+
+    private OnlineController onlineController;
 
     public Controller(Stage stage) {
         this.stage = stage;
@@ -44,9 +44,9 @@ public class Controller {
         this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
-            mePlayer.minigameSelected(minigame.num);
+            guiPlayer.minigameSelected(minigame.num);
         });
-        this.cardPane = new CardPane(card -> { mePlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
+        this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.update(); trickPane.packUpTrick(); });
         this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close();this.close();});
 
@@ -83,7 +83,6 @@ public class Controller {
 
         Platform.runLater(() -> {
             stage.setScene(startMenuView.getScene());
-
         });
     }
 
@@ -101,9 +100,8 @@ public class Controller {
                 () -> {
                     trickPane.update();
                     cardPane.update();
-                }                );
+                });
         players[0] = guiPlayer;
-        mePlayer = guiPlayer;
 
         for (int i = 1; i < 4; i++) {
             players[i] = new PlayerBot(i, Position.values()[i]);
@@ -138,10 +136,12 @@ public class Controller {
             clientOnly = true;
             System.out.println("waiting");
             showSettingUpOnlineGame();
-
         }
 
-
+        Platform.runLater(() -> {
+            onlineController = new OnlineController(stage, client, startMenuView, myPos);
+            client.setOnlineController(onlineController);
+        });
 
     }
 
@@ -186,13 +186,11 @@ public class Controller {
                         cardPane.update();
                     }, server);
             players[i] = player;
-            if (i == myPos.index){ mePlayer = player;}
         }
 
         for (int i = server.getConnections().size(); i < 4; i++) {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
-        System.out.println(players[0].getUsername());
 
         game = new Game(players, () -> showEndGameScreen());
         server.setGame(game);

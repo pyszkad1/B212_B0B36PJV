@@ -55,7 +55,7 @@ public class Server implements Runnable {
             while (true) {
                 // listening for clients...
                     socket = serverSocket.accept();
-                    LOGGER.info("The server is accepted connection.");
+                    LOGGER.info("The server has accepted connection.");
                     // ...open new connection with client
                     Connection connection = new Connection(this, socket);
 
@@ -122,7 +122,7 @@ public class Server implements Runnable {
                 socket.close();
             }
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "The server is failed to stop properly. {0}", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "The server has failed to stop properly. {0}", ex.getMessage());
         }
     }
 
@@ -135,7 +135,15 @@ public class Server implements Runnable {
         broadcast(Protocol.GAME_STARTED, "");
 //POSLAT KARTY
         game.startRound();
+    }
 
+    public void sendMinigamesToClient(int id, ArrayList<Integer> minigames) {
+        String possibleMG = "";
+        for (Integer mg: minigames) {
+            possibleMG += mg + "#";
+        }
+        getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMG);
 
     }
+
 }

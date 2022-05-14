@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bonken.Controller;
+import bonken.OnlineController;
 import bonken.game.Position;
 import bonken.net.Protocol;
 import javafx.application.Platform;
@@ -30,12 +31,17 @@ public class Client implements Runnable {
 
     private Socket socket;
     private PrintWriter out;
+    private OnlineController onlineController;
 
     public Client(Controller controller, String host, int port, String name) {
         this.controller = controller;
         this.host = host;
         this.port = port;
         this.name = name;
+    }
+
+    public void setOnlineController(OnlineController onlineController) {
+        this.onlineController = onlineController;
     }
 
     @Override
@@ -59,7 +65,7 @@ public class Client implements Runnable {
             LOGGER.log(Level.SEVERE, "Server is not running. {0}", ex.getMessage());
             //controller.showAlert("Can't connect to server.");
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "Client can''t connect. {0}", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "Client can't connect. {0}", ex.getMessage());
             //controller.showAlert("Connection to server lost.");
         } finally {
             close();
@@ -88,9 +94,7 @@ public class Client implements Runnable {
                 System.out.println("myPos je " + controller.myPos);
                 break;
             case GAME_STARTED:
-                //TODO CONTROLLER START ONLINE CONTROLLER
-                //DELETE SHOW START MENU
-                controller.showStartMenu();
+                onlineController.showGameStarted();
                 break;
             case POSSIBLE_MINIGAMES:
                 String[] minigamesString = tokens[1].split("#");
@@ -98,9 +102,11 @@ public class Client implements Runnable {
                 for (String minigame: minigamesString) {
                     minigames.add(Integer.valueOf(minigame));
                 }
-                controller.showMiniGameChoiceView(minigames);
+                onlineController.setPossibleMinigames(minigames);
+                onlineController.showMiniGameChoiceView();
         }
     }
+
 
     public void sendMessage(String message) {
     //    sendToServer(Protocol.BROADCAST, name + " says: " + message);
