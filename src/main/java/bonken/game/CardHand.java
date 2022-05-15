@@ -32,7 +32,8 @@ public class CardHand {
 
         ArrayList<Card> playableCards;
 
-        if (firstCard.getSuit() == -1) {
+        //TODO IDK?
+        if (firstCard == null || firstCard.getSuit() == -1) {
             if (cannotPlayHearts) {
                 playableCards = addAllButHearts();
             }

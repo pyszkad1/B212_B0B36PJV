@@ -97,13 +97,5 @@ public class GameView extends View{
         borderPane.toFront();
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-
-        PlayerInterface player = game.getPlayers()[0];
-
-        cardPane.setPlayer(player);
-
-    }
 
 }

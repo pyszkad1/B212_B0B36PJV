@@ -5,6 +5,7 @@ import bonken.net.Protocol;
 import bonken.net.Server;
 import bonken.utils.Action;
 import bonken.utils.Callable;
+import bonken.utils.DoubleAction;
 
 import java.util.ArrayList;
 
@@ -12,14 +13,14 @@ public class NetPlayer extends Player{
 
     private Action<ArrayList<Integer>> onMinigameRequired;
     private Action<Integer> onMinigameSelected;
-    private Action<ArrayList<Card>> onCardRequired;
+    private DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired;
 
     Server server;
 
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
-    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, Action<ArrayList<Card>> onCardRequired, Server server) {
+    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired, Server server) {
         super(id, pos);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
@@ -75,7 +76,7 @@ public class NetPlayer extends Player{
     protected void getCardToPlay() {
         cardRequired = true;
 
-        onCardRequired.call(playableCards);
+        onCardRequired.call(cardHand.hand, playableCards);
     }
 
     public String[] getStringHand() {

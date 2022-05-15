@@ -66,7 +66,11 @@ public class OnlineController {
         for (int i = 0; i < handList.size(); i++) {
             currentStringCardHand[i] = handList.get(i);
         }
+    }
 
+    public void updateGui(String[] trick, String[] cardHand, String[] playableCards){
+        trickPane.update();
+        cardPane.updateBefore(cardHand, playableCards);
     }
 
     public void start() {

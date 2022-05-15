@@ -101,7 +101,7 @@ public class Controller {
                 minigames -> showMiniGameChoiceView(minigames),
                 () -> {
                     trickPane.update();
-                    cardPane.updateBefore(guiPlayer.getStringHand(), );
+                    updateCards();
                 });
         players[0] = guiPlayer;
 
@@ -111,15 +111,21 @@ public class Controller {
 
         game = new Game(players, () -> showEndGameScreen());
 
+        guiPlayer.setGame(game);
+
         stage.setScene(gameView.getScene());
 
         game.startRound();
 
-        gameView.setGame(game);
         trickPane.setGame(game);
         endGameView.setGame(game);
 
+    }
 
+    private void updateCards(){
+        Platform.runLater(() ->
+        {cardPane.updateBefore(guiPlayer.getStringHand(), guiPlayer.getStringPlayableCards());}
+        );
     }
 
     private void startupBackend() {

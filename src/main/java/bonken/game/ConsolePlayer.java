@@ -58,6 +58,10 @@ public class ConsolePlayer extends Player {
     @Override
     public void minigameSelected(Integer minigame){}
 
+    @Override
+    public void cardSelected(String card) {
+
+    }
 
 
     public void getCardToPlay() {

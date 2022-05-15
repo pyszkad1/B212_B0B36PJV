@@ -34,15 +34,9 @@ public class CardPane extends HBox {
 
     }
 
-    private PlayerInterface player;
-
-    public void setPlayer (PlayerInterface player) {
-
-        this.player = player;
-        update();
-    }
-
     public void updateBefore(String[] cards, String[] playableCards) {
+
+        System.out.println("++++++UPDATE BEFORE+++++");
 
         this.getChildren().clear();
 
@@ -91,6 +85,7 @@ public class CardPane extends HBox {
         }
     }
     public void updateAfter(String[] cards) {
+        System.out.println("++++++UPDATE AFTER +++++");
 
         this.getChildren().clear();
 

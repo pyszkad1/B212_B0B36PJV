@@ -133,8 +133,8 @@ public class Server implements Runnable {
             int finalI = i;
             NetPlayer player = new NetPlayer(i, Position.values()[i], this.getConnections().get(i).getName(),
                     minigames -> this.sendMinigamesToClient(finalI, minigames),
-                    cardhand -> {
-                        this.sendTrickToClient(finalI, cardhand); trickPane.update(); cardPane.update(finalI, ); //SEND TO CLIENT
+                    (cardHand, playableCards) -> {
+                        this.sendTrickToClient(finalI, cardHand, playableCards); //SEND TO CLIENT
                           //SEND TO CLIENT
                     }, this);
             players[i] = player;
@@ -173,7 +173,7 @@ public class Server implements Runnable {
         getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMG);
     }
 
-    public void sendTrickToClient(int id, ArrayList<Card> cardHand) {
+    public void sendTrickToClient(int id, ArrayList<Card> cardHand, ArrayList<Card> playableCards) {
         Card[] currentTrick = game.getCurrentRound().getCurrentTrick().getCards();
 
         String sendingTrick = "";
@@ -183,6 +183,11 @@ public class Server implements Runnable {
         sendingTrick += "@";
 
         for (Card card : cardHand){
+            sendingTrick += card.getImage() + "#";
+        }
+
+        sendingTrick += "@";
+        for (Card card : playableCards){
             sendingTrick += card.getImage() + "#";
         }
 

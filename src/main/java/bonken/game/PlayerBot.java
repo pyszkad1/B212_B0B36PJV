@@ -57,4 +57,9 @@ public class PlayerBot extends Player {
     public void minigameSelected(Integer minigame) {
         selectedMinigame = minigame;
     }
+
+    @Override
+    public void cardSelected(String card) {
+
+    }
 }
