@@ -89,7 +89,6 @@ public class Controller {
         this.trickPane = new OfflineTrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.gameView = new GameView( minigameChoicePane, cardPane, trickPane);
 
-
         if(username == null) {
             getName();
             return;
@@ -110,13 +109,9 @@ public class Controller {
         }
 
         game = new Game(players, () -> showEndGameScreen());
-
         guiPlayer.setGame(game);
-
         stage.setScene(gameView.getScene());
-
         game.startRound();
-
         trickPane.setGame(game);
         endGameView.setGame(game);
 
@@ -153,8 +148,6 @@ public class Controller {
 
     }
 
-
-
     private void startServerThenClient() {
         new Thread(server).start();
     }
@@ -184,11 +177,7 @@ public class Controller {
             getNameOnline();
             return;
         }
-
-
         server.setPLayers(game);
-
-
     }
 
     public void showEndGameScreen() {
@@ -213,10 +202,11 @@ public class Controller {
     }
 
     public void close() {
-        if (server != null){
-            server.stop();
-        }
-        trickPane.killTimer();
+        if (server != null) server.stop();
+        if (client != null) client.close();
+        if (trickPane != null) trickPane.killTimer();
+        if (game != null) game.killTimer();
+        if (onlineController != null) onlineController.close();
     }
 
 

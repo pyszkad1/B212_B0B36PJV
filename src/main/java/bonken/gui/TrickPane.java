@@ -94,9 +94,6 @@ public abstract class TrickPane extends Pane {
         }
     }
 
-
-
-
     public void killTimer(){
         if (timer != null) {
             timer.cancel();

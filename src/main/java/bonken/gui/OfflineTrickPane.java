@@ -1,6 +1,7 @@
 package bonken.gui;
 
 import bonken.game.*;
+import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -8,9 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
-public class OfflineTrickPane extends TrickPane{
+public class OfflineTrickPane extends TrickPane {
 
+    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
     private StatusPane statusPane;
 
     public OfflineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
@@ -56,7 +59,7 @@ public class OfflineTrickPane extends TrickPane{
     }
 
     private void drawTrick(Trick trick) {
-        System.out.println("---------DRAWING TRICK---------");
+        LOGGER.info("---------DRAWING TRICK---------");
         this.clear();
         Card[] cards = trick.getCards();
 
@@ -79,9 +82,6 @@ public class OfflineTrickPane extends TrickPane{
     private void setupCardPanes() {
         cardPanes = new Pane[4];
 
-        Position currPos = bottomPlayer;
-
-
         for (int i = 0; i < 4; i++) {
             Pane p = new Pane();
             cardPanes[i] = p;
@@ -94,7 +94,6 @@ public class OfflineTrickPane extends TrickPane{
         this.getChildren().add(statusPane);
         statusPane.setTranslateX(0);
         statusPane.setTranslateX(0);
-
     }
 
     private void putCard(Card card, Position pos) {
@@ -105,8 +104,5 @@ public class OfflineTrickPane extends TrickPane{
 
         this.cardPanes[pos.index].getChildren().add(imageView);
     }
-
-
-
 
 }

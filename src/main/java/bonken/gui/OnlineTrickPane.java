@@ -1,6 +1,7 @@
 package bonken.gui;
 
 import bonken.game.Position;
+import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -8,8 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class OnlineTrickPane extends TrickPane {
+
+    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
     private OnlineStatusPane statusPane;
 
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
@@ -35,7 +39,7 @@ public class OnlineTrickPane extends TrickPane {
     }
 
     private void drawTrick(int position, String[] trick) {
-        System.out.println("---------DRAWING TRICK---------");
+        LOGGER.info("---------DRAWING TRICK---------");
         this.clear();
 
 
@@ -52,16 +56,11 @@ public class OnlineTrickPane extends TrickPane {
             currPosition = currPosition.next();
         }
 
-
         adjustPanePositions();
-
     }
 
     private void setupCardPanes() {
         cardPanes = new Pane[4];
-
-        Position currPos = bottomPlayer;
-
 
         for (int i = 0; i < 4; i++) {
             Pane p = new Pane();

@@ -1,5 +1,10 @@
 package bonken.net;
 
+import bonken.Controller;
+import bonken.OnlineController;
+import bonken.game.Position;
+import javafx.application.Platform;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,12 +14,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import bonken.Controller;
-import bonken.OnlineController;
-import bonken.game.Position;
-import bonken.net.Protocol;
-import javafx.application.Platform;
 
 /**
  *
@@ -135,6 +134,7 @@ public class Client implements Runnable {
                 String[] players = scoreBoard[0].split("#");
                 String[] score = scoreBoard[1].split("#");
                 Platform.runLater(() -> onlineController.updateScoreboard(players, score));
+                break;
         }
     }
 

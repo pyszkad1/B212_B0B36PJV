@@ -8,8 +8,6 @@ import javafx.scene.layout.VBox;
 
 public class OnlineStatusPane extends VBox {
 
-    Game game;
-
     /**
      * SHOULD SHOW
      *
@@ -28,8 +26,8 @@ public class OnlineStatusPane extends VBox {
     public OnlineStatusPane() {
         super();
 
-        roundHeader= new Label("Round ");
-        roundLabel= new Label();
+        roundHeader = new Label("Round ");
+        roundLabel = new Label();
         roundBox = new HBox(roundHeader, roundLabel);
 
         minigameLabel= new Label() ;
@@ -38,9 +36,8 @@ public class OnlineStatusPane extends VBox {
         scoreLabel = new Label("Score");
         onlineScoreboardView = new OnlineScoreboardView();
         scoreLabel.hoverProperty().addListener((obs, oldVal, newVal) -> {
-            if(newVal) {
+            if (newVal) {
                 onlineScoreboardView.show();
-
             } else {
                 onlineScoreboardView.hide();
             }
@@ -48,10 +45,9 @@ public class OnlineStatusPane extends VBox {
         scoreboardBox = new VBox(scoreLabel, onlineScoreboardView);
 
         this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
-
     }
 
-    public void update(String roundNum, String minigame) {
+    public void update(String roundNum, String minigame) {              // TODO fix
         roundLabel.setText(roundNum + " / 11");
         minigameLabel.setText(minigame);
     }

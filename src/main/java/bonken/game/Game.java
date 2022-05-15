@@ -21,7 +21,6 @@ public class Game {
     Timer timer;
     private static final Logger logger = Logger.getLogger(Server.class.getName());
 
-
     public ArrayList<Integer> getMinigames() {
         return minigames;
     }
@@ -112,6 +111,12 @@ public class Game {
 
     public Deck getDeck(){
         return deck;
+    }
+
+    public void killTimer(){
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
 }

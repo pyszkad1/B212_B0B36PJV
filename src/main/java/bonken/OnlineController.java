@@ -1,6 +1,6 @@
 package bonken;
 
-import bonken.game.*;
+import bonken.game.Position;
 import bonken.gui.*;
 import bonken.net.Client;
 import bonken.net.Protocol;
@@ -9,8 +9,6 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class OnlineController {
 
@@ -52,7 +50,6 @@ public class OnlineController {
         this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
-
     }
 
     public Position getMyPosition() {

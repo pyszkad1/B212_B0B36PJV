@@ -24,6 +24,8 @@ public class OnlineScoreboardView extends VBox {
     HBox player2;
     HBox player3;
     public OnlineScoreboardView() {
+        super();
+
         username0 = new Label();
         username1 = new Label();
         username2 = new Label();
