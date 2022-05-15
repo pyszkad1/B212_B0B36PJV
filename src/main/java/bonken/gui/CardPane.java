@@ -5,6 +5,7 @@ import bonken.game.CardHand;
 import bonken.game.Player;
 import bonken.game.PlayerInterface;
 import bonken.utils.Action;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -118,6 +119,6 @@ public class CardPane extends HBox {
 
     public void pressedCard(String card) {
 
-        onCardClicked.call(card);
+        Platform.runLater(() -> onCardClicked.call(card));
     }
 }

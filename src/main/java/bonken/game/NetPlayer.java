@@ -6,6 +6,7 @@ import bonken.net.Server;
 import bonken.utils.Action;
 import bonken.utils.Callable;
 import bonken.utils.DoubleAction;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,8 @@ public class NetPlayer extends Player{
     protected void getCardToPlay() {
         cardRequired = true;
 
-        onCardRequired.call(cardHand.hand, playableCards);
+        Platform.runLater(() -> onCardRequired.call(cardHand.hand, playableCards));
+
     }
 
     public String[] getStringHand() {

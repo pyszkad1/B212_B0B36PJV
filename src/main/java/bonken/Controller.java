@@ -176,7 +176,6 @@ public class Controller {
     }
 
     private void startGameOnline() {
-        //TODO make server, player num choice view,...
 
         System.out.println("------------------------------------------------");
         if (username == null) {
@@ -186,8 +185,6 @@ public class Controller {
 
 
         server.setPLayers(game);
-
-
 
 
     }

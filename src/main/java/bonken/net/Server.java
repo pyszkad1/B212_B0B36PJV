@@ -2,6 +2,7 @@ package bonken.net;
 
 import bonken.Controller;
 import bonken.game.*;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -174,10 +175,12 @@ public class Server implements Runnable {
     }
 
     public void sendTrickToClient(int id, ArrayList<Card> cardHand, ArrayList<Card> playableCards) {
+
         Card[] currentTrick = game.getCurrentRound().getCurrentTrick().getCards();
 
         String sendingTrick = "";
         for (Card card: currentTrick) {
+            if (card == null) break;
             sendingTrick += card.getImage() + "#";
         }
         sendingTrick += "@";

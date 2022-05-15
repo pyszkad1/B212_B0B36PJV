@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class StartOnlineView extends View {
-    private Game game;
 
     public StartOnlineView(Callable onOnlineStart) {
         Button startButton = new Button("START GAME");

@@ -40,7 +40,7 @@ public class OnlineController {
             gameView.hideMinigameChoice();
             client.sendToServer(Protocol.MINIGAME,  String.valueOf(minigame.num));
         });
-        this.cardPane = new CardPane(card -> {updateHand(card); client.sendToServer(Protocol.CARD, card); cardPane.updateAfter(currentStringCardHand); trickPane.packUpTrick();  });
+        this.cardPane = new CardPane(card -> {client.sendToServer(Protocol.CARD, card); cardPane.updateAfter(currentStringCardHand); trickPane.packUpTrick();  });
         this.trickPane = new TrickPane(position, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
@@ -68,9 +68,12 @@ public class OnlineController {
         }
     }
 
+    private boolean showingGameView = false;
     public void updateGui(String[] trick, String[] cardHand, String[] playableCards){
-        trickPane.update();
-        cardPane.updateBefore(cardHand, playableCards);
+        //trickPane.update(trick);
+
+        Platform.runLater(() -> cardPane.updateBefore(cardHand, playableCards));
+
     }
 
     public void start() {
@@ -79,8 +82,11 @@ public class OnlineController {
     }
 
     public void showGameView() {
+        if (!showingGameView){
         stage.setScene(gameView.getScene());
         stage.show();
+        showingGameView = true;
+        }
     }
 
     public void showGameStarted() {

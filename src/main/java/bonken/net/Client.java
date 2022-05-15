@@ -97,6 +97,7 @@ public class Client implements Runnable {
                 onlineController.showGameStarted();
                 break;
             case POSSIBLE_MINIGAMES:
+
                 System.out.println(name + " received minigames");
                 String[] minigamesString = tokens[1].split("#");
                 ArrayList<Integer> minigames = new ArrayList<>();
@@ -106,13 +107,14 @@ public class Client implements Runnable {
                 Platform.runLater(() -> {onlineController.showGameView(); onlineController.setPossibleMinigames(minigames);onlineController.showMiniGameChoiceView();});
                 break;
             case TRICK_AND_HAND:
-                System.out.println(name + "received trick and hand");
+                //onlineController.showGameView();
+                System.out.println(name + " received trick and hand");
                 String[] trickAndHand = tokens[1].split("@");
                 String[] trick = trickAndHand[0].split("#");
                 String[] hand = trickAndHand[1].split("#");
                 String[] playableCards = trickAndHand[2].split("#");
                 onlineController.setCurrentStringCardHand(hand);
-                onlineController.updateGui(trick, hand, playableCards);
+                Platform.runLater(() -> {onlineController.showGameView(); onlineController.updateGui(trick, hand, playableCards);});
         }
     }
 
@@ -120,7 +122,7 @@ public class Client implements Runnable {
 
 
     public void sendToServer(Protocol code, String payload) {
-        System.out.println("trying to send to server");
+        System.out.println("trying to send to server " + payload);
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Client {1} is sending >>>{0}<<< to server", new Object[]{msg, name});
         out.println(msg);
