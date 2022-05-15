@@ -3,6 +3,7 @@ package bonken.gui;
 import bonken.game.Card;
 import bonken.game.Game;
 import bonken.game.PlayerInterface;
+import bonken.net.Client;
 import bonken.utils.Action;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -18,21 +19,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class GameView extends View{
 
-
+    private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
     private Game game;
-
     private CardPane cardPane;
     private MinigameChoicePane minigameChoicePane;
     private OnlineTrickPane onlineTrickPane;
     private OfflineTrickPane offlineTrickPane;
     private StackPane centerPane;
-
     private BorderPane borderPane;
     private Rectangle blockingRec;
-
     private StackPane wholeScreen;
 
     public void showMinigameChoice() {
@@ -56,7 +55,7 @@ public class GameView extends View{
 
     public GameView( MinigameChoicePane minigamePane, CardPane cardPane, OfflineTrickPane offlineTrickPane) {
 
-        System.out.println("StartedGameView!! --------- :)");
+        LOGGER.info("Started Game View ------- OFFLINE");
 
         this.cardPane = cardPane;
         cardPane.setMaxWidth(1080);
@@ -94,7 +93,7 @@ public class GameView extends View{
 
     public GameView( MinigameChoicePane minigamePane, CardPane cardPane, OnlineTrickPane onlineTrickPane) {
 
-        System.out.println("StartedGameView!! --------- :)");
+        LOGGER.info("Started Game View ------- ONLINE");
 
         this.cardPane = cardPane;
         cardPane.setMaxWidth(1080);

@@ -8,7 +8,6 @@ public enum Protocol {
     GAME_STARTED,
     POSSIBLE_MINIGAMES,
     TRICK_AND_HAND,
-    CARD_HAND,
     TRICK_END,
     ROUND,
     SCORE,

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class OnlineTrickPane extends TrickPane {
 
-    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OnlineTrickPane.class.getName());
     private OnlineStatusPane statusPane;
 
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {

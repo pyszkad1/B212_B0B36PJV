@@ -10,6 +10,7 @@ public class GameStartedView extends View {
 
     public GameStartedView() {
         Label label = new Label("ONLINE GAME STARTED");
+        label.getStyleClass().add("header-label");
         //TODO waiting for player to choose minigame
 
         HBox hb = new HBox(label);

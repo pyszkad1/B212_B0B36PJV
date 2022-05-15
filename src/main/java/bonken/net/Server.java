@@ -171,12 +171,24 @@ public class Server implements Runnable {
     }
 
     public void sendMinigamesToClient(int id, ArrayList<Integer> minigames) {
+        ArrayList<Card> cardHand = game.getPlayers()[id].getCardHand().getHand();
+
+        String whole = "";
+
         String possibleMG = "";
         for (Integer mg: minigames) {
             possibleMG += mg + "#";
         }
-        //TODO Poslat i karty!!
-        getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, possibleMG);
+        whole += possibleMG;
+        whole += "@";
+
+        String cardHandString = "";
+        for (Card card : cardHand){
+            cardHandString += card.getImage() + "#";
+        }
+        whole += cardHandString;
+
+        getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, whole);
     }
 
     public void sendTrickToClient(int id, ArrayList<Card> cardHand, ArrayList<Card> playableCards) {

@@ -186,7 +186,14 @@ public class Controller {
     }
 
     public void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {
+        ArrayList<Card> cardHand = game.getPlayers()[0].getCardHand().getHand();
+        String[] hand = new String[cardHand.size()];
 
+        for (int i = 0; i < cardHand.size(); i++) {
+            hand[i] = cardHand.get(i).getImage();
+        }
+
+        cardPane.updateAfter(hand);
         minigameChoicePane.setAvailableMinigames(availableMinigames);
         gameView.showMinigameChoice();
     }

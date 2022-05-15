@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Client implements Runnable {
 
-    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
 
     private final Controller controller;
     private final int port;
@@ -98,12 +98,17 @@ public class Client implements Runnable {
                 break;
             case POSSIBLE_MINIGAMES:
                 System.out.println(name + " received minigames");
-                String[] minigamesString = tokens[1].split("#");
+                String[] minigamesAndHand = tokens[1].split("@");
+                String[] minigamesString = minigamesAndHand[0].split("#");
+                String[] cardHandString = minigamesAndHand[1].split("#");
+
                 ArrayList<Integer> minigames = new ArrayList<>();
                 for (String minigame: minigamesString) {
                     minigames.add(Integer.valueOf(minigame));
                 }
-                Platform.runLater(() -> {onlineController.showGameView(); onlineController.setPossibleMinigames(minigames);onlineController.showMiniGameChoiceView();});
+
+                Platform.runLater(() -> {onlineController.showCardHand(cardHandString); onlineController.showGameView(); onlineController.setPossibleMinigames(minigames);
+                                        onlineController.showMiniGameChoiceView();});
                 break;
             case TRICK_AND_HAND:
                 //onlineController.showGameView();

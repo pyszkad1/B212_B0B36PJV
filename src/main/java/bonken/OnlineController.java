@@ -79,13 +79,15 @@ public class OnlineController {
     }
 
     private boolean showingGameView = false;
+
     public void updateGui(String stringFirstPlayer, String[] trick, String[] cardHand, String[] playableCards){
         int firstPlayer = Integer.valueOf(stringFirstPlayer);
         trickPane.update(firstPlayer, trick);
-
-
         Platform.runLater(() -> cardPane.updateBefore(cardHand, playableCards));
+    }
 
+    public void showCardHand(String[] cardHand) {
+        Platform.runLater(() -> cardPane.updateAfter(cardHand));
     }
 
     public void updateTrickEnd(String firstPlayerAgain, String[] wholeTrick){
@@ -98,8 +100,6 @@ public class OnlineController {
         stage.setScene(startMenuView.getScene());
         stage.show();
     }
-
-
 
     public void showGameView() {
         if (!showingGameView){
@@ -123,14 +123,9 @@ public class OnlineController {
         gameView.showMinigameChoice();
     }
 
-    public void sendToServer(String msg) {
-
-    }
-
     public void close() {
-        trickPane.killTimer();
+        if (trickPane != null) trickPane.killTimer();
     }
-
 
     public void updateStatus(String roundNum, String minigame) {
         onlineStatusPane.update(roundNum, minigame);

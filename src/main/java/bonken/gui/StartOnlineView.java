@@ -11,6 +11,7 @@ public class StartOnlineView extends View {
 
     public StartOnlineView(Callable onOnlineStart) {
         Button startButton = new Button("START GAME");
+        startButton.getStyleClass().add("menu-button");
         startButton.setOnAction(event -> onOnlineStart.call());
 
         HBox hb = new HBox(startButton);

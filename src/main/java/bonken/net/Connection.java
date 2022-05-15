@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class Connection implements Runnable {
 
-    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     private final Server server;
     private final Socket socket;
