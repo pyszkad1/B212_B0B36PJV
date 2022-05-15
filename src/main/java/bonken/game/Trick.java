@@ -125,6 +125,7 @@ public class Trick {
     }
 
     private void countTrickScore(Card[] trick, int trickWinner) {
+
         if (trumps == -1) {
             ArrayList<Card> playedTrick = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
@@ -178,8 +179,6 @@ public class Trick {
                     }
                 }
             }
-
-
 
         } else if (trumps >= 0 && trumps <= 4) {
             game.scoreBoard.updateScoreBoard(10, trickWinner);

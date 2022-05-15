@@ -140,6 +140,9 @@ public class Client implements Runnable {
                 String[] score = scoreBoard[1].split("#");
                 Platform.runLater(() -> onlineController.updateScoreboard(players, score));
                 break;
+            case GAME_ENDED:
+                Platform.runLater(() -> onlineController.showEndGameScreen());
+                break;
         }
     }
 

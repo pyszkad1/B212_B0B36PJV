@@ -1,30 +1,16 @@
 package bonken.gui;
 
-import bonken.game.Card;
-import bonken.game.Game;
-import bonken.game.PlayerInterface;
-import bonken.net.Client;
-import bonken.utils.Action;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class GameView extends View{
 
     private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
-    private Game game;
     private CardPane cardPane;
     private MinigameChoicePane minigameChoicePane;
     private OnlineTrickPane onlineTrickPane;

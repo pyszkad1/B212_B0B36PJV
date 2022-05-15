@@ -94,15 +94,16 @@ public class Game {
         System.out.println(scoreBoard.toString());
         timer = new Timer();
 
-        if(++gameCounter == 11) {
+        if(++gameCounter == 11) {                               // TODO == 11
             gameEnded = true;
             logger.info("END OF GAME");
+
+
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     Platform.runLater(() -> onGameEnd.call());
-                }
-            } , 3100);
+                }} , 3100);
             return;
         }
 

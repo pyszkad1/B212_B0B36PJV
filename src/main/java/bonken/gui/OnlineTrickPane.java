@@ -1,7 +1,6 @@
 package bonken.gui;
 
 import bonken.game.Position;
-import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -39,13 +38,11 @@ public class OnlineTrickPane extends TrickPane {
     }
 
     private void drawTrick(int position, String[] trick) {
-        LOGGER.info("---------DRAWING TRICK---------");
+        LOGGER.info("Drawing trick.");
         this.clear();
-
 
         Position currPosition = Position.values()[position];
         System.out.println(position + " is position");
-
 
         for (int i = 0; i < trick.length; i++) {
             String card = trick[i];

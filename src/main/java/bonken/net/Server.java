@@ -144,7 +144,7 @@ public class Server implements Runnable {
             players[i] = new PlayerBot(i, Position.values()[i], (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer); sendScoreToClients();} );
         }
 
-        game = new Game(players, () -> controller.showEndGameScreen(), () -> sendStatusToClients());
+        game = new Game(players, () -> sendGameEndToClients(), () -> sendStatusToClients());
         setGame(game);
         startGame();
     }
@@ -263,6 +263,10 @@ public class Server implements Runnable {
         whole += trickString;
 
         broadcast(Protocol.TRICK_END, whole);
+    }
+
+    private void sendGameEndToClients() {
+        broadcast(Protocol.GAME_ENDED, "");
     }
 
 }

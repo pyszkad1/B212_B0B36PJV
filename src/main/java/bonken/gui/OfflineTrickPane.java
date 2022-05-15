@@ -1,7 +1,6 @@
 package bonken.gui;
 
 import bonken.game.*;
-import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -42,7 +41,6 @@ public class OfflineTrickPane extends TrickPane {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-
                     Platform.runLater(() -> update());
                     blocking = true;
                     showingTrickEnd = false;
@@ -59,7 +57,7 @@ public class OfflineTrickPane extends TrickPane {
     }
 
     private void drawTrick(Trick trick) {
-        LOGGER.info("---------DRAWING TRICK---------");
+        LOGGER.info("Drawing trick.");
         this.clear();
         Card[] cards = trick.getCards();
 
@@ -73,7 +71,6 @@ public class OfflineTrickPane extends TrickPane {
 
             currPosition = currPosition.next();
         }
-
 
         adjustPanePositions();
         statusPane.update();

@@ -22,7 +22,7 @@ public class OnlineController {
     private CardPane cardPane;
     private OnlineTrickPane trickPane;
     private GameView gameView;
-    private EndGameView endGameView;
+    private OnlineEndGameView onlineEndGameView;
     private GameStartedView gameStartedView;
     private OnlineStatusPane onlineStatusPane;
     private OnlineScoreboardView onlineScoreboardView;
@@ -48,7 +48,7 @@ public class OnlineController {
     public void setMyPos(Position pos){
         this.myPosition = pos;
         this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
-        this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
+        this.onlineEndGameView = new OnlineEndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
     }
 
@@ -112,7 +112,6 @@ public class OnlineController {
     public void showGameStarted() {
         gameStartedView = new GameStartedView();
         Platform.runLater(() -> stage.setScene(gameStartedView.getScene()));
-
     }
 
     public void setPossibleMinigames(ArrayList<Integer> minigames) {
@@ -121,6 +120,11 @@ public class OnlineController {
 
     public void showMiniGameChoiceView() {
         gameView.showMinigameChoice();
+    }
+
+    public void showEndGameScreen() {
+        onlineEndGameView.show();
+        stage.setScene(onlineEndGameView.getScene());
     }
 
     public void close() {
@@ -133,5 +137,6 @@ public class OnlineController {
 
     public void updateScoreboard(String[] players, String[] score) {
         onlineScoreboardView.update(players, score);
+        onlineEndGameView.getScoreboard(players, score);
     }
 }

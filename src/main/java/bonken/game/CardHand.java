@@ -2,11 +2,9 @@ package bonken.game;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Scanner;
 
 public class CardHand {
     ArrayList<Card> hand;
-
 
     public CardHand(ArrayList<Card> hand) {
         this.hand = hand;
@@ -32,7 +30,6 @@ public class CardHand {
 
         ArrayList<Card> playableCards;
 
-        //TODO IDK?
         if (firstCard == null || firstCard.getSuit() == -1) {
             if (cannotPlayHearts) {
                 playableCards = addAllButHearts();
@@ -84,6 +81,5 @@ public class CardHand {
         }
         return ret;
     }
-
 
 }

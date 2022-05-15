@@ -11,6 +11,7 @@ public enum Protocol {
     TRICK_END,
     ROUND,
     SCORE,
+    GAME_ENDED,
 
     // client origin
     USERNAME,

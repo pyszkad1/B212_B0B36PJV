@@ -1,6 +1,7 @@
 package bonken.game;
 
 import bonken.utils.Callable;
+import javafx.application.Platform;
 
 public class Main {
 
@@ -18,12 +19,7 @@ public class Main {
             }
         }
 
-        Game game = new Game(players, new Callable() {
-            @Override
-            public void call() {
-
-            }
-        });
+        Game game = new Game(players, () -> Platform.exit());
 
         game.startRound();
 
