@@ -20,7 +20,7 @@ public class Controller {
     private String username;
     private MinigameChoicePane minigameChoicePane;
     private CardPane cardPane;
-    private TrickPane trickPane;
+    private OfflineTrickPane trickPane;
     private GameView gameView;
     private EndGameView endGameView;
 
@@ -86,7 +86,7 @@ public class Controller {
             guiPlayer.minigameSelected(minigame.num);
         });
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.updateAfter(guiPlayer.getStringHand()); trickPane.packUpTrick(); });
-        this.trickPane = new TrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
+        this.trickPane = new OfflineTrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.gameView = new GameView( minigameChoicePane, cardPane, trickPane);
 
 
@@ -147,11 +147,13 @@ public class Controller {
         }
 
         Platform.runLater(() -> {
-            onlineController = new OnlineController(stage, client, startMenuView, myPos);
+            onlineController = new OnlineController(stage, client, startMenuView);
             client.setOnlineController(onlineController);
         });
 
     }
+
+
 
     private void startServerThenClient() {
         new Thread(server).start();

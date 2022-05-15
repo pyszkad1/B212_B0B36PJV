@@ -46,8 +46,6 @@ public class GameView extends View{
 
     public GameView( MinigameChoicePane minigamePane, CardPane cardPane, TrickPane trickPane) {
 
-
-
         System.out.println("StartedGameView!! --------- :)");
 
         this.cardPane = cardPane;
@@ -79,8 +77,7 @@ public class GameView extends View{
         wholeScreen.getChildren().addAll(blockingRec, borderPane);
 
 
-
-        showMinigameChoice();
+        hideMinigameChoice();
 
 
 

@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class OnlineController {
 
-    private Position position;
+    private Position myPosition;
     public Stage stage;
 
     public StartMenuView startMenuView;
@@ -22,7 +22,7 @@ public class OnlineController {
     private String username;
     private MinigameChoicePane minigameChoicePane;
     private CardPane cardPane;
-    private TrickPane trickPane;
+    private OnlineTrickPane trickPane;
     private GameView gameView;
     private EndGameView endGameView;
     private GameStartedView gameStartedView;
@@ -30,10 +30,9 @@ public class OnlineController {
     private Client client;
     private Callable onMinigameRequired;
 
-    public OnlineController(Stage stage, Client client, StartMenuView startMenuView, Position position) {
+    public OnlineController(Stage stage, Client client, StartMenuView startMenuView) {
         this.client = client;
         this.stage = stage;
-        this.position = position;
         this.startMenuView = startMenuView;
 
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
@@ -41,9 +40,19 @@ public class OnlineController {
             client.sendToServer(Protocol.MINIGAME,  String.valueOf(minigame.num));
         });
         this.cardPane = new CardPane(card -> {client.sendToServer(Protocol.CARD, card); cardPane.updateAfter(currentStringCardHand); trickPane.packUpTrick();  });
-        this.trickPane = new TrickPane(position, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
+    }
+
+
+    public void setMyPos(Position pos){
+        this.myPosition = pos;
+        this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
+
+    }
+
+    public Position getMyPosition() {
+        return myPosition;
     }
 
     private String[] currentStringCardHand;
@@ -69,8 +78,10 @@ public class OnlineController {
     }
 
     private boolean showingGameView = false;
-    public void updateGui(String[] trick, String[] cardHand, String[] playableCards){
-        //trickPane.update(trick);
+    public void updateGui(String stringFirstPlayer, String[] trick, String[] cardHand, String[] playableCards){
+        int firstPlayer = Integer.valueOf(stringFirstPlayer);
+        trickPane.update(firstPlayer, trick);
+
 
         Platform.runLater(() -> cardPane.updateBefore(cardHand, playableCards));
 

@@ -177,8 +177,12 @@ public class Server implements Runnable {
     public void sendTrickToClient(int id, ArrayList<Card> cardHand, ArrayList<Card> playableCards) {
 
         Card[] currentTrick = game.getCurrentRound().getCurrentTrick().getCards();
+        int firstplayer = game.getCurrentRound().getCurrentTrick().firstPlayer;
 
         String sendingTrick = "";
+        sendingTrick += firstplayer;
+        sendingTrick += "@";
+
         for (Card card: currentTrick) {
             if (card == null) break;
             sendingTrick += card.getImage() + "#";

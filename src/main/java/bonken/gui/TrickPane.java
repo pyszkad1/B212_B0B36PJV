@@ -18,7 +18,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TrickPane extends Pane {
+public abstract class TrickPane extends Pane {
 
     boolean trickEndAlreadyDrawn = false;
 
@@ -26,14 +26,14 @@ public class TrickPane extends Pane {
     private double cardHeight = 180;
 
 
-    private Timer timer;
+    protected Timer timer;
 
-    private StatusPane statusPane;
+    protected StatusPane statusPane;
 
     private static Border testBorder = new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
-    private Pane[] cardPanes;
-    private Game game;
+    protected Pane[] cardPanes;
+    protected Game game;
 
     Callable showBlock; Callable hideBlock;
 
@@ -50,17 +50,20 @@ public class TrickPane extends Pane {
 
         timer = new Timer();
         statusPane = new StatusPane();
-
-        setupCardPanes(bottomPlayer);
+        this.bottomPlayer = bottomPlayer;
+        setupCardPanes();
         this.setBorder(new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //this.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-    private void setupCardPanes(Position bottomPlayer) {
+    protected Position bottomPlayer;
+
+    private void setupCardPanes() {
         cardPanes = new Pane[4];
 
         Position currPos = bottomPlayer;
+
 
         for (int i = 0; i < 4; i++) {
             Pane p = new Pane();
@@ -78,110 +81,52 @@ public class TrickPane extends Pane {
 
     }
 
-    private void adjustPanePositions() {
+    protected void adjustPanePositions() {
         double h = (this.getHeight() - cardHeight) / 2;
         double w = (this.getWidth() - cardWidth) / 2;
         double alignment = (this.getWidth() / 4);
 
-        Position currPos = Position.North;
+        Position currPos = bottomPlayer;
         for (int i = 0; i < 4; i++) {
             Pane p = cardPanes[i];
-        switch (currPos) {
-            case North:
-                p.setTranslateY(this.getHeight() - cardHeight);
-                p.setTranslateX( w );
-                break;
-            case East:
-                p.setTranslateY(h);
-                p.setTranslateX(alignment);
-                break;
-            case South:
-                p.setTranslateY(0);
-                p.setTranslateX( w);
-                break;
-            case West:
-                p.setTranslateY( h);
-                p.setTranslateX(this.getWidth()  - cardWidth - alignment);
-                break;
+        if (currPos == bottomPlayer) {
+            p.setTranslateY(this.getHeight() - cardHeight);
+            p.setTranslateX(w);
         }
-        currPos = currPos.next();}
-    }
-
-    private boolean showingTrickEnd = false;
-    private boolean blocking = false;
-
-    public void update() {
-        if (blocking){
-            hideBlock.call();
+        else if (currPos == bottomPlayer.next()) {
+            p.setTranslateY(h);
+            p.setTranslateX(alignment);
         }
-        Round round = game.getCurrentRound();
+        else if(currPos == (bottomPlayer.next()).next()) {
+            p.setTranslateY(0);
+            p.setTranslateX(w);
+        }
+        else if (currPos == ((bottomPlayer.next()).next()).next()) {
+            p.setTranslateY(h);
+            p.setTranslateX(this.getWidth() - cardWidth - alignment);
+        }
 
-        if(round.trickNum != 0 && !trickEndAlreadyDrawn) {
-            trickEndAlreadyDrawn = true;
-            showingTrickEnd = true;
-            drawTrick(round.tricks.get(round.trickNum - 1));
-            showBlock.call();
-
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-
-                    Platform.runLater(() -> update());
-                    blocking = true;
-                    showingTrickEnd = false;
-                }
-            } , 2500);
-
-        } else if (!showingTrickEnd) {
-
-            Trick trick = round.getCurrentTrick();
-            if(trick == null) return;
-            drawTrick(trick);
-            trickEndAlreadyDrawn = false;
-
+        currPos = currPos.next();
         }
     }
+
+    protected boolean showingTrickEnd = false;
+    protected boolean blocking = false;
+
 
     public void packUpTrick() {
         if(showingTrickEnd == false) return;
         showingTrickEnd = false;
     }
 
-    private void clear() {
+    protected void clear() {
         for (Pane p: cardPanes) {
             p.getChildren().clear();
         }
     }
 
-    private void putCard(Card card, Position pos) {
-
-        String image = this.getClass().getResource("/bonken/gui/cards/" + card.getImage()).toExternalForm();
-        ImageView imageView = new ImageView(new Image(image));
-        imageView.getStyleClass().add("card");
-
-        this.cardPanes[pos.index].getChildren().add(imageView);
-    }
-
-    private void drawTrick(Trick trick) {
-        System.out.println("---------DRAWING TRICK---------");
-        this.clear();
-        Card[] cards = trick.getCards();
-
-        Position currPosition = trick.firstToPlay;
-
-        for (int i = 0; i < 4; i++) {
-            Card card = cards[i];
-            if(card == null) break;
-
-            putCard(card, currPosition);
-
-            currPosition = currPosition.next();
-        }
 
 
-        adjustPanePositions();
-        statusPane.update();
-    }
 
     public void killTimer(){
         if (timer != null) {

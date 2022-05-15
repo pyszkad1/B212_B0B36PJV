@@ -90,8 +90,9 @@ public class Client implements Runnable {
             //    controller.showAlert("Name " + name + " already taken. Please choose another one.");
                 break;
             case MYPOS:
-                controller.myPos = Position.values()[Integer.valueOf(tokens[1])];
-                System.out.println("myPos je " + controller.myPos);
+
+                onlineController.setMyPos(Position.values()[Integer.valueOf(tokens[1])]);
+                System.out.println("myPos je " + onlineController.getMyPosition());
                 break;
             case GAME_STARTED:
                 onlineController.showGameStarted();
@@ -110,11 +111,12 @@ public class Client implements Runnable {
                 //onlineController.showGameView();
                 System.out.println(name + " received trick and hand");
                 String[] trickAndHand = tokens[1].split("@");
-                String[] trick = trickAndHand[0].split("#");
-                String[] hand = trickAndHand[1].split("#");
-                String[] playableCards = trickAndHand[2].split("#");
+                String firstPlayer = trickAndHand[0];
+                String[] trick = trickAndHand[1].split("#");
+                String[] hand = trickAndHand[2].split("#");
+                String[] playableCards = trickAndHand[3].split("#");
                 onlineController.setCurrentStringCardHand(hand);
-                Platform.runLater(() -> {onlineController.showGameView(); onlineController.updateGui(trick, hand, playableCards);});
+                Platform.runLater(() -> {onlineController.showGameView(); onlineController.updateGui(firstPlayer ,trick, hand, playableCards);});
         }
     }
 
