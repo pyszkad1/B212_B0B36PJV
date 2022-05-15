@@ -9,6 +9,7 @@ public enum Protocol {
     POSSIBLE_MINIGAMES,
     TRICK_AND_HAND,
     CARD_HAND,
+    TRICK_END,
 
     // client origin
     USERNAME,

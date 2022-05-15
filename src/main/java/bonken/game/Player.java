@@ -1,6 +1,7 @@
 package bonken.game;
 
 import bonken.utils.Action;
+import bonken.utils.DoubleAction;
 
 import java.util.ArrayList;
 
@@ -13,8 +14,18 @@ public abstract class Player implements PlayerInterface {
     protected boolean hisTurn;
     protected boolean chosenPositive;
     protected Trick trickToPlayTo;
+    DoubleAction<Trick, Integer> giveServerTrickEnd;
 
     private Position pos;
+
+    public Player(int id, Position pos, DoubleAction<Trick, Integer> giveServerTrickEnd) {
+        this.pos = pos;
+        this.username = "no username";
+        this.id = id;
+        chosenPositive = false;
+        this.playableCards = new ArrayList<>();
+        this.giveServerTrickEnd = giveServerTrickEnd;
+    }
 
     public Player(int id, Position pos) {
         this.pos = pos;
@@ -90,9 +101,24 @@ public abstract class Player implements PlayerInterface {
         this.playableCards.clear();
         this.cardHand.hand.remove(playedCard);
 
+        Integer firstPLayer = trickToPlayTo.firstPlayer;
         Trick tmp = trickToPlayTo;
         trickToPlayTo = null;
+        int counter = 0;
+        for (int i = 0; i < 4; i++) {
+            if (tmp.getCards()[i] == null){
+                break;
+            }
+            counter++;
+        }
+
         tmp.addCard(this, playedCard);
+
+
+        if (counter == 3 && giveServerTrickEnd != null) {
+            giveServerTrickEnd.call(tmp, firstPLayer);
+        }
+
     }
 
     public boolean canPlay(Card card) {

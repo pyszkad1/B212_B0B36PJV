@@ -1,6 +1,7 @@
 package bonken.game;
 
 import bonken.utils.Action;
+import bonken.utils.DoubleAction;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,6 +9,15 @@ import java.util.Random;
 public class PlayerBot extends Player {
 
     private Random random;
+
+    DoubleAction<Trick, Integer> giveServerTrickEnd;
+
+    public PlayerBot(int id, Position pos, DoubleAction<Trick, Integer> giveServerTrickEnd) {
+        super(id, pos, giveServerTrickEnd);
+        this.username = "Bot" + id;
+        chosenPositive = false;
+        random = new Random();
+    }
 
     public PlayerBot(int id, Position pos) {
         super(id, pos);

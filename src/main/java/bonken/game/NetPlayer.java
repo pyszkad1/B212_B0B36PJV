@@ -15,24 +15,26 @@ public class NetPlayer extends Player{
     private Action<ArrayList<Integer>> onMinigameRequired;
     private Action<Integer> onMinigameSelected;
     private DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired;
+    DoubleAction<Trick, Integer> giveServerTrickEnd;
 
     Server server;
 
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
-    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired, Server server) {
-        super(id, pos);
+    public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired, Server server, DoubleAction<Trick, Integer> giveServerTrickEnd) {
+        super(id, pos, giveServerTrickEnd);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;
         this.server = server;
 
+
+
     }
 
     //BUDE NA EVENT ZE SERVERU -> jakmile přijde odpovědět od klienta s minihrou!
     public void minigameSelected(Integer minigame) {
-
         if(miniGameRequired == false) return;
         miniGameRequired = false;
         if (minigame >= 7) {
@@ -43,6 +45,7 @@ public class NetPlayer extends Player{
     }
 
     public void cardSelected(String card) {
+
         if(cardRequired == false) return;
         System.out.println(card);
 

@@ -137,12 +137,12 @@ public class Server implements Runnable {
                     (cardHand, playableCards) -> {
                         this.sendTrickToClient(finalI, cardHand, playableCards); //SEND TO CLIENT
                           //SEND TO CLIENT
-                    }, this);
+                    }, this, (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer);});
             players[i] = player;
         }
 
         for (int i = this.getConnections().size(); i < 4; i++) {
-            players[i] = new PlayerBot(i, Position.values()[i]);
+            players[i] = new PlayerBot(i, Position.values()[i], (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer);} );
         }
 
         game = new Game(players, () -> controller.showEndGameScreen());
@@ -207,7 +207,29 @@ public class Server implements Runnable {
     }
 
     public void setCard(String card, int connectionNum) {
-        game.getPlayers()[connectionNum].cardSelected(card);
+        int firstPlayer = game.getCurrentRound().getCurrentTrick().firstPlayer;
+
+        Platform.runLater(() -> game.getPlayers()[connectionNum].cardSelected(card));
+
+    }
+
+
+
+    public void sendTrickEndToClients(Trick trick, Integer firstPlayer){
+        Card[] cards = trick.getCards();
+        String whole = "";
+        String player = String.valueOf(firstPlayer);
+        whole += player;
+        whole += "@";
+        String trickString = "";
+        for (int i = 0; i < 4; i++) {
+            trickString += cards[i].getImage();
+            trickString += "#";
+        }
+
+        whole += trickString;
+
+        broadcast(Protocol.TRICK_END, whole);
     }
 
 }

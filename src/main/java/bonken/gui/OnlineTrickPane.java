@@ -21,15 +21,20 @@ public class OnlineTrickPane extends TrickPane {
 
 
     public void update(int firstPlayer, String[] trick){
-        if (blocking){
-            hideBlock.call();
+        if (!blocking){
+            showBlock.call();
+            blocking = true;
         }
+
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> drawTrick(firstPlayer, trick));
+                Platform.runLater(() -> {if (blocking){
+                    hideBlock.call();
+                }; drawTrick(firstPlayer, trick);});
             }
-        } , 1000);
+        } , 3000);
     }
 
     private void drawTrick(int position, String[] trick) {
@@ -53,6 +58,13 @@ public class OnlineTrickPane extends TrickPane {
 
         adjustPanePositions();
         statusPane.update();
+
+    }
+
+    public void updateOnTrickEnd(int firstPlayer, String[] wholeTrick) {
+        showBlock.call();
+        blocking = true;
+        drawTrick(firstPlayer, wholeTrick);
 
     }
 

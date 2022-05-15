@@ -87,10 +87,18 @@ public class OnlineController {
 
     }
 
+    public void updateTrickEnd(String firstPlayerAgain, String[] wholeTrick){
+        int firstPlayer = Integer.valueOf(firstPlayerAgain);
+        trickPane.updateOnTrickEnd(firstPlayer, wholeTrick);
+
+    }
+
     public void start() {
         stage.setScene(startMenuView.getScene());
         stage.show();
     }
+
+
 
     public void showGameView() {
         if (!showingGameView){

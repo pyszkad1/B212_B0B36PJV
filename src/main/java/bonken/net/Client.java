@@ -117,6 +117,14 @@ public class Client implements Runnable {
                 String[] playableCards = trickAndHand[3].split("#");
                 onlineController.setCurrentStringCardHand(hand);
                 Platform.runLater(() -> {onlineController.showGameView(); onlineController.updateGui(firstPlayer ,trick, hand, playableCards);});
+                break;
+            case TRICK_END:
+                String[] playerAndTrick = actionPayload.split("@");
+                String firstPlayerAgain = playerAndTrick[0];
+                String[] wholeTrick = playerAndTrick[1].split("#");
+                System.out.println("******UPDATE ON TRICK END******");
+                Platform.runLater(() -> onlineController.updateTrickEnd(firstPlayerAgain, wholeTrick));
+
         }
     }
 
