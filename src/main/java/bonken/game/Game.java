@@ -56,10 +56,35 @@ public class Game {
         gameCounter = 0;
     }
 
+    private Callable onStatusUpdateNeeded;
+    public Game(PlayerInterface[] players, Callable onGameEnd, Callable onStatusUpdateNeeded) {
+        for (int i = 0; i < 12; i++) {
+            minigames.add(Integer.valueOf(i));
+        }
+        this.onGameEnd = onGameEnd;
+        this.onStatusUpdateNeeded = onStatusUpdateNeeded;
+        this.players = players;
+
+        Random random = new Random();
+        int startingPlayer = 0 ;// random.nextInt( 4);
+
+        players[startingPlayer].setHisTurn(true);
+
+        rounds = new ArrayList<>();
+        scoreBoard = new ScoreBoard(players);
+        deck = new Deck();
+        gameCounter = 0;
+    }
+
 
     public void startRound() {
         deck.shuffle();
-        Round round = new Round(this, deck, minigames, players);
+        Round round;
+        if (onStatusUpdateNeeded != null) {
+            round = new Round(this, deck, minigames, players, onStatusUpdateNeeded);
+        } else {
+            round = new Round(this, deck, minigames, players);
+        }
         rounds.add(round);
         System.out.println("--------------------------------------------------------------------------------------------");
         round.playRound(() -> finishRound());
@@ -79,7 +104,6 @@ public class Game {
                     Platform.runLater(() -> onGameEnd.call());
                 }
             } , 3100);
-
             return;
         }
 

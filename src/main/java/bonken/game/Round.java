@@ -26,6 +26,17 @@ public class Round {
         createCardHands();
     }
 
+    private Callable onStatusUpdateNeeded;
+    public Round(Game game, Deck deck, ArrayList<Integer> minigames, PlayerInterface[] players, Callable onStatusUpdateNeeded) {
+        this.game = game;
+        this.players = players;
+        this.deck = deck;
+        this.minigames = minigames;
+        this.tricks = new ArrayList<>();
+        this.onStatusUpdateNeeded = onStatusUpdateNeeded;
+        createCardHands();
+    }
+
 
     public Trick getCurrentTrick()
     {
@@ -81,6 +92,10 @@ public class Round {
 
         this.chosenMiniGameNum = chosenMiniGameNum;
 
+        if (onStatusUpdateNeeded != null) {
+            onStatusUpdateNeeded.call();
+        }
+
         int leadingPlayer = (startingPlayer + 3) % 4;
         System.out.println("LEADING PLAYER IS " + leadingPlayer);
         trickNum = 0;
@@ -107,8 +122,6 @@ public class Round {
 
 
     private void finishTrick() {
-
-
         if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
             System.out.println("the only card was played");
             wrapUp();

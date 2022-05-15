@@ -10,6 +10,8 @@ public enum Protocol {
     TRICK_AND_HAND,
     CARD_HAND,
     TRICK_END,
+    ROUND,
+    SCORE,
 
     // client origin
     USERNAME,

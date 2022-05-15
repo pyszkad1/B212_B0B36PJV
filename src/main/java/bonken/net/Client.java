@@ -98,7 +98,6 @@ public class Client implements Runnable {
                 onlineController.showGameStarted();
                 break;
             case POSSIBLE_MINIGAMES:
-
                 System.out.println(name + " received minigames");
                 String[] minigamesString = tokens[1].split("#");
                 ArrayList<Integer> minigames = new ArrayList<>();
@@ -124,12 +123,20 @@ public class Client implements Runnable {
                 String[] wholeTrick = playerAndTrick[1].split("#");
                 System.out.println("******UPDATE ON TRICK END******");
                 Platform.runLater(() -> onlineController.updateTrickEnd(firstPlayerAgain, wholeTrick));
-
+                break;
+            case ROUND:
+                String[] statusInfo = actionPayload.split("#");
+                String roundNum = statusInfo[0];
+                String minigame = statusInfo[1];
+                Platform.runLater(() -> onlineController.updateStatus(roundNum, minigame));
+                break;
+            case SCORE:
+                String[] scoreBoard = actionPayload.split("@");
+                String[] players = scoreBoard[0].split("#");
+                String[] score = scoreBoard[1].split("#");
+                Platform.runLater(() -> onlineController.updateScoreboard(players, score));
         }
     }
-
-
-
 
     public void sendToServer(Protocol code, String payload) {
         System.out.println("trying to send to server " + payload);

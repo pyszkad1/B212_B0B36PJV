@@ -26,6 +26,8 @@ public class OnlineController {
     private GameView gameView;
     private EndGameView endGameView;
     private GameStartedView gameStartedView;
+    private OnlineStatusPane onlineStatusPane;
+    private OnlineScoreboardView onlineScoreboardView;
 
     private Client client;
     private Callable onMinigameRequired;
@@ -34,6 +36,8 @@ public class OnlineController {
         this.client = client;
         this.stage = stage;
         this.startMenuView = startMenuView;
+        this.onlineStatusPane = new OnlineStatusPane();
+        this.onlineScoreboardView = new OnlineScoreboardView();
 
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
@@ -131,4 +135,11 @@ public class OnlineController {
     }
 
 
+    public void updateStatus(String roundNum, String minigame) {
+        onlineStatusPane.update(roundNum, minigame);
+    }
+
+    public void updateScoreboard(String[] players, String[] score) {
+        onlineScoreboardView.update(players, score);
+    }
 }

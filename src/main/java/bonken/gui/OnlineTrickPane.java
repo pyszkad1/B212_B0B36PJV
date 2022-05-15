@@ -1,10 +1,6 @@
 package bonken.gui;
 
-
-import bonken.game.Card;
 import bonken.game.Position;
-import bonken.game.Round;
-import bonken.game.Trick;
 import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -14,18 +10,19 @@ import javafx.scene.layout.Pane;
 import java.util.TimerTask;
 
 public class OnlineTrickPane extends TrickPane {
+    private OnlineStatusPane statusPane;
+
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
         super(bottomPlayer, showBlock, hideBlock);
+        statusPane = new OnlineStatusPane();
+        setupCardPanes();
     }
-
-
 
     public void update(int firstPlayer, String[] trick){
         if (!blocking){
             showBlock.call();
             blocking = true;
         }
-
 
         timer.schedule(new TimerTask() {
             @Override
@@ -57,7 +54,27 @@ public class OnlineTrickPane extends TrickPane {
 
 
         adjustPanePositions();
-        statusPane.update();
+
+    }
+
+    private void setupCardPanes() {
+        cardPanes = new Pane[4];
+
+        Position currPos = bottomPlayer;
+
+
+        for (int i = 0; i < 4; i++) {
+            Pane p = new Pane();
+            cardPanes[i] = p;
+            p.setMinHeight(cardHeight);
+            p.setMinWidth(cardWidth);
+            p.setBorder(testBorder);
+            this.getChildren().add(p);
+        }
+
+        this.getChildren().add(statusPane);
+        statusPane.setTranslateX(0);
+        statusPane.setTranslateX(0);
 
     }
 
@@ -75,8 +92,5 @@ public class OnlineTrickPane extends TrickPane {
 
         this.cardPanes[pos.index].getChildren().add(imageView);
     }
-
-
-
 
 }

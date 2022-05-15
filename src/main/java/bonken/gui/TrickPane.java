@@ -22,25 +22,19 @@ public abstract class TrickPane extends Pane {
 
     boolean trickEndAlreadyDrawn = false;
 
-    private double cardWidth = 132;
-    private double cardHeight = 180;
+    protected double cardWidth = 132;
+    protected double cardHeight = 180;
 
 
     protected Timer timer;
 
-    protected StatusPane statusPane;
-
-    private static Border testBorder = new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    protected static Border testBorder = new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
     protected Pane[] cardPanes;
     protected Game game;
 
-    Callable showBlock; Callable hideBlock;
-
-    public void setGame(Game game) {
-        this.game = game;
-        statusPane.setGame(game);
-    }
+    Callable showBlock;
+    Callable hideBlock;
 
     public TrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
         super();
@@ -49,37 +43,13 @@ public abstract class TrickPane extends Pane {
         this.hideBlock = hideBlock;
 
         timer = new Timer();
-        statusPane = new StatusPane();
         this.bottomPlayer = bottomPlayer;
-        setupCardPanes();
         this.setBorder(new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //this.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     protected Position bottomPlayer;
-
-    private void setupCardPanes() {
-        cardPanes = new Pane[4];
-
-        Position currPos = bottomPlayer;
-
-
-        for (int i = 0; i < 4; i++) {
-            Pane p = new Pane();
-            cardPanes[i] = p;
-            p.setMinHeight(cardHeight);
-            p.setMinWidth(cardWidth);
-            p.setBorder(testBorder);
-            this.getChildren().add(p);
-        }
-
-        this.getChildren().add(statusPane);
-        statusPane.setTranslateX(0);
-        statusPane.setTranslateX(0);
-
-
-    }
 
     protected void adjustPanePositions() {
         double h = (this.getHeight() - cardHeight) / 2;
@@ -105,8 +75,7 @@ public abstract class TrickPane extends Pane {
             p.setTranslateY(h);
             p.setTranslateX(this.getWidth() - cardWidth - alignment);
         }
-
-        currPos = currPos.next();
+            currPos = currPos.next();
         }
     }
 

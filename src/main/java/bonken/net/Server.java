@@ -135,22 +135,19 @@ public class Server implements Runnable {
             NetPlayer player = new NetPlayer(i, Position.values()[i], this.getConnections().get(i).getName(),
                     minigames -> this.sendMinigamesToClient(finalI, minigames),
                     (cardHand, playableCards) -> {
-                        this.sendTrickToClient(finalI, cardHand, playableCards); //SEND TO CLIENT
-                          //SEND TO CLIENT
-                    }, this, (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer);});
+                        this.sendTrickToClient(finalI, cardHand, playableCards); sendScoreToClients();
+                    }, this, (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer); sendScoreToClients();});
             players[i] = player;
         }
 
         for (int i = this.getConnections().size(); i < 4; i++) {
-            players[i] = new PlayerBot(i, Position.values()[i], (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer);} );
+            players[i] = new PlayerBot(i, Position.values()[i], (trick, firstPlayer) -> {sendTrickEndToClients(trick, firstPlayer); sendScoreToClients();} );
         }
 
-        game = new Game(players, () -> controller.showEndGameScreen());
+        game = new Game(players, () -> controller.showEndGameScreen(), () -> sendStatusToClients());
         setGame(game);
-
-       startGame();
+        startGame();
     }
-
 
     public void setGame(Game game){
         this.game = game;
@@ -163,6 +160,14 @@ public class Server implements Runnable {
     public void startGame(){
         broadcast(Protocol.GAME_STARTED, "");
         game.startRound();
+    }
+
+    public void sendStatusToClients() {
+        String status = "";
+        status += String.valueOf(this.game.getGameCounter());
+        status += "#";
+        status += Minigames.values()[this.game.getCurrentRound().getChosenMiniGameNum()];
+        broadcast(Protocol.ROUND, status);
     }
 
     public void sendMinigamesToClient(int id, ArrayList<Integer> minigames) {
@@ -213,7 +218,23 @@ public class Server implements Runnable {
 
     }
 
-
+    public void sendScoreToClients() {
+        String players = "";
+        String scores = "";
+        String whole = "";
+        for (int i = 0; i < 4; i++) {
+            players += game.getPlayers()[i].getUsername();
+            players += "#";
+        }
+        whole += players;
+        whole += "@";
+        for (int i = 0; i < 4; i++) {
+            scores += String.valueOf(game.getPlayers()[i].getScore());
+            scores += "#";
+        }
+        whole += scores;
+        broadcast(Protocol.SCORE, whole);
+    }
 
     public void sendTrickEndToClients(Trick trick, Integer firstPlayer){
         Card[] cards = trick.getCards();
