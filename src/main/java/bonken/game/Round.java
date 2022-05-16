@@ -39,7 +39,7 @@ public class Round {
         this.onStatusUpdateNeeded = onStatusUpdateNeeded;
         createCardHands();
     }
-    
+
     public Trick getCurrentTrick()
     {
         if(tricks.isEmpty()) return null;

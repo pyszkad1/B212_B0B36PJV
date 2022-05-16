@@ -40,8 +40,9 @@ public class OnlineTrickPane extends TrickPane {
     private void drawTrick(int position, String[] trick) {
         LOGGER.info("Drawing trick.");
         this.clear();
+        int currentPos = (4 + position - bottomPlayer.index)%4;
 
-        Position currPosition = Position.values()[position];
+        Position currPosition = Position.values()[currentPos];
         System.out.println(position + " is position");
 
         for (int i = 0; i < trick.length; i++) {
