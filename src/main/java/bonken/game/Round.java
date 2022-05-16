@@ -39,8 +39,7 @@ public class Round {
         this.onStatusUpdateNeeded = onStatusUpdateNeeded;
         createCardHands();
     }
-
-
+    
     public Trick getCurrentTrick()
     {
         if(tricks.isEmpty()) return null;
@@ -49,7 +48,6 @@ public class Round {
 
     private void createCardHands() {
         ArrayList<ArrayList<Card>> hands = deck.deal();
-        System.out.println(hands.toString());
         cardHands = new CardHand[4];
         for (int i = 0; i < 4; i++) {
             cardHands[i] = new CardHand(hands.get(i));

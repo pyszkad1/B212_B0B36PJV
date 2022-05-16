@@ -113,7 +113,6 @@ public class Game {
             round = new Round(this, deck, minigames, players);
         }
         rounds.add(round);
-        System.out.println("--------------------------------------------------------------------------------------------");
         round.playRound(() -> finishRound());
     }
 
