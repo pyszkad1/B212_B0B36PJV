@@ -67,10 +67,10 @@ public class OnlineScoreboardView extends VBox {
     }
 
     public void update(String[] players, String[] score) {
-        username0.setText(players[0]);
-        username1.setText(players[1]);
-        username2.setText(players[2]);
-        username3.setText(players[3]);
+        username0.setText(players[0] + ": ");
+        username1.setText(players[1] + ": ");
+        username2.setText(players[2] + ": ");
+        username3.setText(players[3] + ": ");
 
         score0.setText(score[0]);
         score1.setText(score[1]);

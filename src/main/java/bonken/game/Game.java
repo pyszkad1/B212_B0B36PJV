@@ -125,7 +125,7 @@ public class Game {
         }
         timer = new Timer();
 
-        if(++gameCounter == 1) {                               // TODO == 11
+        if(++gameCounter == 11) {                         // TODO == 11
             gameEnded = true;
             LOGGER.info("END OF GAME");
 

@@ -47,12 +47,10 @@ public class OnlineStatusPane extends VBox {
 
     public void update(String roundNum, String minigame) {
         // TODO fix
-        this.getChildren().clear();
 
-        roundLabel = new Label(roundNum + " / 11");
-        minigameLabel= new Label(minigame) ;
+        roundLabel.setText(roundNum + " / 11");
+        minigameLabel.setText(minigame);
 
-        this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
 
     }
 }

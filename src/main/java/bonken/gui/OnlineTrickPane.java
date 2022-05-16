@@ -13,12 +13,13 @@ import java.util.logging.Logger;
 public class OnlineTrickPane extends TrickPane {
 
     private static final Logger LOGGER = Logger.getLogger(OnlineTrickPane.class.getName());
-    private OnlineStatusPane statusPane;
+    public OnlineStatusPane statusPane;
 
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock, OnlineStatusPane onlineStatusPane) {
         super(bottomPlayer, showBlock, hideBlock);
         System.out.println("HERE in ONLINE TRICK PANE");
         this.statusPane = onlineStatusPane;
+
         setupCardPanes();
     }
 
@@ -68,10 +69,10 @@ public class OnlineTrickPane extends TrickPane {
             p.setMinWidth(cardWidth);
             this.getChildren().add(p);
         }
-
         this.getChildren().add(statusPane);
         statusPane.setTranslateX(10);
         statusPane.setTranslateY(10);
+
 
     }
 
@@ -79,7 +80,6 @@ public class OnlineTrickPane extends TrickPane {
         showBlock.call();
         blocking = true;
         drawTrick(firstPlayer, wholeTrick);
-
     }
 
     private void putCard(String card, Position pos) {

@@ -163,10 +163,12 @@ public class Server implements Runnable {
     }
 
     public void sendStatusToClients() {
+        int gameCount = this.game.getGameCounter() + 1;
+        if (gameCount > 11) gameCount = 11;
         String status = "";
-        status += String.valueOf(this.game.getGameCounter());
+        status += String.valueOf(gameCount);
         status += "#";
-        status += Minigames.values()[this.game.getCurrentRound().getChosenMiniGameNum()];
+        status += Minigames.values()[this.game.getCurrentRound().getChosenMiniGameNum()].name;
         broadcast(Protocol.ROUND, status);
     }
 
