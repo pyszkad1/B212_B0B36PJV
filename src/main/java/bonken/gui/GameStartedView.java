@@ -3,20 +3,24 @@ package bonken.gui;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class GameStartedView extends View {
 
 
     public GameStartedView() {
-        Label label = new Label("ONLINE GAME STARTED");
-        label.getStyleClass().add("header-label");
-        //TODO waiting for player to choose minigame
+        Label gameStarted = new Label("ONLINE GAME STARTED");
+        gameStarted.getStyleClass().add("header-label");
+        Label waiting = new Label("Waiting for player to choose a minigame.");
 
-        HBox hb = new HBox(label);
-        hb.setAlignment(Pos.CENTER);
+        VBox vb = new VBox(gameStarted, waiting);
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(40);
 
-        Scene scene = new Scene(hb, 1080, 720);
+        //HBox hb = new HBox(gameStarted);
+        //hb.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(vb, 1080, 720);
         setScene(scene);
     }
 

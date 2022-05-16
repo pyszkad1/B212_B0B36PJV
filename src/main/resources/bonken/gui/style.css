@@ -21,6 +21,7 @@
 
 .small-label {
     -fx-font-size: 30px;
+    -fx-text-fill: #f7e7d4;
     -fx-effect: dropshadow(gaussian, BLACK, 2, 2, 0, 0);
 }
 
@@ -38,17 +39,21 @@
 
 .button {
     -fx-font-size: 20px;
+    -fx-border-color: BLACK;
+    -fx-border-width: 5 5 5 5;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: BLACK;
+    -fx-background-color: LINEN;
+}
+
+.button:pressed {
+    -fx-background-color: #f7e7d4;
 }
 
 .ok-button {
     -fx-pref-width: 150px;
     -fx-pref-height: 30px;
     -fx-padding: 30 30 30 30;
-    -fx-border-color: BLACK;
-    -fx-border-width: 5 5 5 5;
-    -fx-font-weight: BOLD;
-    -fx-text-fill: BLACK;
-    -fx-background-color: LINEN;
 }
 
 .ok-button {
@@ -67,22 +72,12 @@
 }
 
 .return-button {
-    -fx-font-size: 20px;
-    -fx-background-color: DARKGREEN;
-    -fx-text-fill: LINEN;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 20 20 20 20;
     -fx-pref-height: 28px;
-    -fx-pref-width: 130px;
-}
-
-.return-button:pressed {
-    -fx-background-color: DARKGREEN;
-    -fx-text-fill: #f7e7d4;
+    -fx-pref-width: 200px;
 }
 
 .minigame-choice-button {
-    -fx-border-color: BLACK;
-    -fx-border-width: 5 5 5 5;
     -fx-font-weight: BOLD;
     -fx-text-fill: BLACK;
     -fx-padding: 5 5 10 10;
@@ -99,13 +94,6 @@
     -fx-background-color: DIMGRAY;
 }
 
-.menu-button:pressed {
-    -fx-background-color: #f7e7d4;
-}
-
-.minigame-choice-button:pressed {
-    -fx-background-color: #f7e7d4;
-}
 
 .endgame-button {
     -fx-border-color: BLACK;
@@ -116,9 +104,6 @@
     -fx-pref-height: 30px;
 }
 
-.endgame-button:pressed {
-    -fx-background-color: #f7e7d4;
-}
 
 .text-field {
 	-fx-accent: DIMGRAY;
