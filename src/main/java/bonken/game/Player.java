@@ -60,6 +60,14 @@ public abstract class Player implements PlayerInterface {
         this.score = score;
     }
 
+    public boolean getChosenPositive() {
+        return chosenPositive;
+    }
+
+    public void setChosenPositive(boolean chosenPositive) {
+        this.chosenPositive = chosenPositive;
+    }
+
     @Override
     public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;

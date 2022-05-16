@@ -80,7 +80,7 @@ public class Controller {
         });
     }
 
-    private void startGame() {
+    private void startGame(boolean fromGameSave) {
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
             guiPlayer.minigameSelected(minigame.num);
@@ -108,7 +108,7 @@ public class Controller {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
 
-        game = new Game(players, () -> showEndGameScreen());
+        game = new Game(players, () -> showEndGameScreen(), fromGameSave);
         guiPlayer.setGame(game);
         stage.setScene(gameView.getScene());
         game.startRound();

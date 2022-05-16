@@ -37,6 +37,7 @@ public class Game {
         return  gameCounter;
     }
 
+    /*
     public Game(PlayerInterface[] players, Callable onGameEnd) {
         for (int i = 0; i < 12; i++) {
             minigames.add(Integer.valueOf(i));
@@ -54,6 +55,7 @@ public class Game {
         deck = new Deck();
         gameCounter = 0;
     }
+    */
 
     private Callable onStatusUpdateNeeded;
     public Game(PlayerInterface[] players, Callable onGameEnd, Callable onStatusUpdateNeeded) {
@@ -64,8 +66,7 @@ public class Game {
         this.onStatusUpdateNeeded = onStatusUpdateNeeded;
         this.players = players;
 
-        Random random = new Random();
-        int startingPlayer = 0 ;// random.nextInt( 4);
+        int startingPlayer = 0 ;
 
         players[startingPlayer].setHisTurn(true);
 
@@ -75,6 +76,38 @@ public class Game {
         gameCounter = 0;
     }
 
+    public Game(PlayerInterface[] players, Callable onGameEnd, boolean fromGameSave) {
+        int startingPlayer = 0;
+        if (fromGameSave) {
+            GameSave gameSave = new GameSave();
+            gameSave.readGame();
+            minigames = gameSave.getAvailableMinigames();
+
+            this.onGameEnd = onGameEnd;
+            this.players = players;
+            for (int i = 0; i < 4; i++) {
+                players[i].setChosenPositive(gameSave.getPlayersChosenPos()[i]);
+                players[i].setScore(gameSave.getScore()[i]);
+            }
+            startingPlayer = gameSave.getStartingPlayer();
+
+        }
+        else {
+            for (int i = 0; i < 12; i++) {
+                minigames.add(Integer.valueOf(i));
+            }
+
+            this.onGameEnd = onGameEnd;
+            this.players = players;
+
+        }
+
+        players[startingPlayer].setHisTurn(true);
+        scoreBoard = new ScoreBoard(players);
+        rounds = new ArrayList<>();
+        deck = new Deck();
+        gameCounter = 11 - minigames.size();
+    }
 
     public void startRound() {
         deck.shuffle();

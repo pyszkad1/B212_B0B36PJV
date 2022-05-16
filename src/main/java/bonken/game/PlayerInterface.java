@@ -10,6 +10,8 @@ public interface PlayerInterface {
     public void setHisTurn(boolean hisTurn);
     public int getScore();
     public void setScore(int score);
+    public boolean getChosenPositive();
+    public void setChosenPositive(boolean chosenPositive);
     public void setCardHand(CardHand cardHand);
     public CardHand getCardHand();
     public int getId();
