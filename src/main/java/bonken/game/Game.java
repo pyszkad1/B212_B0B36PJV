@@ -1,5 +1,6 @@
 package bonken.game;
 
+import bonken.gui.GameSetupView;
 import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
@@ -17,9 +18,10 @@ public class Game {
     private int gameCounter;
 
     private Callable onGameEnd;
+    private GameSave gameSave;
 
     Timer timer;
-    private static final Logger logger = Logger.getLogger(Server.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
 
     public ArrayList<Integer> getMinigames() {
         return minigames;
@@ -36,26 +38,6 @@ public class Game {
     public int getGameCounter(){
         return  gameCounter;
     }
-
-    /*
-    public Game(PlayerInterface[] players, Callable onGameEnd) {
-        for (int i = 0; i < 12; i++) {
-            minigames.add(Integer.valueOf(i));
-        }
-        this.onGameEnd = onGameEnd;
-        this.players = players;
-
-        Random random = new Random();
-        int startingPlayer = 0 ;// random.nextInt( 4);
-
-        players[startingPlayer].setHisTurn(true);
-
-        rounds = new ArrayList<>();
-        scoreBoard = new ScoreBoard(players);
-        deck = new Deck();
-        gameCounter = 0;
-    }
-    */
 
     private Callable onStatusUpdateNeeded;
     public Game(PlayerInterface[] players, Callable onGameEnd, Callable onStatusUpdateNeeded) {
@@ -76,37 +58,50 @@ public class Game {
         gameCounter = 0;
     }
 
+    int startingPlayer = 0;
+
     public Game(PlayerInterface[] players, Callable onGameEnd, boolean fromGameSave) {
-        int startingPlayer = 0;
+        gameSave = new GameSave();
         if (fromGameSave) {
-            GameSave gameSave = new GameSave();
-            gameSave.readGame();
-            minigames = gameSave.getAvailableMinigames();
-
-            this.onGameEnd = onGameEnd;
-            this.players = players;
-            for (int i = 0; i < 4; i++) {
-                players[i].setChosenPositive(gameSave.getPlayersChosenPos()[i]);
-                players[i].setScore(gameSave.getScore()[i]);
+            gameSave = gameSave.readGame();
+            if (gameSave == null) {
+                fromGameSave = false;
+                players[0].setUsername("Player");
+                setGame(players, onGameEnd);
+            } else {
+                setGameFromFile(players, onGameEnd);
             }
-            startingPlayer = gameSave.getStartingPlayer();
-
         }
         else {
-            for (int i = 0; i < 12; i++) {
-                minigames.add(Integer.valueOf(i));
-            }
-
-            this.onGameEnd = onGameEnd;
-            this.players = players;
-
+            setGame(players, onGameEnd);
         }
-
         players[startingPlayer].setHisTurn(true);
         scoreBoard = new ScoreBoard(players);
         rounds = new ArrayList<>();
         deck = new Deck();
         gameCounter = 11 - minigames.size();
+    }
+
+    public void setGameFromFile(PlayerInterface[] players, Callable onGameEnd) {
+
+        minigames = gameSave.getAvailableMinigames();
+
+        this.onGameEnd = onGameEnd;
+        this.players = players;
+        for (int i = 0; i < 4; i++) {
+            players[i].setChosenPositive(gameSave.getPlayersChosenPos().get(i));
+            players[i].setScore(gameSave.getScore().get(i));
+            players[i].setUsername(gameSave.getUsernames().get(i));
+        }
+        startingPlayer = gameSave.getStartingPlayer().get(0);
+    }
+
+    public void setGame(PlayerInterface[] players, Callable onGameEnd) {
+        for (int i = 0; i < 12; i++) {
+            minigames.add(Integer.valueOf(i));
+        }
+        this.onGameEnd = onGameEnd;
+        this.players = players;
     }
 
     public void startRound() {
@@ -125,11 +120,15 @@ public class Game {
     private void finishRound()
     {
         System.out.println(scoreBoard.toString());
+        if (gameSave != null) {
+            LOGGER.info("Saving game.");
+            gameSave.saveGame(this);
+        }
         timer = new Timer();
 
-        if(++gameCounter == 11) {                               // TODO == 11
+        if(++gameCounter == 1) {                               // TODO == 11
             gameEnded = true;
-            logger.info("END OF GAME");
+            LOGGER.info("END OF GAME");
 
 
             timer.schedule(new TimerTask() {

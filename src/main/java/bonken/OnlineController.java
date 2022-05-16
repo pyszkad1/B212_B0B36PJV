@@ -8,13 +8,13 @@ import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 
 public class OnlineController {
 
     private Position myPosition;
     public Stage stage;
-
     public StartMenuView startMenuView;
 
     private String username;
@@ -27,13 +27,15 @@ public class OnlineController {
     private OnlineStatusPane onlineStatusPane;
     private OnlineScoreboardView onlineScoreboardView;
 
+    private Controller controller;
     private Client client;
     private Callable onMinigameRequired;
 
-    public OnlineController(Stage stage, Client client, StartMenuView startMenuView) {
+    public OnlineController(Stage stage, Client client, StartMenuView startMenuView, Controller controller) {
         this.client = client;
         this.stage = stage;
         this.startMenuView = startMenuView;
+        this.controller = controller;
         this.onlineStatusPane = new OnlineStatusPane();
         this.onlineScoreboardView = new OnlineScoreboardView();
 
@@ -129,6 +131,7 @@ public class OnlineController {
 
     public void close() {
         if (trickPane != null) trickPane.killTimer();
+        if (controller != null) controller.close();
     }
 
     public void updateStatus(String roundNum, String minigame) {

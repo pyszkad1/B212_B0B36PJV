@@ -17,6 +17,7 @@ public class Controller {
 
     private StartMenuView startMenuView;
     private GameMenuView gameMenuView;
+    private GameSetupView gameSetupView;
     private String username;
     private MinigameChoicePane minigameChoicePane;
     private CardPane cardPane;
@@ -29,7 +30,7 @@ public class Controller {
     private Client client;
     private boolean clientOnly;
     private Server server;
-    private static final int PORT_NUMBER = 11111;               // TODO
+    private static final int PORT_NUMBER = 11111;
     private static final String HOST = "localhost";
 
     public Position myPos;
@@ -41,16 +42,16 @@ public class Controller {
     public Controller(Stage stage) {
         this.stage = stage;
         this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, () -> {stage.close();this.close();});
-        this.gameMenuView = new GameMenuView(this::startGame, () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
+        this.gameMenuView = new GameMenuView(() -> stage.setScene(gameSetupView.getScene()), () -> { stage.setScene(startMenuView.getScene());}, () -> this.getNameOnline());
+        this.gameSetupView = new GameSetupView(() -> stage.setScene(startMenuView.getScene()), () -> startGame(false), () -> loadGame());
 
         this.endGameView = new EndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close();this.close();});
 
-
-
         this.nameInputView =  new NameInputView(name -> {
             username = name;
-            startGame();
+            startGame(false);
         });
+
 
         this.onlineNameInputView = new NameInputView(name -> {
             username = name;
@@ -74,10 +75,13 @@ public class Controller {
 
     public void showStartMenu() {
         //TODO IF COMING FROM ONLINE REFUSAL SHOW MSG!!
-
         Platform.runLater(() -> {
             stage.setScene(startMenuView.getScene());
         });
+    }
+
+    private void loadGame() {
+        startGame(true);
     }
 
     private void startGame(boolean fromGameSave) {
@@ -88,11 +92,6 @@ public class Controller {
         this.cardPane = new CardPane(card -> { guiPlayer.cardSelected(card); cardPane.updateAfter(guiPlayer.getStringHand()); trickPane.packUpTrick(); });
         this.trickPane = new OfflineTrickPane(Position.North, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
         this.gameView = new GameView( minigameChoicePane, cardPane, trickPane);
-
-        if(username == null) {
-            getName();
-            return;
-        }
 
         PlayerInterface[] players = new  PlayerInterface[4];
 
@@ -108,13 +107,22 @@ public class Controller {
             players[i] = new PlayerBot(i, Position.values()[i]);
         }
 
-        game = new Game(players, () -> showEndGameScreen(), fromGameSave);
+        if (fromGameSave) {
+            game = new Game(players, () -> showEndGameScreen(), fromGameSave);
+        } else {
+            if(username == null) {
+                getName();
+                return;
+            }
+            game = new Game(players, () -> showEndGameScreen(), fromGameSave);
+
+        }
+
         guiPlayer.setGame(game);
         stage.setScene(gameView.getScene());
-        game.startRound();
         trickPane.setGame(game);
         endGameView.setGame(game);
-
+        game.startRound();
     }
 
     private void updateCards(){
@@ -142,7 +150,7 @@ public class Controller {
         }
 
         Platform.runLater(() -> {
-            onlineController = new OnlineController(stage, client, startMenuView);
+            onlineController = new OnlineController(stage, client, startMenuView, this);
             client.setOnlineController(onlineController);
         });
 
@@ -209,11 +217,11 @@ public class Controller {
     }
 
     public void close() {
-        if (server != null) server.stop();
-        if (client != null) client.close();
+        if (server != null) {
+            Platform.runLater(() -> server.stop());
+        }
         if (trickPane != null) trickPane.killTimer();
         if (game != null) game.killTimer();
-        if (onlineController != null) onlineController.close();
     }
 
 

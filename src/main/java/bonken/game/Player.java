@@ -87,6 +87,10 @@ public abstract class Player implements PlayerInterface {
         return username;
     }
 
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public void requestCardToPlay(Trick trick, Integer chosenMinigameNum) {

@@ -147,7 +147,6 @@ public class Client implements Runnable {
     }
 
     public void sendToServer(Protocol code, String payload) {
-        System.out.println("trying to send to server " + payload);
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Client {1} is sending >>>{0}<<< to server", new Object[]{msg, name});
         out.println(msg);

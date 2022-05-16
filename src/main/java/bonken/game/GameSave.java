@@ -1,24 +1,33 @@
 package bonken.game;
 
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameSave {
 
     private ArrayList<Integer> availableMinigames;
-    private boolean[] playersChosenPos;
-    private int startingPlayer;
-    private int[] score;
+    private ArrayList<Boolean> playersChosenPos;
+    private ArrayList<Integer> startingPlayer;
+    private ArrayList<Integer> score;
+    private ArrayList<String> usernames;
 
-    public int getStartingPlayer() {
+    public GameSave() {
+        availableMinigames = new ArrayList<>(11);
+        playersChosenPos = new ArrayList<>(4);
+        startingPlayer = new ArrayList<>(2);
+        score = new ArrayList<>(4);
+        usernames = new ArrayList<>(4);
+    }
+
+    public ArrayList<Integer> getStartingPlayer() {
         return startingPlayer;
     }
 
-    public boolean[] getPlayersChosenPos() {
+    public ArrayList<Boolean> getPlayersChosenPos() {
         return playersChosenPos;
     }
 
@@ -26,26 +35,33 @@ public class GameSave {
         return availableMinigames;
     }
 
-    public int[] getScore() {
+    public ArrayList<Integer> getScore() {
         return score;
+    }
+
+    public ArrayList<String> getUsernames() {
+        return usernames;
     }
 
     public void saveGame(Game game) {
         availableMinigames = game.getMinigames();
         for (int i = 0; i < 4; i++) {
+            System.out.println("SIZE IS " + playersChosenPos.size());
             if (game.getPlayers()[i].getChosenPositive()) {
-                playersChosenPos[i] = true;
+                playersChosenPos.add(i, true);
             } else {
-                playersChosenPos[i] = false;
+                playersChosenPos.add(i, false);;
             }
             if (game.getPlayers()[i].isHisTurn()) {
-                startingPlayer = i;
+                startingPlayer.add(0, i);
             }
-            score[i] = game.getPlayers()[i].getScore();
+            usernames.add(i, game.getPlayers()[i].getUsername());
+            score.add(i, game.getPlayers()[i].getScore());
         }
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("gameSave.json"), this);
+            System.out.println("Game saved");
         } catch (IOException ex) {
             System.out.println("IOException " + ex.getMessage());
         }
@@ -56,9 +72,18 @@ public class GameSave {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(new File("gameSave.json"), GameSave.class);
         } catch (IOException ex) {
-            System.out.println("IOException " + ex.getMessage());
+            return null;
         }
-        return null;
     }
 
+    @Override
+    public String toString() {
+        return "GameSave{" +
+                "availableMinigames=" + availableMinigames +
+                ", playersChosenPos=" + playersChosenPos +
+                ", startingPlayer=" + startingPlayer +
+                ", score=" + score +
+                ", usernames=" + usernames +
+                '}';
+    }
 }

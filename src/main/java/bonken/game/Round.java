@@ -69,7 +69,6 @@ public class Round {
     private int playerToChooseMinigame;
 
     public void putMinigame(Integer chosenMiniGameNum) {
-        // TODO check if correct player is choosing the minigame
 
         if (chosenMiniGameNum == -1) {
             getNextPlayer();
@@ -79,7 +78,6 @@ public class Round {
         minigames.remove(chosenMiniGameNum);
         chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
 
-        //TODO negative/positive minigame choosing
         if (chosenMiniGameNum > 6) {
             System.out.println("Chosen POSITIVE minigame, playing with "
                     + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
@@ -167,7 +165,7 @@ public class Round {
         for (int i = 0; i < 4; i++) {
             if (players[i].isHisTurn()) {
                 players[i].setHisTurn(false);
-                players[(i+1)%4].setHisTurn(true);           // TODO should check the rules
+                players[(i+1)%4].setHisTurn(true);
                 break;
             }
         }

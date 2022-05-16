@@ -4,4 +4,6 @@ module bonken {
     requires java.logging;
     requires com.fasterxml.jackson.databind;
     exports bonken;
+    exports bonken.game;
+    opens bonken.game;
 }

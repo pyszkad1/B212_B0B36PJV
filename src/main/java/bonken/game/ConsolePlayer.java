@@ -65,10 +65,6 @@ public class ConsolePlayer extends Player {
 
 
     public void getCardToPlay() {
-        //TODO just insert played card from gui, dont ask for it
-
-        //first card
-
         System.out.println(playableCards);
         System.out.println("Choosing from " + (playableCards.size()) + " cards.");
         Scanner scanner = new Scanner(System.in);

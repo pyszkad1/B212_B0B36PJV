@@ -16,6 +16,7 @@ public interface PlayerInterface {
     public CardHand getCardHand();
     public int getId();
     public String getUsername();
+    public void setUsername(String username);
     public void chooseMinigame(ArrayList<Integer> minigames, Action<Integer> callback);
     public boolean canPlay(Card card);
     public void minigameSelected(Integer minigame);

@@ -10,20 +10,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class GameSetupView(Callable chooseVsBots, Callable showStartMenu, Callable startVsBots) extends View {
+public class GameSetupView extends View {
 
-    public GameSetupView(Callable chooseVsBots, Callable showStartMenu, Callable startVsPlayers) {
-        BorderPane borderPane=new BorderPane();
+    public GameSetupView(Callable showStartMenu, Callable startVsBotsNew, Callable startVsBotsLoad) {
+        BorderPane borderPane = new BorderPane();
 
-        Button returnBtn=new Button("RETURN");
+        Button returnBtn = new Button("RETURN");
         returnBtn.getStyleClass().add("return-button");
         returnBtn.setOnAction(event->showStartMenu.call());
-        VBox returnBox=new VBox(returnBtn);
+        VBox returnBox = new VBox(returnBtn);
         returnBox.setAlignment(Pos.TOP_LEFT);
 
-        Label text=new Label("Choose a game");
+        Label text = new Label("Choose a game moad");
 
-        Button newGame =new Button("NEW GAME");
+        Button newGame = new Button("NEW GAME");
         newGame.getStyleClass().add("menu-button");
 
         Button loadGame = new Button("LOAD GAME");
@@ -41,9 +41,9 @@ public class GameSetupView(Callable chooseVsBots, Callable showStartMenu, Callab
 
         Scene scene = new Scene(borderPane,1080,720);
 
-        // TODO config
-        newGame.setOnAction(event->startVsBots.call());
-        loadGame.setOnAction(event->startVsPlayers.call());
+        // TODO startVsBotsNew & startVsBotsLoad ??
+        newGame.setOnAction(event->startVsBotsNew.call());
+        loadGame.setOnAction(event->startVsBotsLoad.call());
 
         setScene(scene);
     }

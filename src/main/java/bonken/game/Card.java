@@ -30,7 +30,6 @@ public class Card {
             {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
     public Card(int rank, int suit) {
-        // TODO check -1 suit
         if (suit == -1) {
         } else if ((suit < 0) || (suit > 3) || (rank < 2) || (rank > 14)) {
             throw new IllegalArgumentException();

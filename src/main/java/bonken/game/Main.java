@@ -19,7 +19,7 @@ public class Main {
             }
         }
 
-        Game game = new Game(players, () -> Platform.exit());
+        Game game = new Game(players, () -> Platform.exit(), false);
 
         game.startRound();
 
