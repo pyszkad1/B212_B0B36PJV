@@ -30,6 +30,7 @@ public class NameInputView extends  View {
         label1 = new Label("Enter your username:");
 
         textField = new TextField();
+        textField.setMaxWidth(400);
 
         submitButton = new Button("OK");
         submitButton.getStyleClass().add("ok-button");

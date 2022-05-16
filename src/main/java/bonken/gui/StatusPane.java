@@ -59,10 +59,11 @@ public class StatusPane extends VBox {
     }
 
     public void update() {
-        int gameCounter = game.getGameCounter()+1;
+        int gameCounter = game.getGameCounter() + 2;        // TODO +1 ??
         if (gameCounter > 11){
             gameCounter = 11;
         }
+        System.out.println(gameCounter);
 
         roundLabel.setText(gameCounter + " / 11");
         minigameLabel.setText(String.valueOf(Minigames.values()[game.getCurrentRound().getChosenMiniGameNum()].name));
