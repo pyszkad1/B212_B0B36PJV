@@ -28,7 +28,8 @@ public abstract class TrickPane extends Pane {
 
     protected Timer timer;
 
-    protected static Border testBorder = new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    protected static Border testBorder = new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    protected static Border testBorder2 = new Border(new BorderStroke(Color.GOLDENROD, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
     protected Pane[] cardPanes;
     protected Game game;
@@ -44,9 +45,6 @@ public abstract class TrickPane extends Pane {
 
         timer = new Timer();
         this.bottomPlayer = bottomPlayer;
-        this.setBorder(new Border(new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
-        //this.setBackground(new Background(new BackgroundFill(Color.MAGENTA, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     protected Position bottomPlayer;
@@ -59,16 +57,18 @@ public abstract class TrickPane extends Pane {
         Position currPos = bottomPlayer;
         for (int i = 0; i < 4; i++) {
             Pane p = cardPanes[i];
+            p.setBorder(testBorder);
         if (currPos == bottomPlayer) {
-            p.setTranslateY(this.getHeight() - cardHeight);
+            p.setTranslateY(this.getHeight() - cardHeight - 20);
             p.setTranslateX(w);
+            p.setBorder(testBorder2);
         }
         else if (currPos == bottomPlayer.next()) {
             p.setTranslateY(h);
             p.setTranslateX(alignment);
         }
         else if(currPos == (bottomPlayer.next()).next()) {
-            p.setTranslateY(0);
+            p.setTranslateY(20);
             p.setTranslateX(w);
         }
         else if (currPos == ((bottomPlayer.next()).next()).next()) {

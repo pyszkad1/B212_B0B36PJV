@@ -64,7 +64,6 @@ public class OnlineTrickPane extends TrickPane {
             cardPanes[i] = p;
             p.setMinHeight(cardHeight);
             p.setMinWidth(cardWidth);
-            p.setBorder(testBorder);
             this.getChildren().add(p);
         }
 

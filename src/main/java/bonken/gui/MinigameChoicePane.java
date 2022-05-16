@@ -25,8 +25,6 @@ public class MinigameChoicePane extends FlowPane {
         space.setFill(Color.TRANSPARENT);
 
         this.setAlignment(Pos.CENTER);
-        this.setBorder(new Border(new BorderStroke(Color.ORANGERED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
 
         minigameButtons = new ArrayList<>();
         availableMinigames = new ArrayList<>();
