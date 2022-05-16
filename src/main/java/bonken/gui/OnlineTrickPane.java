@@ -69,8 +69,8 @@ public class OnlineTrickPane extends TrickPane {
         }
 
         this.getChildren().add(statusPane);
-        statusPane.setTranslateX(0);
-        statusPane.setTranslateX(0);
+        statusPane.setTranslateX(10);
+        statusPane.setTranslateY(10);
 
     }
 

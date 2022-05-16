@@ -88,8 +88,8 @@ public class OfflineTrickPane extends TrickPane {
         }
 
         this.getChildren().add(statusPane);
-        statusPane.setTranslateX(0);
-        statusPane.setTranslateX(0);
+        statusPane.setTranslateX(10);
+        statusPane.setTranslateY(10);
     }
 
     private void putCard(Card card, Position pos) {
