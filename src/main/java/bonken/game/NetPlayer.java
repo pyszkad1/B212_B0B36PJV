@@ -45,13 +45,8 @@ public class NetPlayer extends Player{
     }
 
     public void cardSelected(String card) {
-
         if(cardRequired == false) return;
-        System.out.println(card);
-
         Deck deck = server.getGame().getDeck();
-
-
         putCard(deck.getSpecificCardByString(card));
     }
 

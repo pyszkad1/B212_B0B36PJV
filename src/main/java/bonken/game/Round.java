@@ -1,10 +1,13 @@
 package bonken.game;
 
+import bonken.net.Client;
 import bonken.utils.Callable;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Round {
+    private static final Logger LOGGER = Logger.getLogger(Round.class.getName());
     CardHand[] cardHands;
     PlayerInterface[] players;
     Deck deck;
@@ -63,10 +66,7 @@ public class Round {
             }
         }
 
-        System.out.println("Starting PLAYER IS " + startingPlayer);
     }
-
-    private int playerToChooseMinigame;
 
     public void putMinigame(Integer chosenMiniGameNum) {
 
@@ -79,13 +79,11 @@ public class Round {
         chosenMiniGameTrump = new MiniGameTrumps(chosenMiniGameNum);
 
         if (chosenMiniGameNum > 6) {
-            System.out.println("Chosen POSITIVE minigame, playing with "
-                    + chosenMiniGameTrump.trumpNames[chosenMiniGameTrump.trumps]
-                    + " as trumps");
+            LOGGER.info("Chosen POSITIVE minigame.");
         } else {
             MiniGameNegative chosenNegative = new MiniGameNegative(chosenMiniGameNum, deck);
             penaltyCards = chosenNegative.penaltyCards;
-            System.out.println("Chosen NEGATIVE minigame: " + chosenNegative.negativeNames[chosenMiniGameNum]);
+            LOGGER.info("Chosen NEGATIVE minigame.");
         }
 
         this.chosenMiniGameNum = chosenMiniGameNum;
@@ -95,7 +93,6 @@ public class Round {
         }
 
         int leadingPlayer = (startingPlayer + 3) % 4;
-        System.out.println("LEADING PLAYER IS " + leadingPlayer);
         trickNum = 0;
 
         playTrick(Position.values()[leadingPlayer]);
@@ -103,7 +100,6 @@ public class Round {
 
     public void chooseGame() {
         getStartingPlayer();
-        System.out.println("PLAYER " + startingPlayer + " is choosing a minigame.");
         players[startingPlayer].chooseMinigame(minigames, minigame -> putMinigame(minigame));
     }
 
@@ -121,7 +117,6 @@ public class Round {
 
     private void finishTrick() {
         if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
-            System.out.println("the only card was played");
             wrapUp();
             return;
         }
@@ -129,7 +124,6 @@ public class Round {
         Trick lastTrick = tricks.get(trickNum);
         int leadingPlayer  = lastTrick.getTrickWinner(lastTrick.getCards());
 
-        System.out.println("TO NEXT TRICK LEADS PLAYER " + leadingPlayer);
 
         tricksTaken[leadingPlayer]++;
 
@@ -144,18 +138,14 @@ public class Round {
     }
 
     private void wrapUp() {
-        //QUICK COUNTER! - deletable
         int maxTricks = 0;
         int playerNumber = -1;
-        System.out.println("Tricks of players:");
         for (int i = 0; i < 4; i++) {
-            System.out.println("Player " + i + " got " + tricksTaken[i]);
             if (tricksTaken[i] > maxTricks){
                 maxTricks = tricksTaken[i];
                 playerNumber = i;
             }
         }
-        System.out.println("Player " + playerNumber + " won with " + maxTricks + " tricks");
         getNextPlayer();
 
         onRoundFinished.call();

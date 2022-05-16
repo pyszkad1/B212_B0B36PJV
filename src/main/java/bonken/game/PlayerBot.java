@@ -50,12 +50,9 @@ public class PlayerBot extends Player {
         int num = possibleMinigameChoices.size();
         Integer chosenMiniGameNum;
         if (possibleMinigameChoices.size() > 0) {
-            System.out.println("Bot choosing from: " + possibleMinigameChoices);
             chosenMiniGameNum = possibleMinigameChoices.get((random.nextInt(num)));
-            System.out.println("Bot chose minigame " + chosenMiniGameNum);
         } else {
             chosenMiniGameNum = -1;
-            System.out.println("Bot can't choose, next player's turn");
         }
         if (chosenMiniGameNum > 6) chosenPositive = true;
 

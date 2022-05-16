@@ -106,9 +106,7 @@ public class Trick {
                 }
                 if (cards[i].getSuit() == winningSuit && cards[i].getRank() >= winningCard.getRank()) {
                     winningCard = cards[i];
-                    System.out.print("Winning card is " + winningCard.toString());
                     player = (i + firstPlayer) % 4;
-                    System.out.println(" of player " + player);
                 }
             }
 
@@ -131,7 +129,6 @@ public class Trick {
             for (int i = 0; i < 4; i++) {
                 playedTrick.add(trick[i]);
             }
-            System.out.println("Played trick: " + playedTrick);
             if (round.chosenMiniGameNum == 4) {
                 game.scoreBoard.updateScoreBoard(-10, trickWinner);
             } else if (round.chosenMiniGameNum == 0) {
@@ -175,7 +172,6 @@ public class Trick {
                     if (round.penaltyCards.contains(card)) {
                         game.scoreBoard.updateScoreBoard(-50, trickWinner);
                         round.penaltyCards.remove(card);
-                        System.out.println("You should buy other players beer! :)");
                     }
                 }
             }

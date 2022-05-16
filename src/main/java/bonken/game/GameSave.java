@@ -61,7 +61,6 @@ public class GameSave {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("gameSave.json"), this);
-            System.out.println("Game saved");
         } catch (IOException ex) {
             System.out.println("IOException " + ex.getMessage());
         }
