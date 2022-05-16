@@ -16,12 +16,12 @@ public class OnlineStatusPane extends VBox {
      *
      * */
 
-    private Label minigameLabel , roundLabel, roundHeader, scoreLabel;
-    private HBox minigameBox, roundBox;
-    private VBox scoreboardBox;
-    private OnlineScoreboardView onlineScoreboardView;
+    public Label minigameLabel , roundLabel, roundHeader, scoreLabel;
+    public HBox minigameBox, roundBox;
+    public VBox scoreboardBox;
+    public OnlineScoreboardView onlineScoreboardView;
 
-    public OnlineStatusPane() {
+    public OnlineStatusPane(OnlineScoreboardView onlineScoreboardView) {
         super();
 
         roundHeader = new Label("Round ");
@@ -32,7 +32,7 @@ public class OnlineStatusPane extends VBox {
         minigameBox = new HBox(minigameLabel);
 
         scoreLabel = new Label("Score");
-        onlineScoreboardView = new OnlineScoreboardView();
+        this.onlineScoreboardView = onlineScoreboardView;
         scoreLabel.hoverProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 onlineScoreboardView.show();
@@ -45,9 +45,14 @@ public class OnlineStatusPane extends VBox {
         this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
     }
 
-    public void update(String roundNum, String minigame) {              // TODO fix
+    public void update(String roundNum, String minigame) {
+        // TODO fix
+        this.getChildren().clear();
+
         roundLabel = new Label(roundNum + " / 11");
         minigameLabel= new Label(minigame) ;
+
+        this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
 
     }
 }

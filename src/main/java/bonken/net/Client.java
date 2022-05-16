@@ -132,6 +132,7 @@ public class Client implements Runnable {
                 String[] statusInfo = actionPayload.split("#");
                 String roundNum = statusInfo[0];
                 String minigame = statusInfo[1];
+                System.out.println("HERE IN CLIENT");
                 Platform.runLater(() -> onlineController.updateStatus(roundNum, minigame));
                 break;
             case SCORE:

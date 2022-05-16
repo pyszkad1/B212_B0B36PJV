@@ -15,9 +15,10 @@ public class OnlineTrickPane extends TrickPane {
     private static final Logger LOGGER = Logger.getLogger(OnlineTrickPane.class.getName());
     private OnlineStatusPane statusPane;
 
-    public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
+    public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock, OnlineStatusPane onlineStatusPane) {
         super(bottomPlayer, showBlock, hideBlock);
-        statusPane = new OnlineStatusPane();
+        System.out.println("HERE in ONLINE TRICK PANE");
+        this.statusPane = onlineStatusPane;
         setupCardPanes();
     }
 

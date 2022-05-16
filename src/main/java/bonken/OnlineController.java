@@ -36,8 +36,6 @@ public class OnlineController {
         this.stage = stage;
         this.startMenuView = startMenuView;
         this.controller = controller;
-        this.onlineStatusPane = new OnlineStatusPane();
-        this.onlineScoreboardView = new OnlineScoreboardView();
 
         this.minigameChoicePane = new MinigameChoicePane( minigame -> {
             gameView.hideMinigameChoice();
@@ -49,7 +47,10 @@ public class OnlineController {
 
     public void setMyPos(Position pos){
         this.myPosition = pos;
-        this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec());
+        this.onlineScoreboardView = new OnlineScoreboardView();
+
+        this.onlineStatusPane = new OnlineStatusPane(onlineScoreboardView);
+        this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec(), onlineStatusPane);
         this.onlineEndGameView = new OnlineEndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
     }
