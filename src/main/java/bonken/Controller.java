@@ -134,6 +134,8 @@ public class Controller {
     private void startupBackend() {
 
         client = new Client(this, HOST, PORT_NUMBER, username);
+        onlineController = new OnlineController(stage, client, startMenuView, this);
+        client.setOnlineController(onlineController);
         System.out.println("username is " + username);
         if (!isServerRunning()) {
             server = new Server(client, PORT_NUMBER, this);
@@ -149,10 +151,9 @@ public class Controller {
             showSettingUpOnlineGame();
         }
 
-        Platform.runLater(() -> {
-            onlineController = new OnlineController(stage, client, startMenuView, this);
-            client.setOnlineController(onlineController);
-        });
+
+
+
 
     }
 

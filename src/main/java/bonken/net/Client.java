@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  *
  * @author ladislav.seredi@fel.cvut.cz
  */
+//TODO CHANGE
 public class Client implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
@@ -89,9 +90,8 @@ public class Client implements Runnable {
             //    controller.showAlert("Name " + name + " already taken. Please choose another one.");
                 break;
             case MYPOS:
-
-                onlineController.setMyPos(Position.values()[Integer.valueOf(tokens[1])]);
-                System.out.println("myPos je " + onlineController.getMyPosition());
+                Platform.runLater(() -> onlineController.setMyPos(Position.values()[Integer.valueOf(tokens[1])]));
+                //System.out.println("myPos je " + onlineController.getMyPosition());
                 break;
             case GAME_STARTED:
                 onlineController.showGameStarted();

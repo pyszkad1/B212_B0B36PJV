@@ -28,7 +28,7 @@ public class OnlineStatusPane extends VBox {
         roundLabel = new Label();
         roundBox = new HBox(roundHeader, roundLabel);
 
-        minigameLabel= new Label() ;
+        minigameLabel = new Label();
         minigameBox = new HBox(minigameLabel);
 
         scoreLabel = new Label("Score");
@@ -46,7 +46,8 @@ public class OnlineStatusPane extends VBox {
     }
 
     public void update(String roundNum, String minigame) {              // TODO fix
-        roundLabel.setText(roundNum + " / 11");
-        minigameLabel.setText(minigame);
+        roundLabel = new Label(roundNum + " / 11");
+        minigameLabel= new Label(minigame) ;
+
     }
 }

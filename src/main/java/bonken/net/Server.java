@@ -82,7 +82,7 @@ public class Server implements Runnable {
             connections.add(newConnection);
 
             //sends myPos to client
-            newConnection.sendToClient(Protocol.MYPOS, String.valueOf(connections.size()-1));
+            Platform.runLater(() -> newConnection.sendToClient(Protocol.MYPOS, String.valueOf(connections.size()-1)));
 
             return true;
         }
