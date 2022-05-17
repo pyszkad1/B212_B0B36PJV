@@ -1,12 +1,10 @@
 package bonken.game;
 
-import bonken.net.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class GameSave {

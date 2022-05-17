@@ -56,7 +56,7 @@ public class Round {
         }
     }
 
-    private void getStartingPlayer() {
+    protected void getStartingPlayer() {
         startingPlayer = -1;
         for (PlayerInterface player : players) {
             if (player.isHisTurn()) {
@@ -111,8 +111,6 @@ public class Round {
         chooseGame();
     }
 
-
-
     private void finishTrick() {
         if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
             wrapUp();
@@ -149,7 +147,7 @@ public class Round {
         onRoundFinished.call();
     }
 
-    private void getNextPlayer() {
+    protected void getNextPlayer() {
         for (int i = 0; i < 4; i++) {
             if (players[i].isHisTurn()) {
                 players[i].setHisTurn(false);

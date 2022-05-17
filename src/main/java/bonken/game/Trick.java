@@ -69,16 +69,17 @@ public class Trick {
 
     private void wrapUp() {
         firstSuit = cards[0].getSuit();
-        System.out.println("Setting first suit " + firstSuit);
 
         onTrickFinished.call();
     }
 
     public int getTrickWinner(Card[] cards) {
         Card winningCard = cards[0];
+        /*
         for (int i = 0; i < 4; i++) {
             System.out.println(cards[i].toString());
         }
+         */
 
         int player = -1;
 
@@ -101,7 +102,6 @@ public class Trick {
             for (int i = 0; i < 4; i++) {
                 if (winningSuit != trumps && cards[i].getSuit() == trumps) {
                     winningCard = cards[i];
-                    System.out.println(winningCard.toString());
                     winningSuit = trumps;
                 }
                 if (cards[i].getSuit() == winningSuit && cards[i].getRank() >= winningCard.getRank()) {
