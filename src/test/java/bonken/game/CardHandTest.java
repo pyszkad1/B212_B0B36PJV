@@ -14,8 +14,16 @@ public class CardHandTest {
     private final Card fC = new Card(5, Card.CLUBS);
     private final Card sD = new Card(7, Card.DIAMONDS);
     private final Card qH = new Card(Card.QUEEN, Card.HEARTS);
+    private final Card sS = new Card(7, Card.SPADES);
     private final ArrayList<Card> cards = new ArrayList<>(List.of(aH, qS, tH, fC, sD));
     private final CardHand cardHand = new CardHand(cards);
+
+    @Test
+    void getPlayableCardsTest() {
+        ArrayList<Card> expected = new ArrayList<>(List.of(qS));
+        ArrayList<Card> testResult = cardHand.getPlayableCards(sS, 9);
+        assertEquals(expected, testResult);
+    }
 
     @Test
     void addAllButHeartsTest() {
