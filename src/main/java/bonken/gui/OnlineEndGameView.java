@@ -1,6 +1,5 @@
 package bonken.gui;
 
-import bonken.game.Game;
 import bonken.utils.Callable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,6 +29,11 @@ public class OnlineEndGameView extends View {
     Button returnButton;
     Button exitButton;
 
+    /**
+     * Class for showing ending screen for net game.
+     * @param showStartMenu call on return button press
+     * @param onClose call on exit button press
+     */
     public OnlineEndGameView(Callable showStartMenu, Callable onClose) {
 
         username0 = new Label();
@@ -52,8 +56,6 @@ public class OnlineEndGameView extends View {
         player2.setSpacing(10);
         player3.setSpacing(10);
 
-
-
         vb = new VBox();
         hbScore = new HBox();
         gameFinished = new Label("GAME FINISHED");
@@ -66,7 +68,7 @@ public class OnlineEndGameView extends View {
         returnButton = new Button("MENU");
         exitButton = new Button("EXIT");
 
-        returnButton.setOnAction(event -> showStartMenu.call());    // TODO fix menu or delete menu button
+        returnButton.setOnAction(event -> showStartMenu.call());
         exitButton.setOnAction(event -> onClose.call());
 
         returnButton.getStyleClass().add("endgame-button");
@@ -80,6 +82,11 @@ public class OnlineEndGameView extends View {
         vb.setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Updates scoreboard upon getting info from server.
+     * @param players
+     * @param score
+     */
     public void getScoreboard(String[] players, String[] score) {
         username0.setText(players[0]);
         username1.setText(players[1]);

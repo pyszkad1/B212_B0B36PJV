@@ -2,6 +2,9 @@ package bonken.game;
 
 import javafx.geometry.Pos;
 
+/**
+ * Enum for positions of players. Default position of bottom player is North.
+ */
 public enum Position {
 
     North (0),

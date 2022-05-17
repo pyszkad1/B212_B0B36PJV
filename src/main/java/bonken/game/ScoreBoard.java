@@ -1,5 +1,8 @@
 package bonken.game;
 
+/**
+ * Class for keeping score of players.
+ */
 public class ScoreBoard {
 
     PlayerInterface[] players;

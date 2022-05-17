@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *  Server class for net game.
+ *  Inspired by ladislav.seredi@fel.cvut.cz
+ */
 public class Server implements Runnable {
 
     private final int PORT_NUMBER;
@@ -28,6 +32,12 @@ public class Server implements Runnable {
 
     Game game;
 
+    /**
+     *
+     * @param client
+     * @param PORT_NUMBER
+     * @param controller game controller
+     */
     public Server(Client client, int PORT_NUMBER, Controller controller) {
         this.PORT_NUMBER = PORT_NUMBER;
         this.client = client;
@@ -66,6 +76,12 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param newConnection
+     * @param newName player username
+     * @return true on connection accepted, otherwise false
+     */
     public boolean addConnection(Connection newConnection, String newName) {
         // add only connection with name not yet existing
         synchronized(connections) {
@@ -88,6 +104,10 @@ public class Server implements Runnable {
         return connections;
     }
 
+    /**
+     *
+     * @param nameToRemove username of player to remove
+     */
     public void removeConnection(String nameToRemove) {
         synchronized(connections) {
             for (Iterator<Connection> it = connections.iterator(); it.hasNext();) {
@@ -100,6 +120,11 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param protocol Protocol code to be sent
+     * @param msg message to be sent
+     */
     public void broadcast(Protocol protocol,String msg) {
         synchronized(connections) {
             for (Connection connection : connections) {
@@ -108,11 +133,21 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Stops server.
+     */
     public void stop() {
         LOGGER.info("Stopping server.");
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
-                serverSocket.close();
+                sendGameEndToClients();
+                Platform.runLater(() -> {
+                    try {
+                        serverSocket.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
             if (socket != null) {
                 socket.close();
@@ -122,6 +157,10 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Sets players and bots (if needed) and starts game.
+     * @param game
+     */
     public void setPLayers(Game game) {
         this.game = game;
         PlayerInterface[] players = new  PlayerInterface[4];
@@ -153,11 +192,17 @@ public class Server implements Runnable {
         return game;
     }
 
+    /**
+     * Starts the game.
+     */
     public void startGame(){
         broadcast(Protocol.GAME_STARTED, "");
         game.startRound();
     }
 
+    /**
+     * Sends game status info to players.
+     */
     public void sendStatusToClients() {
         int gameCount = this.game.getGameCounter() + 1;
         if (gameCount > 11) gameCount = 11;
@@ -168,6 +213,11 @@ public class Server implements Runnable {
         broadcast(Protocol.ROUND, status);
     }
 
+    /**
+     * Sends minigames in String to the choosing player.
+     * @param id choosing player
+     * @param minigames
+     */
     public void sendMinigamesToClient(int id, ArrayList<Integer> minigames) {
         ArrayList<Card> cardHand = game.getPlayers()[id].getCardHand().getHand();
 
@@ -189,6 +239,12 @@ public class Server implements Runnable {
         getConnections().get(id).sendToClient(Protocol.POSSIBLE_MINIGAMES, whole);
     }
 
+    /**
+     * Sends card hand and trick to a player.
+     * @param id player to send trick to
+     * @param cardHand
+     * @param playableCards
+     */
     public void sendTrickToClient(int id, ArrayList<Card> cardHand, ArrayList<Card> playableCards) {
 
         Card[] currentTrick = game.getCurrentRound().getCurrentTrick().getCards();
@@ -217,10 +273,20 @@ public class Server implements Runnable {
 
     }
 
-    public void setMinigame(Integer minigame, int concectionNum) {
-        game.getPlayers()[concectionNum].minigameSelected(minigame);
+    /**
+     * Gets chosen minigame from the player.
+     * @param minigame
+     * @param connectionNum connection number of the choosing player
+     */
+    public void setMinigame(Integer minigame, int connectionNum) {
+        game.getPlayers()[connectionNum].minigameSelected(minigame);
     }
 
+    /**
+     * Gets played card from player
+     * @param card
+     * @param connectionNum connection num of player who played the card
+     */
     public void setCard(String card, int connectionNum) {
         int firstPlayer = game.getCurrentRound().getCurrentTrick().firstPlayer;
 
@@ -228,6 +294,9 @@ public class Server implements Runnable {
 
     }
 
+    /**
+     * Sends score to players.
+     */
     public void sendScoreToClients() {
         String players = "";
         String scores = "";
@@ -246,6 +315,11 @@ public class Server implements Runnable {
         broadcast(Protocol.SCORE, whole);
     }
 
+    /**
+     * Sends played trick to players.
+     * @param trick
+     * @param firstPlayer
+     */
     public void sendTrickEndToClients(Trick trick, Integer firstPlayer){
         Card[] cards = trick.getCards();
         String whole = "";
@@ -263,7 +337,10 @@ public class Server implements Runnable {
         broadcast(Protocol.TRICK_END, whole);
     }
 
-    private void sendGameEndToClients() {
+    /**
+     * Send game ended info to clients.
+     */
+    public void sendGameEndToClients() {
         broadcast(Protocol.GAME_ENDED, "");
         this.stop();
     }

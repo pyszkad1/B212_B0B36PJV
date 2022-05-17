@@ -9,6 +9,10 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Connection class for net game.
+ * Inspired by ladislav.seredi@fel.cvut.cz
+ */
 public class Connection implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Connection.class.getName());
@@ -20,6 +24,12 @@ public class Connection implements Runnable {
 
     private int connectionNum;
 
+    /**
+     *
+     * @param server
+     * @param socket
+     * @param connectionNum player's number in order of connecting to server
+     */
     public Connection(Server server, Socket socket, int connectionNum) {
         this.server = server;
         this.socket = socket;
@@ -70,8 +80,8 @@ public class Connection implements Runnable {
                 }
                 break;
             case QUIT:
-                //TODO SEND other players that game is no longer playable or somthing?
                 server.removeConnection(name);
+                server.sendGameEndToClients();
                 return false;
             case MINIGAME:
                 Integer chosenMg = Integer.valueOf(actionPayload);
@@ -82,6 +92,11 @@ public class Connection implements Runnable {
         return true;
     }
 
+    /**
+     *
+     * @param code Protocol code to send
+     * @param payload message to send
+     */
     public void sendToClient(Protocol code, String payload) {
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Sending >>>{0}<<< to {1}", new Object[]{msg, name});

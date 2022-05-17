@@ -1,27 +1,19 @@
 package bonken.gui;
 
 import bonken.game.Game;
-import javafx.scene.control.Button;
+import bonken.game.Minigames;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import bonken.game.Minigames;
 
+/**
+ * Class for showing game status in offline game.
+ */
 public class StatusPane extends VBox {
 
     Game game;
 
-    /**
-     * SHOULD SHOW
-     *
-     * Current minigame
-     * Round
-     * Score
-     *
-     *
-     * */
-
-    private Label minigameLabel, minigameHeader , roundLabel, roundHeader, scoreLabel;
+    private Label minigameLabel, roundLabel, roundHeader, scoreLabel;
     private HBox minigameBox, roundBox;
     private VBox scoreboardBox;
     private ScoreboardView scoreboard;
@@ -33,7 +25,6 @@ public class StatusPane extends VBox {
 
     public StatusPane() {
         super();
-
 
         roundHeader= new Label("Round ");
         roundLabel= new Label();
@@ -58,8 +49,11 @@ public class StatusPane extends VBox {
 
     }
 
+    /**
+     * Updates round number and current minigame.
+     */
     public void update() {
-        int gameCounter = game.getGameCounter() + 2;        // TODO check
+        int gameCounter = game.getGameCounter() + 1;
         if (gameCounter > 11) {
             gameCounter = 11;
         }

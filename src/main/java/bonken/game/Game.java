@@ -39,6 +39,13 @@ public class Game {
     }
 
     private Callable onStatusUpdateNeeded;
+
+    /**
+     * Game constructor for net game.
+     * @param players
+     * @param onGameEnd call when the game ended
+     * @param onStatusUpdateNeeded call when information needs to be sent to client(s)
+     */
     public Game(PlayerInterface[] players, Callable onGameEnd, Callable onStatusUpdateNeeded) {
         for (int i = 0; i < 12; i++) {
             minigames.add(Integer.valueOf(i));
@@ -59,6 +66,12 @@ public class Game {
 
     int startingPlayer = 0;
 
+    /**
+     * Constructor for offline game.
+     * @param players
+     * @param onGameEnd call when the game ended
+     * @param fromGameSave true if loading from saved file
+     */
     public Game(PlayerInterface[] players, Callable onGameEnd, boolean fromGameSave) {
         gameSave = new GameSave();
         if (fromGameSave) {
@@ -78,9 +91,14 @@ public class Game {
         scoreBoard = new ScoreBoard(players);
         rounds = new ArrayList<>();
         deck = new Deck();
-        gameCounter = 11 - minigames.size();
+        gameCounter = 12 - minigames.size();
     }
 
+    /**
+     * 
+     * @param players
+     * @param onGameEnd call when the game ended
+     */
     public void setGameFromFile(PlayerInterface[] players, Callable onGameEnd) {
 
         minigames = gameSave.getAvailableMinigames();
@@ -123,7 +141,7 @@ public class Game {
         }
         timer = new Timer();
 
-        if(++gameCounter == 1) {                         // TODO == 11
+        if(++gameCounter == 11) {
             gameEnded = true;
             LOGGER.info("END OF GAME");
 

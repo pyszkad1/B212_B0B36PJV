@@ -8,12 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+/**
+ * CLass for showing main menu of the game.
+ */
 public class StartMenuView extends View {
 
     private Button exitBtn, startBtn;
     private Label mainLabel;
     private VBox menuButtons, menu;
 
+    /**
+     *
+     * @param onStart calls startGame on button clicked
+     * @param onClose calls exit on button clicked
+     */
     public StartMenuView(Callable onStart, Callable onClose) {
 
         mainLabel = new Label("BONKEN");

@@ -8,9 +8,11 @@ import bonken.utils.Callable;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 
+/**
+ * Class for GUI and Client interactions.
+ */
 public class OnlineController {
 
     private Position myPosition;
@@ -31,6 +33,13 @@ public class OnlineController {
     private Client client;
     private Callable onMinigameRequired;
 
+    /**
+     *
+     * @param stage
+     * @param client
+     * @param startMenuView
+     * @param controller main game controller
+     */
     public OnlineController(Stage stage, Client client, StartMenuView startMenuView, Controller controller) {
         this.client = client;
         this.stage = stage;
@@ -44,7 +53,10 @@ public class OnlineController {
         this.cardPane = new CardPane(card -> {client.sendToServer(Protocol.CARD, card); cardPane.updateAfter(currentStringCardHand); trickPane.packUpTrick();  });
     }
 
-
+    /**
+     * Get position from server.
+     * @param pos
+     */
     public void setMyPos(Position pos){
         this.myPosition = pos;
         this.onlineScoreboardView = new OnlineScoreboardView();
@@ -65,45 +77,43 @@ public class OnlineController {
         this.currentStringCardHand = currentStringCardHand;
     }
 
-    public void updateHand(String card) {
-        ArrayList<String> handList = new ArrayList<>();
-        for (String string : currentStringCardHand){
-            handList.add(string);
-        }
-
-        for (String string: handList) {
-            if (string.equals(card)){
-                handList.remove(card);
-            }
-        }
-        for (int i = 0; i < handList.size(); i++) {
-            currentStringCardHand[i] = handList.get(i);
-        }
-    }
-
     private boolean showingGameView = false;
 
+    /**
+     * Updates GUI.
+     * @param stringFirstPlayer
+     * @param trick
+     * @param cardHand
+     * @param playableCards
+     */
     public void updateGui(String stringFirstPlayer, String[] trick, String[] cardHand, String[] playableCards){
         int firstPlayer = Integer.valueOf(stringFirstPlayer);
         trickPane.update(firstPlayer, trick);
         Platform.runLater(() -> cardPane.updateBefore(cardHand, playableCards));
     }
 
+    /**
+     * Updates card hand after playing trick.
+     * @param cardHand
+     */
     public void showCardHand(String[] cardHand) {
         Platform.runLater(() -> cardPane.updateAfter(cardHand));
     }
 
+    /**
+     * Gets data from server and updates GUI on trick end.
+     * @param firstPlayerAgain
+     * @param wholeTrick
+     */
     public void updateTrickEnd(String firstPlayerAgain, String[] wholeTrick){
         int firstPlayer = Integer.valueOf(firstPlayerAgain);
         trickPane.updateOnTrickEnd(firstPlayer, wholeTrick);
 
     }
 
-    public void start() {
-        stage.setScene(startMenuView.getScene());
-        stage.show();
-    }
-
+    /**
+     * Sets stage to show main game window.
+     */
     public void showGameView() {
         if (!showingGameView){
         stage.setScene(gameView.getScene());
@@ -112,6 +122,9 @@ public class OnlineController {
         }
     }
 
+    /**
+     * Sets stage to show game started screen.
+     */
     public void showGameStarted() {
         gameStartedView = new GameStartedView();
         Platform.runLater(() -> stage.setScene(gameStartedView.getScene()));
@@ -121,10 +134,16 @@ public class OnlineController {
         minigameChoicePane.setAvailableMinigames(minigames);
     }
 
+    /**
+     * Sets stage to show minigame choice.
+     */
     public void showMiniGameChoiceView() {
         gameView.showMinigameChoice();
     }
 
+    /**
+     * Sets stage to show ending screen.
+     */
     public void showEndGameScreen() {
         onlineEndGameView.show();
         stage.setScene(onlineEndGameView.getScene());
@@ -132,13 +151,23 @@ public class OnlineController {
 
     public void close() {
         if (trickPane != null) trickPane.killTimer();
-        if (controller != null) controller.close();
+        if (client != null) client.close();
     }
 
+    /**
+     * Calls online status update with data from server.
+     * @param roundNum
+     * @param minigame
+     */
     public void updateStatus(String roundNum, String minigame) {
         onlineStatusPane.update(roundNum, minigame);
     }
 
+    /**
+     * Calls online scoreboard update with data from server.
+     * @param players
+     * @param score
+     */
     public void updateScoreboard(String[] players, String[] score) {
         onlineScoreboardView.update(players, score);
         onlineEndGameView.getScoreboard(players, score);

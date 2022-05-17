@@ -1,11 +1,18 @@
 package bonken.game;
 
+/**
+ * General class for trumps setting.
+ */
 public class MiniGameTrumps {
     int trumps;
     int minigameNum;
     public final String[] trumpNames = new String[]
             {"Clubs ♣", "Diamonds ♦", "Hearts ♥", "Spades ♠", "No Trumps NT"};
 
+    /**
+     * Sets trumps according to current minigame number.
+     * @param minigameNum
+     */
     public MiniGameTrumps(int minigameNum) {
         this.minigameNum = minigameNum;
         setTrumps();

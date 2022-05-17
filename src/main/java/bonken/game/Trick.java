@@ -48,13 +48,11 @@ public class Trick {
 
     public void addCard(PlayerInterface player, Card card) {
 
-        // check if correct player is playing
         if(player.getId() != playerToPlay) return;
 
         cards[numPlayedCards] = card;
         numPlayedCards++;
 
-        // check if trick ended
         if(numPlayedCards == 4) {
             wrapUp();
             return;
@@ -62,17 +60,24 @@ public class Trick {
 
         playerToPlay = (playerToPlay + 1) % 4;
 
-        // request new player
         game.players[playerToPlay].requestCardToPlay(this, round.getChosenMiniGameNum());
 
     }
 
+    /**
+     * Ends the trick.
+     */
     private void wrapUp() {
         firstSuit = cards[0].getSuit();
 
         onTrickFinished.call();
     }
 
+    /**
+     *
+     * @param cards the played trick
+     * @return winner of the trick
+     */
     public int getTrickWinner(Card[] cards) {
         Card winningCard = cards[0];
 

@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Client class for net game.
+ * Inspired by ladislav.seredi@fel.cvut.cz
+ */
+
 public class Client implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
@@ -132,6 +137,11 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param code Protocol code to send
+     * @param payload message to send
+     */
     public void sendToServer(Protocol code, String payload) {
         String msg = code.toString() + '|' + payload;
         LOGGER.log(Level.INFO, "Client {1} is sending >>>{0}<<< to server", new Object[]{msg, name});

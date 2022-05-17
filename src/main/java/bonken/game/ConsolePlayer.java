@@ -5,7 +5,9 @@ import bonken.utils.Action;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Player for a console game.
+ */
 public class ConsolePlayer extends Player {
 
     private Scanner scanner;

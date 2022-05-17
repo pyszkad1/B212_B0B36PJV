@@ -6,9 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * CLass for showing scoreboard in net game.
+ */
 public class OnlineScoreboardView extends VBox {
-    Game game;
-
     Label username0;
     Label username1;
     Label username2;
@@ -23,6 +24,7 @@ public class OnlineScoreboardView extends VBox {
     HBox player1;
     HBox player2;
     HBox player3;
+
     public OnlineScoreboardView() {
         super();
 
@@ -66,6 +68,11 @@ public class OnlineScoreboardView extends VBox {
         this.setVisible(false);
     }
 
+    /**
+     * Updates scoreboard upon receiving info from server.
+     * @param players
+     * @param score
+     */
     public void update(String[] players, String[] score) {
         username0.setText(players[0] + ": ");
         username1.setText(players[1] + ": ");

@@ -1,14 +1,14 @@
 package bonken.gui;
 
-import bonken.utils.Callable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class for showing waiting for owner to start game in net game.
+ */
 public class WaitingView extends View {
-
 
     public WaitingView() {
         Label label = new Label("WAITING FOR OWNER TO START GAME");

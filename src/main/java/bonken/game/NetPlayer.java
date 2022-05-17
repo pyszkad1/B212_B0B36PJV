@@ -10,6 +10,9 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 
+/**
+ * Player for net game with GUI.
+ */
 public class NetPlayer extends Player{
 
     private Action<ArrayList<Integer>> onMinigameRequired;
@@ -22,18 +25,24 @@ public class NetPlayer extends Player{
     private boolean miniGameRequired = false;
     private boolean cardRequired = false;
 
+    /**
+     *
+     * @param id
+     * @param pos
+     * @param username
+     * @param onMinigameRequired
+     * @param onCardRequired
+     * @param server hosting server to send information to
+     * @param giveServerTrickEnd called when the whole trick is finished
+     */
     public NetPlayer(int id, Position pos, String username, Action<ArrayList<Integer>> onMinigameRequired, DoubleAction<ArrayList<Card>, ArrayList<Card>> onCardRequired, Server server, DoubleAction<Trick, Integer> giveServerTrickEnd) {
         super(id, pos, giveServerTrickEnd);
         this.username = username;
         this.onMinigameRequired = onMinigameRequired;
         this.onCardRequired = onCardRequired;
         this.server = server;
-
-
-
     }
 
-    //BUDE NA EVENT ZE SERVERU -> jakmile přijde odpovědět od klienta s minihrou!
     public void minigameSelected(Integer minigame) {
         if(miniGameRequired == false) return;
         miniGameRequired = false;

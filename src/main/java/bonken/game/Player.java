@@ -18,6 +18,12 @@ public abstract class Player implements PlayerInterface {
 
     private Position pos;
 
+    /**
+     * Player constructor for net game.
+     * @param id
+     * @param pos
+     * @param giveServerTrickEnd called when the whole trick is finished
+     */
     public Player(int id, Position pos, DoubleAction<Trick, Integer> giveServerTrickEnd) {
         this.pos = pos;
         this.username = "no username";
@@ -27,6 +33,11 @@ public abstract class Player implements PlayerInterface {
         this.giveServerTrickEnd = giveServerTrickEnd;
     }
 
+    /**
+     * Player constructor for offline game.
+     * @param id
+     * @param pos
+     */
     public Player(int id, Position pos) {
         this.pos = pos;
         this.username = "no username";
@@ -106,6 +117,10 @@ public abstract class Player implements PlayerInterface {
         getCardToPlay();
     }
 
+    /**
+     * Gives game played card.
+     * @param playedCard
+     */
     protected void putCard(Card playedCard) {
 
         if(this.canPlay(playedCard) == false) return;

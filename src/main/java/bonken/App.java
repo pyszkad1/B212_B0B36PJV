@@ -8,7 +8,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-
         stage.setResizable(false);
         Controller controller = new Controller(stage);
         stage.setOnCloseRequest(event -> {stage.close(); controller.close();});

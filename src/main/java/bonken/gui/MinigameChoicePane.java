@@ -1,23 +1,27 @@
 package bonken.gui;
 
-import bonken.game.Game;
 import bonken.game.Minigames;
 import bonken.utils.Action;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * Class for showing minigames choices to player.
+ */
 public class MinigameChoicePane extends FlowPane {
 
     ArrayList<Button> minigameButtons;
     private ArrayList<Integer> availableMinigames;
 
+    /**
+     *
+     * @param onMinigameChosen call on button click
+     */
     public MinigameChoicePane(Action<Minigames> onMinigameChosen) {
         super();
 
@@ -44,6 +48,10 @@ public class MinigameChoicePane extends FlowPane {
         }
     }
 
+    /**
+     * Disables buttons for non available minigames.
+     * @param availableMinigames
+     */
     public void setAvailableMinigames(ArrayList<Integer> availableMinigames) {
 
         this.availableMinigames = availableMinigames;

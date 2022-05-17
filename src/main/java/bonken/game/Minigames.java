@@ -1,5 +1,8 @@
 package bonken.game;
 
+/**
+ * Enum for all minigames.
+ */
 public enum Minigames {
     KingsAndJacks (0, "K & J"),
     Queens (1, "Q"),

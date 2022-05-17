@@ -1,23 +1,16 @@
 package bonken.gui;
 
-import bonken.game.*;
-import bonken.utils.Action;
+import bonken.game.Game;
+import bonken.game.Position;
 import bonken.utils.Callable;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Rectangle;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
+/**
+ * Abstract class for showing trick.
+ */
 public abstract class TrickPane extends Pane {
 
     boolean trickEndAlreadyDrawn = false;
@@ -28,8 +21,8 @@ public abstract class TrickPane extends Pane {
 
     protected Timer timer;
 
-    protected static Border testBorder = new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-    protected static Border testBorder2 = new Border(new BorderStroke(Color.GOLDENROD, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    protected static Border otherPlayerBorder = new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+    protected static Border playerBorder = new Border(new BorderStroke(Color.GOLDENROD, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
     protected Pane[] cardPanes;
     protected Game game;
@@ -37,6 +30,12 @@ public abstract class TrickPane extends Pane {
     Callable showBlock;
     Callable hideBlock;
 
+    /**
+     *
+     * @param bottomPlayer position of the player, default is North
+     * @param showBlock called after playing a card
+     * @param hideBlock called when the player is supposed to play
+     */
     public TrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
         super();
 
@@ -57,11 +56,11 @@ public abstract class TrickPane extends Pane {
         Position currPos = bottomPlayer;
         for (int i = 0; i < 4; i++) {
             Pane p = cardPanes[i];
-            p.setBorder(testBorder);
+            p.setBorder(otherPlayerBorder);
         if (currPos == bottomPlayer) {
             p.setTranslateY(this.getHeight() - cardHeight - 20);
             p.setTranslateX(w);
-            p.setBorder(testBorder2);
+            p.setBorder(playerBorder);
         }
         else if (currPos == bottomPlayer.next()) {
             p.setTranslateY(h);
@@ -82,7 +81,9 @@ public abstract class TrickPane extends Pane {
     protected boolean showingTrickEnd = false;
     protected boolean blocking = false;
 
-
+    /**
+     * Used when ending trick.
+     */
     public void packUpTrick() {
         if(showingTrickEnd == false) return;
         showingTrickEnd = false;

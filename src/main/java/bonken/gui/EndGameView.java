@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 
 import java.nio.Buffer;
 
+/**
+ * Class for ending screen in offline game.
+ */
 public class EndGameView extends View {
 
     Label gameFinished;
@@ -52,6 +55,10 @@ public class EndGameView extends View {
 
     }
 
+    /**
+     * Gets players info from game.
+     * @param game
+     */
     public void setGame(Game game) {
         this.game = game;
 
@@ -75,8 +82,10 @@ public class EndGameView extends View {
 
     }
 
+    /**
+     * Updates score from game and sets the scene.
+     */
     public void show() {
-
         playerScore0.setText(String.valueOf( game.getPlayers()[0].getScore()));
         playerScore1.setText(String.valueOf( game.getPlayers()[1].getScore()));
         playerScore2.setText(String.valueOf( game.getPlayers()[2].getScore()));

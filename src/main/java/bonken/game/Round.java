@@ -6,6 +6,9 @@ import bonken.utils.Callable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Class for one round of a game (13 tricks).
+ */
 public class Round {
     private static final Logger LOGGER = Logger.getLogger(Round.class.getName());
     CardHand[] cardHands;
@@ -20,6 +23,13 @@ public class Round {
     public ArrayList<Trick> tricks;
     public int trickNum = 0;
 
+    /**
+     * Round constructor for offline game.
+     * @param game
+     * @param deck
+     * @param minigames
+     * @param players
+     */
     public Round(Game game, Deck deck, ArrayList<Integer> minigames, PlayerInterface[] players) {
         this.game = game;
         this.players = players;
@@ -30,6 +40,15 @@ public class Round {
     }
 
     private Callable onStatusUpdateNeeded;
+
+    /**
+     * Round constructor for net game.
+     * @param game
+     * @param deck
+     * @param minigames
+     * @param players
+     * @param onStatusUpdateNeeded call when information needs to be sent to client(s)
+     */
     public Round(Game game, Deck deck, ArrayList<Integer> minigames, PlayerInterface[] players, Callable onStatusUpdateNeeded) {
         this.game = game;
         this.players = players;
@@ -46,6 +65,9 @@ public class Round {
         return this.tricks.get(this.trickNum);
     }
 
+    /**
+     * Generates 4 card hands of 13 cards from shuffled deck.
+     */
     private void createCardHands() {
         ArrayList<ArrayList<Card>> hands = deck.deal();
         cardHands = new CardHand[4];
@@ -66,6 +88,10 @@ public class Round {
 
     }
 
+    /**
+     * Sets chosen minigame.
+     * @param chosenMiniGameNum
+     */
     public void putMinigame(Integer chosenMiniGameNum) {
 
         if (chosenMiniGameNum == -1) {
@@ -96,6 +122,9 @@ public class Round {
         playTrick(Position.values()[leadingPlayer]);
     }
 
+    /**
+     * Asks player on turn to choose a minigame.
+     */
     public void chooseGame() {
         getStartingPlayer();
         players[startingPlayer].chooseMinigame(minigames, minigame -> putMinigame(minigame));
@@ -111,6 +140,9 @@ public class Round {
         chooseGame();
     }
 
+    /**
+     * This method is called, when 4 cards were played in trick.
+     */
     private void finishTrick() {
         if ((chosenMiniGameNum == 2 || chosenMiniGameNum == 6) && penaltyCards.size() == 0){
             wrapUp();
@@ -133,6 +165,9 @@ public class Round {
         playTrick(Position.values()[leadingPlayer]);
     }
 
+    /**
+     * Used on end of round, sends info to game using onRoundFinished call.
+     */
     private void wrapUp() {
         int maxTricks = 0;
         int playerNumber = -1;
@@ -157,6 +192,10 @@ public class Round {
         }
     }
 
+    /**
+     * Starts a trick.
+     * @param leadingPlayer player who took the previous trick (on first trick player on right hand of the minigame chooser)
+     */
     private void playTrick(Position leadingPlayer) {
         Trick trick = new Trick(game, this, leadingPlayer, cardHands, chosenMiniGameTrump.trumps);
         tricks.add(trick);

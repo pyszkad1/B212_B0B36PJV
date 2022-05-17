@@ -5,6 +5,9 @@ import bonken.utils.Callable;
 
 import java.util.ArrayList;
 
+/**
+ * Player for game with GUI vs Bots.
+ */
 public class GuiPlayer extends Player{
 
     private Action<ArrayList<Integer>> onMinigameRequired;

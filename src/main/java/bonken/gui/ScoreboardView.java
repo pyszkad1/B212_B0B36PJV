@@ -5,9 +5,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
+/**
+ * Class for showing scoreboard in offline game.
+ */
 public class ScoreboardView extends VBox {
     Game game;
 
@@ -21,6 +22,10 @@ public class ScoreboardView extends VBox {
     HBox player2;
     HBox player3;
 
+    /**
+     * Gets player info from game.
+     * @param game
+     */
     public void setGame(Game game) {
         this.game = game;
         label0 = new Label();
@@ -49,11 +54,13 @@ public class ScoreboardView extends VBox {
     }
 
     public ScoreboardView() {
-
         this.setVisible(false);
 
     }
 
+    /**
+     * Updates score from game.
+     */
     public void show() {
         label0.setText(String.valueOf( game.getPlayers()[0].getScore()));
         label1.setText(String.valueOf( game.getPlayers()[1].getScore()));

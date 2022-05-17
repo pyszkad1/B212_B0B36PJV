@@ -19,6 +19,9 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Class for showing players hand at the bottom of the screen.
+ */
 public class CardPane extends HBox {
 
     private static final Logger LOGGER = Logger.getLogger(CardPane.class.getName());
@@ -37,6 +40,11 @@ public class CardPane extends HBox {
 
     }
 
+    /**
+     * Updates CardPane before playing into trick.
+     * @param cards
+     * @param playableCards
+     */
     public void updateBefore(String[] cards, String[] playableCards) {
 
         LOGGER.info("Updating before trick.");
@@ -57,8 +65,8 @@ public class CardPane extends HBox {
             boolean playable = false;
             String card = cards[i];
 
-            for (String string : playableCards) {
-                if (card.equals(string)) {
+            for (String string: playableCards) {
+                if (card.equals(string)){
                     playable = true;
                 }
             }
@@ -86,6 +94,10 @@ public class CardPane extends HBox {
         }
     }
 
+    /**
+     * Updates CardPane after getting the whole trick.
+     * @param cards
+     */
     public void updateAfter(String[] cards) {
         LOGGER.info("Updating after trick.");
 
@@ -117,9 +129,11 @@ public class CardPane extends HBox {
         }
     }
 
-
+    /**
+     * Call sends info back to the model (if net game through server).
+     * @param card
+     */
     public void pressedCard(String card) {
-
         Platform.runLater(() -> onCardClicked.call(card));
     }
 }

@@ -1,6 +1,5 @@
 package bonken.gui;
 
-import bonken.game.Card;
 import bonken.utils.Callable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,8 +9,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Class for choosing between a new game or saved game (vs Bots).
+ */
 public class GameSetupView extends View {
-
+    /**
+     *
+     * @param showStartMenu call on button click
+     * @param startVsBotsNew call on button click
+     * @param startVsBotsLoad call on button click
+     */
     public GameSetupView(Callable showStartMenu, Callable startVsBotsNew, Callable startVsBotsLoad) {
         BorderPane borderPane = new BorderPane();
 

@@ -14,6 +14,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Class that shows username input screen.
+ */
 public class NameInputView extends  View {
 
     private Action<String> onNameInput;
@@ -23,6 +26,10 @@ public class NameInputView extends  View {
     private Button submitButton;
     private VBox vb;
 
+    /**
+     * Asks for username.
+     * @param onNameInput sends info to model (or server)
+     */
     public NameInputView(Action<String> onNameInput) {
 
         this.onNameInput = onNameInput;

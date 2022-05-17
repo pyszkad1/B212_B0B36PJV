@@ -3,6 +3,13 @@ package bonken.game;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ *
+ * @author orendkar
+ * @author pyszkad1
+ *
+ */
+
 public class CardHand {
     ArrayList<Card> hand;
 
@@ -10,6 +17,9 @@ public class CardHand {
         this.hand = hand;
     }
 
+    /**
+     * Sorts cardHand in order of suits and ranks (in that order).
+     */
     public void sortHand() {
         hand.sort(Comparator.comparing(Card::getRank));
         hand.sort(Comparator.comparing(Card::getSuit));
@@ -19,6 +29,13 @@ public class CardHand {
         return hand;
     }
 
+    /**
+     *
+     * @param firstCard first card played in trick
+     * @param chosenMinigameNum
+     * @return returns playable cards
+     *
+     */
     public ArrayList<Card> getPlayableCards(Card firstCard, Integer chosenMinigameNum) {
         boolean cannotPlayHearts;
         if (chosenMinigameNum.intValue() == 2 || chosenMinigameNum.intValue() == 3) {
@@ -47,7 +64,11 @@ public class CardHand {
         return playableCards;
     }
 
-    public ArrayList<Card> addAllButHearts(){
+    /**
+     *
+     * @return cards from card hand of other suit than Hearts
+     */
+    public ArrayList<Card> addAllButHearts() {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (int i = 0; i < hand.size(); i++) {
             if (!(hand.get(i).getSuit() == 2)) {
@@ -57,7 +78,11 @@ public class CardHand {
         return ret;
     }
 
-
+    /**
+     *
+     * @param card card of the suit
+     * @return cards of the suit or all if cardHand has none of the suit
+     */
     public ArrayList<Card> hasThisSuit(Card card){
         ArrayList<Card> ret = new ArrayList<Card>();
         for (int i = 0; i < hand.size(); i++) {

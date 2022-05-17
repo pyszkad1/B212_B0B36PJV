@@ -4,23 +4,20 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Class for showing statusPane in net game.
+ */
 public class OnlineStatusPane extends VBox {
-
-    /**
-     * SHOULD SHOW
-     *
-     * Current minigame
-     * Round
-     * Score
-     *
-     *
-     * */
 
     public Label minigameLabel , roundLabel, roundHeader, scoreLabel;
     public HBox minigameBox, roundBox;
     public VBox scoreboardBox;
     public OnlineScoreboardView onlineScoreboardView;
 
+    /**
+     * Shows game status (round and current minigame).
+     * @param onlineScoreboardView
+     */
     public OnlineStatusPane(OnlineScoreboardView onlineScoreboardView) {
         super();
 
@@ -45,9 +42,12 @@ public class OnlineStatusPane extends VBox {
         this.getChildren().addAll(roundBox, minigameBox, scoreboardBox);
     }
 
+    /**
+     * Updates number of round and minigame upon receiving them from server.
+     * @param roundNum
+     * @param minigame
+     */
     public void update(String roundNum, String minigame) {
-        // TODO fix
-
         roundLabel.setText(roundNum + " / 11");
         minigameLabel.setText(minigame);
 

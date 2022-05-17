@@ -2,6 +2,9 @@ package bonken.game;
 
 import java.util.ArrayList;
 
+/**
+ * General class for all negative minigames.
+ */
 public class MiniGameNegative {
 
     ArrayList<Card> penaltyCards;
@@ -17,6 +20,9 @@ public class MiniGameNegative {
         getPenaltyCards();
     }
 
+    /**
+     * Creates penalty cards depending on current minigame.
+     */
     private void getPenaltyCards() {
         switch (miniGameNum) {
             case 0:

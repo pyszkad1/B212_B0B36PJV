@@ -45,6 +45,10 @@ public class GameSave {
         return usernames;
     }
 
+    /**
+     * Save current game into json file
+     * @param game
+     */
     public void saveGame(Game game) {
         availableMinigames = game.getMinigames();
         for (int i = 0; i < 4; i++) {
@@ -67,6 +71,10 @@ public class GameSave {
         }
     }
 
+    /**
+     *
+     * @return mapped class GameSave from json file
+     */
     public GameSave readGame() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();

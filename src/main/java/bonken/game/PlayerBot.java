@@ -14,6 +14,12 @@ public class PlayerBot extends Player {
 
     DoubleAction<Trick, Integer> giveServerTrickEnd;
 
+    /**
+     * Bot constructor for net game.
+     * @param id
+     * @param pos
+     * @param giveServerTrickEnd
+     */
     public PlayerBot(int id, Position pos, DoubleAction<Trick, Integer> giveServerTrickEnd) {
         super(id, pos, giveServerTrickEnd);
         this.username = "Bot" + id;
@@ -21,6 +27,11 @@ public class PlayerBot extends Player {
         random = new Random();
     }
 
+    /**
+     * Bot constructor for offline game.
+     * @param id
+     * @param pos
+     */
     public PlayerBot(int id, Position pos) {
         super(id, pos);
         this.username = "Bot" + id;

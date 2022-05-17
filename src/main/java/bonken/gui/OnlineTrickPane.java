@@ -10,11 +10,21 @@ import javafx.scene.layout.Pane;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+/**
+ * Class for showing trick in offline game.
+ */
 public class OnlineTrickPane extends TrickPane {
 
     private static final Logger LOGGER = Logger.getLogger(OnlineTrickPane.class.getName());
     public OnlineStatusPane statusPane;
 
+    /**
+     *
+     * @param bottomPlayer position of player rotated according to his Position enum, default is North
+     * @param showBlock call after playing a card
+     * @param hideBlock call when the player is supposed to play
+     * @param onlineStatusPane from onlineController
+     */
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock, OnlineStatusPane onlineStatusPane) {
         super(bottomPlayer, showBlock, hideBlock);
         this.statusPane = onlineStatusPane;
@@ -22,6 +32,11 @@ public class OnlineTrickPane extends TrickPane {
         setupCardPanes();
     }
 
+    /**
+     * Update on receiving current trick.
+     * @param firstPlayer
+     * @param trick
+     */
     public void update(int firstPlayer, String[] trick){
         if (!blocking){
             showBlock.call();
@@ -74,6 +89,11 @@ public class OnlineTrickPane extends TrickPane {
 
     }
 
+    /**
+     * Updates on receiving the whole trick to draw the result.
+     * @param firstPlayer
+     * @param wholeTrick
+     */
     public void updateOnTrickEnd(int firstPlayer, String[] wholeTrick) {
         showBlock.call();
         blocking = true;

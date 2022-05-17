@@ -1,5 +1,8 @@
 package bonken.net;
 
+/**
+ * Enum class for Protocol codes used in net communication.
+ */
 public enum Protocol {
     // server origin
     SUBMIT,

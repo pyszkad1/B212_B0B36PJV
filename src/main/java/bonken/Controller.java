@@ -4,6 +4,7 @@ import bonken.game.*;
 import bonken.gui.*;
 import bonken.net.Client;
 import bonken.net.Server;
+import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -11,6 +12,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
+/**
+ * Class for model and GUI interaction.
+ */
 public class Controller {
     Game game;
     public Stage stage;
@@ -39,6 +43,10 @@ public class Controller {
 
     private OnlineController onlineController;
 
+    /**
+     * Sets up GUI.
+     * @param stage
+     */
     public Controller(Stage stage) {
         this.stage = stage;
         this.startMenuView = new StartMenuView( () -> { stage.setScene(gameMenuView.getScene());}, () -> {stage.close();this.close();});
@@ -60,21 +68,32 @@ public class Controller {
 
     }
 
+    /**
+     * Sets stage to show start menu.
+     */
     public void start() {
         stage.setScene(startMenuView.getScene());
         stage.show();
     }
 
+    /**
+     * Sets stage to show username input screen.
+     */
     public void getName() {
         stage.setScene(nameInputView.getScene());
     }
 
+    /**
+     * Sets stage to show username input screen in net game.
+     */
     public void getNameOnline() {
         stage.setScene(onlineNameInputView.getScene());
     }
 
+    /**
+     * Sets stage to show start menu.
+     */
     public void showStartMenu() {
-        //TODO IF COMING FROM ONLINE REFUSAL SHOW MSG!!
         Platform.runLater(() -> {
             stage.setScene(startMenuView.getScene());
         });
@@ -184,11 +203,18 @@ public class Controller {
         server.setPLayers(game);
     }
 
+    /**
+     * Sets stage to show ending screen.
+     */
     public void showEndGameScreen() {
         endGameView.show();
         stage.setScene(endGameView.getScene());
     }
 
+    /**
+     * Sets stage to show minigame choice and current card hand.
+     * @param availableMinigames
+     */
     public void showMiniGameChoiceView(ArrayList<Integer> availableMinigames) {
         ArrayList<Card> cardHand = game.getPlayers()[0].getCardHand().getHand();
         String[] hand = new String[cardHand.size()];
@@ -213,12 +239,15 @@ public class Controller {
     }
 
     public void close() {
+        if (onlineController != null) {
+            onlineController.close();
+        }
         if (server != null) {
             Platform.runLater(() -> server.stop());
         }
         if (trickPane != null) trickPane.killTimer();
         if (game != null) game.killTimer();
-        System.exit(0);
+        Platform.runLater(() -> System.exit(0));
     }
 
 

@@ -1,6 +1,5 @@
 package bonken.gui;
 
-import bonken.Controller;
 import bonken.utils.Callable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,12 +8,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
+/**
+ * Class for showing choice of net or offline game.
+ */
 public class GameMenuView  extends  View {
-
-
+    /**
+     *
+     * @param chooseVsBots call on button click
+     * @param showStartMenu call on button click
+     * @param startVsPlayers call on button click
+     */
     public GameMenuView(Callable chooseVsBots, Callable showStartMenu, Callable startVsPlayers) {
         BorderPane borderPane = new BorderPane();
 

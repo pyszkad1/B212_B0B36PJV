@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.logging.Logger;
 
+/**
+ * Main GUI class, combines CardPane at the bottom, TrickPane and MinigameChoicePane in the middle and StatusPane in the top left corner.
+ */
 public class GameView extends View{
 
     private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
@@ -38,7 +41,12 @@ public class GameView extends View{
         }
     }
 
-
+    /**
+     * GameView constructor for offline game.
+     * @param minigamePane
+     * @param cardPane
+     * @param offlineTrickPane
+     */
     public GameView( MinigameChoicePane minigamePane, CardPane cardPane, OfflineTrickPane offlineTrickPane) {
 
         LOGGER.info("Started Game View ------- OFFLINE");
@@ -77,6 +85,12 @@ public class GameView extends View{
         setScene(scene);
     }
 
+    /**
+     * GameView constructor for net game.
+     * @param minigamePane
+     * @param cardPane
+     * @param onlineTrickPane
+     */
     public GameView( MinigameChoicePane minigamePane, CardPane cardPane, OnlineTrickPane onlineTrickPane) {
 
         LOGGER.info("Started Game View ------- ONLINE");
@@ -115,10 +129,16 @@ public class GameView extends View{
         setScene(scene);
     }
 
+    /**
+     * Blocks cardPane.
+     */
     public void showBlockingRec() {
         blockingRec.toFront();
     }
 
+    /**
+     * Enables cardPane.
+     */
     public void hideBlockingRec(){
         borderPane.toFront();
     }

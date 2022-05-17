@@ -1,5 +1,10 @@
 package bonken.game;
 
+/**
+ *
+ * General class for Card object.
+ *
+ */
 public class Card {
     private int suit;
     private int rank;
@@ -29,6 +34,11 @@ public class Card {
     public final String[] faceNames = new String[]
             {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
+    /**
+     *
+     * @param rank number from 2 to 14
+     * @param suit number from 0 to 3 (-1 is used when lowest card possible needed)
+     */
     public Card(int rank, int suit) {
         if (suit == -1) {
         } else if ((suit < 0) || (suit > 3) || (rank < 2) || (rank > 14)) {

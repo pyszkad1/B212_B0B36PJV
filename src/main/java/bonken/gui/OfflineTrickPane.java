@@ -10,11 +10,20 @@ import javafx.scene.layout.Pane;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+/**
+ * Class for showing trick in offline game.
+ */
 public class OfflineTrickPane extends TrickPane {
 
     private static final Logger LOGGER = Logger.getLogger(OfflineTrickPane.class.getName());
     private StatusPane statusPane;
 
+    /**
+     *
+     * @param bottomPlayer position of the player, default is North
+     * @param showBlock called after playing a card
+     * @param hideBlock called when the player is supposed to play
+     */
     public OfflineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock) {
         super(bottomPlayer, showBlock, hideBlock);
         statusPane = new StatusPane();
@@ -26,6 +35,9 @@ public class OfflineTrickPane extends TrickPane {
         statusPane.setGame(game);
     }
 
+    /**
+     * Updates the trick.
+     */
     public void update() {
         if (blocking){
             hideBlock.call();
