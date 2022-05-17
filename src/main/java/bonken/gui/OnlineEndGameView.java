@@ -98,8 +98,11 @@ public class OnlineEndGameView extends View {
         score3.setText(score[3]);
     }
 
+    Scene scene;
     public void show() {
-        Scene scene = new Scene(vb, 1080, 720);
+        if (scene == null) {
+            scene = new Scene(vb, 1080, 720);
+        }
         setScene(scene);
     }
 
