@@ -13,10 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author ladislav.seredi@fel.cvut.cz
- */
 public class Server implements Runnable {
 
     private final int PORT_NUMBER;

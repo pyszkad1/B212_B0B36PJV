@@ -9,10 +9,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author ladislav.seredi@fel.cvut.cz
- */
 public class Connection implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Connection.class.getName());
@@ -68,7 +64,6 @@ public class Connection implements Runnable {
                     // name sent, add connection to the list maintained by server
                     name = actionPayload;
                     sendToClient(Protocol.ACCEPTED, "");
-                    System.out.println("ADDED CONNECTION");
                 } else {
                     // connection with this name already there, reject
                     sendToClient(Protocol.REJECTED, "");

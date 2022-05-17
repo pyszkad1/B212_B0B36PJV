@@ -136,18 +136,15 @@ public class Controller {
         client = new Client(this, HOST, PORT_NUMBER, username);
         onlineController = new OnlineController(stage, client, startMenuView, this);
         client.setOnlineController(onlineController);
-        System.out.println("username is " + username);
         if (!isServerRunning()) {
             server = new Server(client, PORT_NUMBER, this);
             startServerThenClient();
             clientOnly = false;
-            System.out.println("You own the server");
 
             showSettingUpOnlineGame();
         } else {
             startClient();
             clientOnly = true;
-            System.out.println("waiting");
             showSettingUpOnlineGame();
         }
 
@@ -170,7 +167,6 @@ public class Controller {
 
     public void showSettingUpOnlineGame() {
         if (clientOnly){
-            System.out.println("I am just a client");
             waitingView = new WaitingView();
             stage.setScene(waitingView.getScene());
         }else{
@@ -181,7 +177,6 @@ public class Controller {
 
     private void startGameOnline() {
 
-        System.out.println("------------------------------------------------");
         if (username == null) {
             getNameOnline();
             return;

@@ -117,7 +117,6 @@ public class Game {
 
     private void finishRound()
     {
-        System.out.println(scoreBoard.toString());
         if (gameSave != null) {
             LOGGER.info("Saving game.");
             gameSave.saveGame(this);

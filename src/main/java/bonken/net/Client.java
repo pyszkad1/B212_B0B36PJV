@@ -15,11 +15,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author ladislav.seredi@fel.cvut.cz
- */
-//TODO CHANGE
 public class Client implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
@@ -81,17 +76,12 @@ public class Client implements Runnable {
                 sendToServer(Protocol.USERNAME, name);
                 break;
             case ACCEPTED:
-                Platform.runLater(() -> { // dtto as above
-            //        controller.showChatWindow(name);
-                });
                 break;
             case REJECTED:
                 controller.showStartMenu();
-            //    controller.showAlert("Name " + name + " already taken. Please choose another one.");
                 break;
             case MYPOS:
                 Platform.runLater(() -> onlineController.setMyPos(Position.values()[Integer.valueOf(tokens[1])]));
-                //System.out.println("myPos je " + onlineController.getMyPosition());
                 break;
             case GAME_STARTED:
                 onlineController.showGameStarted();
@@ -110,7 +100,6 @@ public class Client implements Runnable {
                                         onlineController.showMiniGameChoiceView();});
                 break;
             case TRICK_AND_HAND:
-                //onlineController.showGameView();
                 String[] trickAndHand = tokens[1].split("@");
                 String firstPlayer = trickAndHand[0];
                 String[] trick = trickAndHand[1].split("#");

@@ -75,11 +75,6 @@ public class Trick {
 
     public int getTrickWinner(Card[] cards) {
         Card winningCard = cards[0];
-        /*
-        for (int i = 0; i < 4; i++) {
-            System.out.println(cards[i].toString());
-        }
-         */
 
         int player = -1;
 

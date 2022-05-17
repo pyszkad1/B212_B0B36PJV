@@ -5,10 +5,12 @@ import bonken.utils.DoubleAction;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class PlayerBot extends Player {
 
     private Random random;
+    private static final Logger LOGGER = Logger.getLogger(PlayerBot.class.getName());
 
     DoubleAction<Trick, Integer> giveServerTrickEnd;
 
@@ -31,7 +33,7 @@ public class PlayerBot extends Player {
         Random random = new Random();
         int playedCard = random.nextInt(playableCards.size());
         Card tmp = playableCards.get(playedCard);
-        System.out.println(tmp.toString());
+        LOGGER.info("Bot played " + tmp.toString());
         this.putCard(tmp);
     }
 
