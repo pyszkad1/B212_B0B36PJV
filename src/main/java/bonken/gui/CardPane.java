@@ -17,9 +17,11 @@ import javafx.scene.layout.VBox;
 
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class CardPane extends HBox {
 
+    private static final Logger LOGGER = Logger.getLogger(CardPane.class.getName());
 
     private double cardWidth = 132;
     private double cardHeight = 180;
@@ -37,13 +39,11 @@ public class CardPane extends HBox {
 
     public void updateBefore(String[] cards, String[] playableCards) {
 
-        System.out.println("++++++UPDATE BEFORE+++++");
+        LOGGER.info("Updating before trick.");
 
         this.getChildren().clear();
 
-
         int cardCount = cards.length;
-
 
         double size = this.getWidth();
         double sizeForOverlap = size - cardWidth;
@@ -57,8 +57,8 @@ public class CardPane extends HBox {
             boolean playable = false;
             String card = cards[i];
 
-            for (String string: playableCards) {
-                if (card.equals(string)){
+            for (String string : playableCards) {
+                if (card.equals(string)) {
                     playable = true;
                 }
             }
@@ -85,8 +85,9 @@ public class CardPane extends HBox {
             }
         }
     }
+
     public void updateAfter(String[] cards) {
-        System.out.println("++++++UPDATE AFTER +++++");
+        LOGGER.info("Updating after trick.");
 
         this.getChildren().clear();
 

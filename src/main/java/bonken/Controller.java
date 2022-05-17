@@ -223,6 +223,7 @@ public class Controller {
         }
         if (trickPane != null) trickPane.killTimer();
         if (game != null) game.killTimer();
+        System.exit(0);
     }
 
 

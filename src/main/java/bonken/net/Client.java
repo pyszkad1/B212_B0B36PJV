@@ -97,7 +97,6 @@ public class Client implements Runnable {
                 onlineController.showGameStarted();
                 break;
             case POSSIBLE_MINIGAMES:
-                System.out.println(name + " received minigames");
                 String[] minigamesAndHand = tokens[1].split("@");
                 String[] minigamesString = minigamesAndHand[0].split("#");
                 String[] cardHandString = minigamesAndHand[1].split("#");
@@ -112,7 +111,6 @@ public class Client implements Runnable {
                 break;
             case TRICK_AND_HAND:
                 //onlineController.showGameView();
-                System.out.println(name + " received trick and hand");
                 String[] trickAndHand = tokens[1].split("@");
                 String firstPlayer = trickAndHand[0];
                 String[] trick = trickAndHand[1].split("#");
@@ -125,14 +123,12 @@ public class Client implements Runnable {
                 String[] playerAndTrick = actionPayload.split("@");
                 String firstPlayerAgain = playerAndTrick[0];
                 String[] wholeTrick = playerAndTrick[1].split("#");
-                System.out.println("******UPDATE ON TRICK END******");
                 Platform.runLater(() -> onlineController.updateTrickEnd(firstPlayerAgain, wholeTrick));
                 break;
             case ROUND:
                 String[] statusInfo = actionPayload.split("#");
                 String roundNum = statusInfo[0];
                 String minigame = statusInfo[1];
-                System.out.println("HERE IN CLIENT");
                 Platform.runLater(() -> onlineController.updateStatus(roundNum, minigame));
                 break;
             case SCORE:

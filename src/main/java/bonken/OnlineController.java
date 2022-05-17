@@ -51,7 +51,7 @@ public class OnlineController {
 
         this.onlineStatusPane = new OnlineStatusPane(onlineScoreboardView);
         this.trickPane = new OnlineTrickPane(myPosition, () -> gameView.showBlockingRec(), () -> gameView.hideBlockingRec(), onlineStatusPane);
-        this.onlineEndGameView = new OnlineEndGameView(() -> { stage.setScene(startMenuView.getScene());}, () -> {stage.close(); this.close();});
+        this.onlineEndGameView = new OnlineEndGameView(() -> { stage.setScene(startMenuView.getScene()); client.close();}, () -> {stage.close(); this.close();});
         gameView = new GameView(minigameChoicePane, cardPane, trickPane);
     }
 

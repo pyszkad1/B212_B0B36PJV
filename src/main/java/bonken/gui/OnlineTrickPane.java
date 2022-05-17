@@ -17,7 +17,6 @@ public class OnlineTrickPane extends TrickPane {
 
     public OnlineTrickPane(Position bottomPlayer, Callable showBlock, Callable hideBlock, OnlineStatusPane onlineStatusPane) {
         super(bottomPlayer, showBlock, hideBlock);
-        System.out.println("HERE in ONLINE TRICK PANE");
         this.statusPane = onlineStatusPane;
 
         setupCardPanes();
@@ -45,7 +44,6 @@ public class OnlineTrickPane extends TrickPane {
         int currentPos = (4 + position - bottomPlayer.index)%4;
 
         Position currPosition = Position.values()[currentPos];
-        System.out.println(position + " is position");
 
         for (int i = 0; i < trick.length; i++) {
             String card = trick[i];
