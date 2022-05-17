@@ -1,13 +1,17 @@
 package bonken.game;
 
+import bonken.net.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 public class GameSave {
+
+    private static final Logger LOGGER = Logger.getLogger(GameSave.class.getName());
 
     private ArrayList<Integer> availableMinigames;
     private ArrayList<Boolean> playersChosenPos;
@@ -46,7 +50,6 @@ public class GameSave {
     public void saveGame(Game game) {
         availableMinigames = game.getMinigames();
         for (int i = 0; i < 4; i++) {
-            System.out.println("SIZE IS " + playersChosenPos.size());
             if (game.getPlayers()[i].getChosenPositive()) {
                 playersChosenPos.add(i, true);
             } else {
@@ -62,7 +65,7 @@ public class GameSave {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("gameSave.json"), this);
         } catch (IOException ex) {
-            System.out.println("IOException " + ex.getMessage());
+            LOGGER.severe("IOException " + ex.getMessage());
         }
     }
 

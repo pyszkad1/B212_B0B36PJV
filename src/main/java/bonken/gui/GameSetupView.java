@@ -21,7 +21,7 @@ public class GameSetupView extends View {
         VBox returnBox = new VBox(returnBtn);
         returnBox.setAlignment(Pos.TOP_LEFT);
 
-        Label text = new Label("Choose a game mode");
+        Label text = new Label("Choose game mode");
 
         Button newGame = new Button("NEW GAME");
         newGame.getStyleClass().add("menu-button");

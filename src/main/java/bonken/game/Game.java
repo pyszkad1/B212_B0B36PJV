@@ -1,11 +1,10 @@
 package bonken.game;
 
-import bonken.gui.GameSetupView;
-import bonken.net.Server;
 import bonken.utils.Callable;
 import javafx.application.Platform;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 public class Game {

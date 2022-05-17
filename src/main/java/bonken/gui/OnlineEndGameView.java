@@ -66,7 +66,7 @@ public class OnlineEndGameView extends View {
         returnButton = new Button("MENU");
         exitButton = new Button("EXIT");
 
-        returnButton.setOnAction(event -> showStartMenu.call());
+        returnButton.setOnAction(event -> showStartMenu.call());    // TODO fix menu or delete menu button
         exitButton.setOnAction(event -> onClose.call());
 
         returnButton.getStyleClass().add("endgame-button");
