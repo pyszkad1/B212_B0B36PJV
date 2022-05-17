@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Class for saving and loading game from json file.
+ */
 public class GameSave {
 
     private static final Logger LOGGER = Logger.getLogger(GameSave.class.getName());

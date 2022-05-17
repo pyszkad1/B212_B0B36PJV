@@ -7,6 +7,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+/**
+ * Class for Game object.
+ */
 public class Game {
     PlayerInterface[] players;
     Deck deck;

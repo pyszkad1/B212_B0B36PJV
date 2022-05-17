@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
+/**
+ * Class for a bot player. Bots choose minigames and cards to play on random.
+ */
 public class PlayerBot extends Player {
 
     private Random random;

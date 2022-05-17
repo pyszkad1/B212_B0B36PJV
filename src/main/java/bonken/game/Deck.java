@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * General class for Deck object.
+ */
 public class Deck {
     ArrayList<Card> cardDeck = new ArrayList<Card>(52);
 

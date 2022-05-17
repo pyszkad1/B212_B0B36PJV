@@ -342,7 +342,7 @@ public class Server implements Runnable {
      */
     public void sendGameEndToClients() {
         broadcast(Protocol.GAME_ENDED, "");
-        this.stop();
+        Platform.runLater(() -> this.stop());
     }
 
 }

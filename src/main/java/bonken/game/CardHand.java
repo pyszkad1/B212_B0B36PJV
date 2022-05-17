@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- *
- * @author orendkar
- * @author pyszkad1
- *
+ * General class for CardHand object.
  */
-
 public class CardHand {
     ArrayList<Card> hand;
 

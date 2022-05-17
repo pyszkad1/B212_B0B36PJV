@@ -5,6 +5,9 @@ import bonken.utils.DoubleAction;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract class for player.
+ */
 public abstract class Player implements PlayerInterface {
     String username;
     final int id;

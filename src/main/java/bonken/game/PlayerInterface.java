@@ -4,6 +4,9 @@ import bonken.utils.Action;
 
 import java.util.ArrayList;
 
+/**
+ * Interface for all player classes
+ */
 public interface PlayerInterface {
     /**
      *

@@ -4,7 +4,9 @@ import bonken.utils.Callable;
 
 import java.util.ArrayList;
 
-
+/**
+ * Class for trick object.
+ */
 public class Trick {
     public int firstPlayer;
     public Position firstToPlay;
